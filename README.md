@@ -1,3 +1,8 @@
+*Hello*
+
+**This is prob the hottest designed Discord RAT! Be patient to dont burn yourself using it**
+
+
 **Setup**:
 
 Change the token on line 146, and you're good to go!
