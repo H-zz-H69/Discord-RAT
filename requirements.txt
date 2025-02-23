@@ -1,0 +1,13 @@
+aiohttp
+opencv-python
+discord.py
+discord
+psutil
+pyautogui
+pyperclip
+requests
+colorama
+Pillow
+pywin32
+pynput
+pyaes

