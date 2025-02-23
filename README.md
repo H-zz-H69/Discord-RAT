@@ -136,8 +136,6 @@ H-zz-H - https://discord.gg/29Ya4F3CgQ - _h_zz_h_
 
 Made with ❤ by H-zz-H
 
-~~~
-
 ### Example Images:
 
 #### Discord Chat Interaction
@@ -149,5 +147,3 @@ This image shows someone using the commands, and the bot responding to them.
 ![Startup Message](other/rat1.png)
 
 This image shows the startup message of someone starting the RAT—looks hot!
-
-~~~
