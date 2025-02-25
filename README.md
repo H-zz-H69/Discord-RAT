@@ -1,10 +1,21 @@
 # Hello
-# **On 5 Stars new update with:**
-*Better startup mechanics*
-*Screen and voice recording*
-*More troll features*
-*rn its cmd commands. will make an !shell for powershell commands*
-*Big bug fixes which crashes the RAT rn*
+# **On 5 Stars - New Update Features:**
+
+- **Improved Startup Mechanics**  
+  Enhanced efficiency and smoother performance.
+
+- **Screen & Voice Recording**  
+  Now with the ability to capture screen activity and audio.
+
+- **Additional Troll Features**  
+  More fun and customizable options for trolling.
+
+- **CMD Commands Integration**  
+  Currently supports CMD commands. Plans for a PowerShell `!shell` integration in the works!
+
+- **Major Bug Fixes**  
+  Fixed critical bugs that caused crashes in the RAT.
+
 
 **This is probably the hottest designed Discord RAT! Be patient to not burn yourself using it.**
 
