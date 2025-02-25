@@ -19,7 +19,7 @@
 
 **This is probably the hottest designed Discord RAT! Be patient to not burn yourself using it. 🔥**
 
-## Setup:
+## [Setup](https://www.youtube.com/watch?v=3AtgXzT03hU):
 
 Change the token on line 146, and you're good to go! ⚡
 
