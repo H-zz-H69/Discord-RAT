@@ -1,29 +1,29 @@
 # Hello
+
 # **On 5 Stars - New Update Features:**
 
 - **Improved Startup Mechanics**  
-  Enhanced efficiency and smoother performance.
+  Enhanced efficiency and smoother performance. 🚀
 
 - **Screen & Voice Recording**  
-  Now with the ability to capture screen activity and audio.
+  Now with the ability to capture screen activity and audio. 🎥🔊
 
 - **Additional Troll Features**  
-  More fun and customizable options for trolling.
+  More fun and customizable options for trolling. 😈
 
 - **CMD Commands Integration**  
-  Currently supports CMD commands. Plans for a PowerShell `!shell` integration in the works!
+  Currently supports CMD commands. Plans for a PowerShell `!shell` integration in the works! 🖥️
 
 - **Major Bug Fixes**  
-  Fixed critical bugs that caused crashes in the RAT.
+  Fixed critical bugs that caused crashes in the RAT. 🐛🔨
 
-
-**This is probably the hottest designed Discord RAT! Be patient to not burn yourself using it.**
+**This is probably the hottest designed Discord RAT! Be patient to not burn yourself using it. 🔥**
 
 ## Setup:
 
-Change the token on line 146, and you're good to go!
+Change the token on line 146, and you're good to go! ⚡
 
-If you want, feel free to read through the details below.
+If you want, feel free to read through the details below. 📖
 
 ---
 
@@ -37,21 +37,21 @@ As of February 23, 2025, I have posted a cracked open-source Discord Stealer in 
 
 Join my Discord for:
 
-- Coding help
-- Troubleshooting errors related to this RAT
-- New ideas, projects, or feature suggestions
+- Coding help 🤖
+- Troubleshooting errors related to this RAT 🛠️
+- New ideas, projects, or feature suggestions 💡
 
-If you'd like to add new features or improve this RAT, go ahead! Feel free to share your work with me on Discord.
+If you'd like to add new features or improve this RAT, go ahead! Feel free to share your work with me on Discord. 🙌
 
-I will update and maintain this project as long as I have time. If I stop, well... I don’t know.
+I will update and maintain this project as long as I have time. If I stop, well... I don’t know. ⏳
 
 ---
 
 ## Disclaimer
 
-- I am not responsible for any misuse of this RAT.
-- I am not liable for any damage caused by this software.
-- Use it at your own risk.
+- I am not responsible for any misuse of this RAT. ⚠️
+- I am not liable for any damage caused by this software. 💥
+- Use it at your own risk. ⚡
 
 ---
 
@@ -59,20 +59,20 @@ I will update and maintain this project as long as I have time. If I stop, well.
 
 I’ve used some code from the following sources:
 
-- [Blank Grabber](https://github.com/Blank-c/Blank-Grabber) – The !blocklist and !unblocklist commands are almost fully skidded, with some modifications to fit my project.
-- [Discord-RAT by moom825](https://github.com/moom825/Discord-RAT) – This project inspired me to start mine. Special thanks to moom825.
+- [Blank Grabber](https://github.com/Blank-c/Blank-Grabber) – The !blocklist and !unblocklist commands are almost fully skidded, with some modifications to fit my project. 🔄
+- [Discord-RAT by moom825](https://github.com/moom825/Discord-RAT) – This project inspired me to start mine. Special thanks to moom825. 👏
 
-The !uncritproc and !critproc commands are directly from moom825’s RAT.
+The !uncritproc and !critproc commands are directly from moom825’s RAT. 💻
 
-Many features are similar because I needed working implementations, and his GitHub page was full of great ideas.
+Many features are similar because I needed working implementations, and his GitHub page was full of great ideas. 💡
 
 ---
 
 ## Final Words
 
-Thanks for taking the time to read this.
+Thanks for taking the time to read this. ❤️
 
-Love y’all. Bye.
+Love y’all. Bye. 👋
 
 ~~~
 H-zz-H - https://discord.gg/29Ya4F3CgQ - _h_zz_h_
@@ -89,8 +89,8 @@ H-zz-H - https://discord.gg/29Ya4F3CgQ - _h_zz_h_
 - `!ram` – Shows current RAM usage 💾
 - `!overview` – Shows all information for CPU, RAM, and Disk 🛠️
 - `!network` – Lists all WiFi networks with passwords 🌐
-- `!net_pass (WiFi name)` – Outputs the password of the selected WiFi 🌐
-- `!publicip` – Get Public IP of Victim 🌐
+- `!net_pass (WiFi name)` – Outputs the password of the selected WiFi 🔑
+- `!publicip` – Get Public IP of Victim 🌍
 - `!battery` – Shows battery status (if laptop) 🔋
 - `!webcam` – Captures and sends a webcam image 📸
 - `!screen` – Takes a screenshot 🖼️
@@ -99,7 +99,7 @@ H-zz-H - https://discord.gg/29Ya4F3CgQ - _h_zz_h_
 ### System Control
 - `!web_open (URL)` – Opens a URL in the browser 🌍
 - `!fakecmd (amount)` – Quickly flashes (amount) CMD windows 💻
-- `!cmdspam` – Spams CMD windows until the system crashes 💻
+- `!cmdspam` – Spams CMD windows until the system crashes 💥
 - `!command (command)` – Executes a given command 💻
 - `!running` – Shows how many PCs the RAT is running on 🌍
 - `!botnet (URL)` – Starts a DDoS attack on a specific server ⚡
@@ -115,7 +115,7 @@ H-zz-H - https://discord.gg/29Ya4F3CgQ - _h_zz_h_
 - `!download (file/path)` – Downloads a file from the victim's PC (10MB max) 📥
 - `!download_ext (file.png)` – Downloads a file from the victim's PC (100MB max) 📥
 - `!upload (attachment) (!path!)` – Uploads a file to the victim's PC 📤
-- `!exec (path)` – Executes a file
+- `!exec (path)` – Executes a file ⚙️
 
 ### Permissions & Security
 - `!admin` – Checks for admin permissions 🛠️
@@ -143,8 +143,8 @@ H-zz-H - https://discord.gg/29Ya4F3CgQ - _h_zz_h_
 - `!smartup` – Uses an unknown startup path 🐀
 
 ### Troll Features
-- `!floatpic (seconds) (URL)` – Displays an unclosable floating image
-- `!screensaver` – Shows an auto-installed screensaver
+- `!floatpic (seconds) (URL)` – Displays an unclosable floating image 🖼️
+- `!screensaver` – Shows an auto-installed screensaver 🖥️
 
 ### Discord Features
 - `!purge (amount)` – Deletes a specified number of messages 🚮
@@ -163,4 +163,4 @@ This image shows someone using the commands, and the bot responding to them.
 #### Startup Message
 ![Startup Message](other/rat1.png)
 
-This image shows the startup message of someone starting the RAT—looks hot!
+This image shows the startup message of someone starting the RAT—looks hot! 🔥
