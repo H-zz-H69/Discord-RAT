@@ -35,6 +35,35 @@
 - **Antivirus Killer**
   Disables Windows Defender forever if using WindowsDefender
 
+# **On 15 Stars - New Update Features (Big Trolling):**
+
+- **Fake Update**  
+  Displays an unclosable Windows update screen to confuse the victim. 🖥️🔄
+
+- **Bluescreen**  
+  Crashes the victim's PC with a fake BSOD for maximum panic. 💥🖥️
+
+- **CPU Fucker**  
+  Maxes out the CPU usage to 100%, slowing down the system significantly. ⚡💻
+
+- **Creepy sounds**  
+  Plays creepy, unsettling sounds to freak them out. 👻🎧
+
+- **jumpscare**  
+  Initiates a loud, scary jumpscare that cannot be closed, blasting full system sound. 😱🔊
+
+- **Reverse Mouse**  
+  Reverses the mouse movement, making it impossible to control normally. 🖱️🔄
+
+- **Sound control**
+  Adjusts the system sound to your chosen volume percentage, either blasting or muting. 🎶🔊
+
+- **Shaking**
+  Makes the cursor shake uncontrollably, adding to the chaos. 🖱️💥
+
+- **Major Bug Fixes**  
+  Fixed critical bugs that caused crashes in the RAT. (if existing) 🐛🔨
+
 **This is probably the hottest designed Discord RAT! Be patient to not burn yourself using it. 🔥**
 
 ## [Setup](https://www.youtube.com/watch?v=3AtgXzT03hU):
