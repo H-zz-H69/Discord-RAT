@@ -17,6 +17,24 @@
 - **Major Bug Fixes**  
   Fixed critical bugs that caused crashes in the RAT. 🐛🔨
 
+
+# **On 10 Stars - New Update Features:**
+
+- **Browser Data extraction**  
+  Steal cookies, saved passwords, autofill data, and credit details from any browsers. 🌐🔑
+
+- **Way better encryption**  
+  Enhanced encryption to keep operations secure and undetected. 🔐🕵️
+
+- **Monitor Brightness & Display Control**  
+  Remotely adjust screen brightness, turn it off or on, or invert colors to confuse the target. 🖥️🔦
+
+- **Mouse & Keyboard stop**
+  Freeze or disable the target’s mouse and keyboard, making their system unusable. 🖱️❌⌨️
+
+- **Antivirus Killer**
+  Disables Windows Defender forever if using WindowsDefender
+
 **This is probably the hottest designed Discord RAT! Be patient to not burn yourself using it. 🔥**
 
 ## [Setup](https://www.youtube.com/watch?v=3AtgXzT03hU):
