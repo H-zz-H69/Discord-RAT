@@ -14,6 +14,12 @@
 - **CMD Commands Integration**  
   Currently supports CMD commands. Plans for a PowerShell `!shell` integration in the works! 🖥️
 
+- **Status Support**
+  Make the Bot show what its doin.
+
+- **Smarter Replies**
+  Replies way smarter by saying from which Guy it has been send and stuff (helps for some things like botnet channel so u know which PC's are running the script)
+
 - **Major Bug Fixes**  
   Fixed critical bugs that caused crashes in the RAT. 🐛🔨
 
