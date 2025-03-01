@@ -61,10 +61,10 @@
 - **Reverse Mouse**  
   Reverses the mouse movement, making it impossible to control normally. 🖱️🔄
 
-- **Sound control**
+- **Sound control**  
   Adjusts the system sound to your chosen volume percentage, either blasting or muting. 🎶🔊
 
-- **Shaking**
+- **Shaking**  
   Makes the cursor shake uncontrollably, adding to the chaos. 🖱️💥
 
 - **Log out**  
