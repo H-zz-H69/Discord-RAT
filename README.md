@@ -35,10 +35,10 @@
 - **Monitor Brightness & Display Control**  
   Remotely adjust screen brightness, turn it off or on, or invert colors to confuse the target. 🖥️🔦
 
-- **Mouse & Keyboard stop**
+- **Mouse & Keyboard stop**  
   Freeze or disable the target’s mouse and keyboard, making their system unusable. 🖱️❌⌨️
 
-- **Antivirus Killer**
+- **Antivirus Killer**  
   Disables Windows Defender forever if using WindowsDefender
 
 # **On 15 Stars - New Update Features (Big Trolling):**
