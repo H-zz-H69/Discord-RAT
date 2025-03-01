@@ -11,6 +11,9 @@
 - **Additional Troll Features**  
   More fun and customizable options for trolling. 😈
 
+- **Taskkill**  
+  Taskkill a process. 🚮🚬
+
 - **CMD Commands Integration**  
   Currently supports CMD commands. Plans for a PowerShell `!shell` integration in the works! 🖥️
 
