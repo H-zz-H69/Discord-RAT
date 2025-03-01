@@ -67,8 +67,20 @@
 - **Shaking**
   Makes the cursor shake uncontrollably, adding to the chaos. 🖱️💥
 
+- **Log out**  
+  Log pc out of current session. 🚮
+
 - **Major Bug Fixes**  
   Fixed critical bugs that caused crashes in the RAT. (if existing) 🐛🔨
+
+# **On 20 Stars - New Update Features:**
+
+- **Plugin System**  
+  Add an plugin system to add not important features which would make an bigger .exe file. Also allow Community to share plugins easier. ☝🎀
+
+- **RAT Builder GUI**  
+  GUI to build the RAT and add plugins and more. 🎁
+
 
 **This is probably the hottest designed Discord RAT! Be patient to not burn yourself using it. 🔥**
 
