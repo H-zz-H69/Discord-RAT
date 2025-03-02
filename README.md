@@ -1,32 +1,7 @@
 # Hello
 
 # **On 5 Stars - New Update Features:**
-
-- **Improved Startup Mechanics**  
-  Enhanced efficiency and smoother performance. 🚀
-
-- **Screen & Voice Recording**  
-  Now with the ability to capture screen activity and audio. 🎥🔊
-
-- **Additional Troll Features**  
-  More fun and customizable options for trolling. 😈
-
-- **Taskkill**  
-  Taskkill a process. 🚮🚬
-
-- **CMD Commands Integration**  
-  Currently supports CMD commands. Plans for a PowerShell `!shell` integration in the works! 🖥️
-
-- **Status Support**  
-  Make the Bot show what its doin.
-
-- **Smarter Replies**  
-  Replies way smarter by saying from which Guy it has been send and stuff (helps for some things like botnet channel so u know which PC's are running the script)
-
-- **Major Bug Fixes**  
-  Fixed critical bugs that caused crashes in the RAT. 🐛🔨
-
-
+-- Finished
 # **On 10 Stars - New Update Features:**
 
 - **Browser Data extraction**  
