@@ -1,7 +1,7 @@
 # Hello
 
 # **On 5 Stars - New Update Features:**
--- Finished
+- Finished
 # **On 10 Stars - New Update Features:**
 
 - **Browser Data extraction**  
