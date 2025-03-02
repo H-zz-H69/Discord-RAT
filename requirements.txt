@@ -11,3 +11,5 @@ Pillow
 pywin32
 pynput
 pyaes
+sounddevice
+wave

