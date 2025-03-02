@@ -58,6 +58,7 @@
   - Trolling [[Plugin]](https://github.com/H-zz-H69/Discord-RAT-Plugins/)
   - Stealer on Startup for like tokens and stuff [[Plugin]](https://github.com/H-zz-H69/Discord-RAT-Plugins/)
   - Pass, crypto and telegram session Stealer [[Plugin]](https://github.com/H-zz-H69/Discord-RAT-Plugins/)
+  - Up to 9 Custom Plugins to add
 
 - **RAT Builder GUI**  
   GUI to build the RAT and add plugins and more. 🎁
