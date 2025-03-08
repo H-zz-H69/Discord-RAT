@@ -10,9 +10,6 @@
 - **Way better encryption**  
   Enhanced encryption to keep operations secure and undetected. 🔐🕵️
 
-- **Monitor Brightness & Display Control**  
-  Remotely adjust screen brightness, turn it off or on, or invert colors to confuse the target. 🖥️🔦
-
 - **Mouse & Keyboard stop**  
   Freeze or disable the target’s mouse and keyboard, making their system unusable. 🖱️❌⌨️
 
