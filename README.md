@@ -64,6 +64,8 @@
 **This is probably the hottest designed Discord RAT! Be patient to not burn yourself using it. 🔥**
 
 ## [Setup](https://www.youtube.com/watch?v=3AtgXzT03hU):
+Install [Python 3.9.11](https://www.python.org/downloads/release/python-3911/)
+
 
 Change the token on line 146, and you're good to go! ⚡
 
