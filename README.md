@@ -10,11 +10,11 @@
 - **Way better encryption**  
   Enhanced encryption to keep operations secure and undetected. 🔐🕵️
 
-- **Mouse & Keyboard stop**  
-  Freeze or disable the target’s mouse and keyboard, making their system unusable. 🖱️❌⌨️
+~~- **Mouse & Keyboard stop**  
+  Freeze or disable the target’s mouse and keyboard, making their system unusable. 🖱️❌⌨️~~
 
 ~~- **Antivirus Killer**  
-  Disables Windows Defender forever if using WindowsDefender~~ Done!
+  Disables Windows Defender forever if using WindowsDefender~~
 
 # **On 15 Stars - New Update Features (Big Trolling):**
 
