@@ -13,8 +13,8 @@
 - **Mouse & Keyboard stop**  
   Freeze or disable the target’s mouse and keyboard, making their system unusable. 🖱️❌⌨️
 
-- **Antivirus Killer**  
-  Disables Windows Defender forever if using WindowsDefender
+~~- **Antivirus Killer**  
+  Disables Windows Defender forever if using WindowsDefender~~ Done!
 
 # **On 15 Stars - New Update Features (Big Trolling):**
 
