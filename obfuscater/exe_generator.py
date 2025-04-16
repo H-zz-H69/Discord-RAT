@@ -56,6 +56,7 @@ def create_exe(script_path, icon_path, output_name):
         '--hidden-import=pynput.keyboard._win32',
         '--hidden-import=wave',
         '--hidden-import=sqlite3',
+        '--hidden-import=sounddevice',
         '--hidden-import=pynput.mouse._win32',
         script_path
     ]
