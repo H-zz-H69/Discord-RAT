@@ -3,19 +3,9 @@
 # **On 5 Stars - New Update Features:**
 - Finished
 # **On 10 Stars - New Update Features:**
-
-- **Browser Data extraction**  
-  Steal cookies, saved passwords, autofill data, and credit details from any browsers. 🌐🔑
-
-- **Way better encryption**  
-  Enhanced encryption to keep operations secure and undetected. 🔐🕵️
-
-~~- **Mouse & Keyboard stop**  
-  Freeze or disable the target’s mouse and keyboard, making their system unusable. 🖱️❌⌨️~~
-
-~~- **Antivirus Killer**  
-  Disables Windows Defender forever if using WindowsDefender~~
-
+- Finished
+- Browser Stealing is not added rn bc i tried adding for over 6-8 hours or smth and i cant get it to work ;(
+- If anyone gets it to work (working version of the pass grabber alone is in "/other" folder) please open an Discord Ticket or dm me :)
 # **On 15 Stars - New Update Features (Big Trolling):**
 
 - **Fake Update**  
