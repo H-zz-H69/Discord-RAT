@@ -13,3 +13,4 @@ pynput
 pyaes
 sounddevice
 wave
+pycryptodome
