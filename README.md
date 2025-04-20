@@ -1,57 +1,10 @@
 # Hello
 
-# **On 5 Stars - New Update Features:**
-- Finished
-# **On 10 Stars - New Update Features:**
-- Finished
-- Browser Stealing is not added rn bc i tried adding for over 6-8 hours or smth and i cant get it to work ;(
-- If anyone gets it to work (working version of the pass grabber alone is in "/other" folder) please open an Discord Ticket or dm me :)
-# **On 15 Stars - New Update Features (Big Trolling):**
+# Soon
 
-- **Fake Update**  
-  Displays an unclosable Windows update screen to confuse the victim. 🖥️🔄
-
-- **Bluescreen**  
-  Crashes the victim's PC with a fake BSOD for maximum panic. 💥🖥️
-
-- **CPU Fucker**  
-  Maxes out the CPU usage to 100%, slowing down the system significantly. ⚡💻
-
-- **Creepy sounds**  
-  Plays creepy, unsettling sounds to freak them out. 👻🎧
-
-- **jumpscare**  
-  Initiates a loud, scary jumpscare that cannot be closed, blasting full system sound. 😱🔊
-
-- **Reverse Mouse**  
-  Reverses the mouse movement, making it impossible to control normally. 🖱️🔄
-
-- **Sound control**  
-  Adjusts the system sound to your chosen volume percentage, either blasting or muting. 🎶🔊
-
-- **Shaking**  
-  Makes the cursor shake uncontrollably, adding to the chaos. 🖱️💥
-
-- **Log out**  
-  Log pc out of current session. 🚮
-
-- **Major Bug Fixes**  
-  Fixed critical bugs that caused crashes in the RAT. (if existing) 🐛🔨
-
-# **On 20 Stars - New Update Features:**
-
-- **Plugin System**  
-  Add an plugin system to add not important features which would make an bigger .exe file. Also allow Community to share plugins easier. ☝🎀
-  - Trolling [[Plugin]](https://github.com/H-zz-H69/Discord-RAT-Plugins/)
-  - Stealer on Startup for like tokens and stuff [[Plugin]](https://github.com/H-zz-H69/Discord-RAT-Plugins/)
-  - Pass, crypto and telegram session Stealer [[Plugin]](https://github.com/H-zz-H69/Discord-RAT-Plugins/)
-  - Up to 9 Custom Plugins to add
-
-- **RAT Builder GUI**  
-  GUI to build the RAT and add plugins and more. 🎁
-
-
-**This is probably the hottest designed Discord RAT! Be patient to not burn yourself using it. 🔥**
+- Rat Builder with GUI!
+- Plugins Options to add custom features!
+- 
 
 ## [Setup](https://www.youtube.com/watch?v=3AtgXzT03hU):
 Install [Python 3.9.11](https://www.python.org/downloads/release/python-3911/)
