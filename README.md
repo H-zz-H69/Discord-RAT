@@ -104,9 +104,9 @@
 
 # Soon
 
-- Rat Builder with GUI!
-- Plugins Options to add custom features!
-- `!browser` - Steals Password, History, Cookies and shiii.
+## Rat Builder with GUI! 🎁
+## Plugins Options to add custom features! 🍕🍕
+## `!browser` - Steals Password, History, Cookies and shiii. 🦕🦖
 
 ## [Setup](https://www.youtube.com/watch?v=3AtgXzT03hU):
 Install [Python 3.9.11](https://www.python.org/downloads/release/python-3911/)
