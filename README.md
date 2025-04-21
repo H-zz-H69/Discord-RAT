@@ -22,8 +22,6 @@ This RAT was created by H-zz-H.
 
 If you have any questions or need assistance, you can reach me on Discord: h_zz_h or join my server: [Discord Server](https://discord.gg/29Ya4F3CgQ).
 
-As of February 23, 2025, I have posted a cracked open-source Discord Stealer in my Discord server. Normally, this would cost over €120 for lifetime access.
-
 Join my Discord for:
 
 - Coding help 🤖
