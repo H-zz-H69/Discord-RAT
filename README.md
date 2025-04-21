@@ -102,7 +102,9 @@
 - `!purge (amount)` — Delete messages 🚮  
 - `!recreate (#channel)` — Delete & recreate channel 🔄  
 
-# Soon
+---
+
+# In the near Future;
 
 ## Rat Builder with GUI! 🎁
 ## Plugins Options to add custom features! 🍕🍕
