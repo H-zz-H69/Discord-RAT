@@ -30,6 +30,7 @@
 - Uninstall Windows and launch a Linux distro 🐧
 - Start an steam game (and show installed ones)
 - Create and change to new Desktop.
+- Play random mp3 files uploaded.
 
 ## [Setup](https://www.youtube.com/watch?v=3AtgXzT03hU):
 Install [Python 3.9.11](https://www.python.org/downloads/release/python-3911/)
