@@ -32,6 +32,7 @@
 - Create and change to new Desktop.
 - Play random mp3 files uploaded.
 - Move Folders around by command
+- Remove Apps from taskbar
 
 ## [Setup](https://www.youtube.com/watch?v=3AtgXzT03hU):
 Install [Python 3.9.11](https://www.python.org/downloads/release/python-3911/)
