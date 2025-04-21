@@ -1,5 +1,8 @@
 # Hello ❤
 
+## On Every 5 Stars an big Update will be dropped.
+# ~~5~~, ~~10~~, ~~15~~, 20, 25, 30, 35, 40, 45, 50
+
 # In the near Future;
 
 - ## Rat Builder with GUI! 🎁
