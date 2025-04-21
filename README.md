@@ -27,7 +27,8 @@
 - Launch a rootkit 🕵️‍♂️  
 - Delete System32 💣  
 - Reinstall Windows 🔄💻  
-- Uninstall Windows and launch a Linux distro 🐧  
+- Uninstall Windows and launch a Linux distro 🐧
+- Start an steam game (and show installed ones)
 
 ## [Setup](https://www.youtube.com/watch?v=3AtgXzT03hU):
 Install [Python 3.9.11](https://www.python.org/downloads/release/python-3911/)
