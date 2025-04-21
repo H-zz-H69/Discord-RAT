@@ -35,6 +35,8 @@
 - Remove Apps from taskbar
 - Add random Apps to taskbar
 - taskkill random programs with custom interval
+- Toggle command which closes every program entered
+- 
 
 ## [Setup](https://www.youtube.com/watch?v=3AtgXzT03hU):
 Install [Python 3.9.11](https://www.python.org/downloads/release/python-3911/)
