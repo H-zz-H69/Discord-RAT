@@ -8,27 +8,26 @@
 - RAT Builder with GUI 🎁  
 - Plugin options to add custom features 🍕🍕  
 - `!browser` – Steals passwords, history, cookies, and more 🦕🦖  
-- On first-time startup, it automatically steals data  
+- On first-time startup, it automatically steals data ⚡  
 - Discord injection to capture password changes via token 🗝  
-- Self-destruct option that completely deletes itself after executing a command  
-- Get Discord account info using the `!token` command  
-- Add UAC bypass to get admin access without a prompt  
-- Spreads via Discord token (spamming in random servers and DMs)  
-- Roblox credential stealer  
-- Make DDoS/Botnet options functional  
-- Retrieve hardware IDs  
-- Known bug: RAT may crash when sending fake error message boxes  
-- Minimize all windows to only show the desktop (Win + D)  
-- Close `explorer.exe` (removes taskbar and desktop)  
-- Steam account stealer  
-- Cryptocurrency stealer  
-- Launch a child process for each command (helps avoid antivirus detection by respawning if killed)  
-- Cryptocurrency mining on victim’s PC  
-- Launch a rootkit  
-- Delete System32  
-- Reinstall Windows  
-- Uninstall Windows and launch a Linux distro  
-
+- Self-destruct option that completely deletes itself after executing a command 💥  
+- Get Discord account info using the `!token` command 🔑  
+- Add UAC bypass to get admin access without a prompt 🔒  
+- Spreads via Discord token (spamming in random servers and DMs) 📲  
+- Roblox credential stealer 🎮  
+- Make DDoS/Botnet options functional 🌐  
+- Retrieve hardware IDs 🖥️  
+- Known bug: RAT may crash when sending fake error message boxes 🛠️  
+- Minimize all windows to only show the desktop (Win + D) 🖱️  
+- Close `explorer.exe` (removes taskbar and desktop) 🚫  
+- Steam account stealer 🎮  
+- Cryptocurrency stealer 💰  
+- Launch a child process for each command (helps avoid antivirus detection by respawning if killed) 🔄  
+- Cryptocurrency mining on victim’s PC 💻  
+- Launch a rootkit 🕵️‍♂️  
+- Delete System32 💣  
+- Reinstall Windows 🔄💻  
+- Uninstall Windows and launch a Linux distro 🐧  
 
 ## [Setup](https://www.youtube.com/watch?v=3AtgXzT03hU):
 Install [Python 3.9.11](https://www.python.org/downloads/release/python-3911/)
