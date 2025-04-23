@@ -105,7 +105,7 @@ Thanks for taking the time to read this. ❤️
 Love y’all. Bye. 👋
 
 ~~~
-H-zz-H - https://discord.gg/29Ya4F3CgQ - _h_zz_h_
+H-zz-H - https://discord.gg/29Ya4F3CgQ
 ~~~
 
 ---
