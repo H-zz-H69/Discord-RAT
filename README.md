@@ -9,6 +9,8 @@
 It is intended to be used **only in a controlled, isolated test environment** (e.g., Virtual Machine).  
 **Any unauthorized use** on real systems or networks is **strictly prohibited and illegal**
 
+🚨 **Warning:** This tool contains potentially dangerous features (e.g., keyloggers, Defender Bypasses). Unauthorized use of these features is prohibited, and may lead to serious legal and ethical consequences. Use at your own risk.
+
 By using this software, you agree that you will only run it in safe, legal environments and will not misuse it in any way. The creator is not responsible for any damage caused by the misuse of this project.
 
 # In the near Future;
