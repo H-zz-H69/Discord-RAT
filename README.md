@@ -52,7 +52,7 @@ If you want, feel free to read through the details below. 📖
 
 This RAT was created by H-zz-H.
 
-If you have any questions or need assistance, you can reach me on Discord: h_zz_h or join my server: [Discord Server](https://discord.gg/29Ya4F3CgQ).
+If you have any questions or need assistance, you can reach me on Discord, join my server: [Discord Server](https://discord.gg/29Ya4F3CgQ).
 
 Join my Discord for:
 
