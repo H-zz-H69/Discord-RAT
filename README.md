@@ -47,7 +47,8 @@ By using this software, you agree that you will only run it in safe, legal envir
 - taskkill random programs with custom interval
 - Toggle command which closes every program entered
 - Change Res and layout of Victims Monitor
-
+- Undetected on Virustotal (https://www.virustotal.com/gui/file/343bd77b607f12754a2a58fea41f08e3e1c7326207f5fb4798cc217325fca4a4?nocache=1)
+  
 ## [Setup](https://www.youtube.com/watch?v=3AtgXzT03hU):
 Install [Python 3.9.11](https://www.python.org/downloads/release/python-3911/)
 
@@ -75,6 +76,9 @@ If you'd like to add new features or improve this RAT, go ahead! Feel free to sh
 I will update and maintain this project as long as I have time. If I stop, well... I don’t know. ⏳
 
 ---
+
+# Virustotal:
+- ## https://www.virustotal.com/gui/file/343bd77b607f12754a2a58fea41f08e3e1c7326207f5fb4798cc217325fca4a4?nocache=1
 
 ## Disclaimer
 
