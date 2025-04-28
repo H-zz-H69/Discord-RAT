@@ -19,7 +19,7 @@ By using this software, you agree that you will only run it in safe, legal envir
 - Plugin options to add custom features 🍕🍕  
 - `!browser` – Steals passwords, history, cookies, and more 🦕🦖  
 - On first-time startup, it automatically steals data ⚡  
-- Discord injection to capture password changes via token 🗝  
+- Discord injection to capture password changes and token 🗝  
 - Self-destruct option that completely deletes itself after executing a command 💥  
 - Get Discord account info using the `!token` command 🔑  
 - Add UAC bypass to get admin access without a prompt 🔒  
