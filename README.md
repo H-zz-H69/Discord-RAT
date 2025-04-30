@@ -19,19 +19,14 @@ By using this software, you agree that you will only run it in safe, legal envir
 - Plugin options to add custom features 🍕🍕  
 - `!browser` – Steals passwords, history, cookies, and more 🦕🦖  
 - On first-time startup, it automatically steals data ⚡  
-- Discord injection to capture password changes and token 🗝  
-- Self-destruct option that completely deletes itself after executing a command 💥                                                            ❎
+- Discord injection to capture password changes and token 🗝                                                 
 - Get Discord account info using the `!token` command 🔑
 - Discord !token command doesnt work smh lol 💀
 - Add UAC bypass to get admin access without a prompt 🔒  
 - Spreads via Discord token (spamming in random servers and DMs) 📲  
 - Roblox credential stealer 🎮  
-- Make DDoS/Botnet options functional 🌐 
-- Retrieve hardware IDs 🖥️                                                                                                                    ❎
-- Known bug: RAT may crash when sending fake error message boxes 🛠️  
-- Minimize all windows to only show the desktop (Win + D) 🖱️                                                                                   ❎
-- Close `explorer.exe` (removes taskbar and desktop) 🚫                                                                                       ❎
-- Steam account stealer 🎮                                                                                                                    ❎
+- Make DDoS/Botnet options functional 🌐                                                                                                    
+- Known bug: RAT may crash when sending fake error message boxes 🛠️                                            
 - Cryptocurrency stealer 💰  
 - Launch a child process for each command (helps avoid antivirus detection by respawning if killed) 🔄  
 - Cryptocurrency mining on victim’s PC 💻  
@@ -41,10 +36,7 @@ By using this software, you agree that you will only run it in safe, legal envir
 - Uninstall Windows and launch a Linux distro 🐧
 - Start an steam game (and show installed ones)                                                                                       
 - Create and change to new Desktop.
-- Play random mp3 files uploaded.                                                                                                             ❎
 - Move Folders around by command
-- Remove Apps from taskbar                                                                                                                    ❎
-- Add random Apps to taskbar                                                                                                                  ❎
 - taskkill random programs with custom interval
 - Toggle command which closes every program entered
 - Change Res and layout of Victims Monitor
