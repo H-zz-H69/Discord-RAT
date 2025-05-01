@@ -87,7 +87,7 @@ I’ve used some code from the following sources:
 
 - [Blank Grabber](https://github.com/Blank-c/Blank-Grabber) – The !blocklist and !unblocklist commands are almost fully skidded, with some modifications to fit my project. 🔄
 - [Discord-RAT by moom825](https://github.com/moom825/Discord-RAT) – This project inspired me to start mine. Special thanks to moom825. 👏
-- [Chat GPT](https://chatgpt.com/) – The !floatpic !cd and !list commands are ChatGPT generated 🙄
+- [Chat GPT](https://chatgpt.com/) – The !floatpic !cd !floatpic !rec commands and !list commands are ChatGPT generated 🙄
 
 The !uncritproc and !critproc commands are directly from moom825’s RAT. 💻
 
