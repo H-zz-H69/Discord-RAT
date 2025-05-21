@@ -124,8 +124,8 @@ H-zz-H - https://discord.gg/29Ya4F3CgQ
 - `!network` — List WiFi networks with saved passwords 🌐  
 - `!net_pass (wifi_name)` — Get password for specific WiFi 🌐  
 - `!net` — Create/Recreate botnet channel ⚡  
-- `!botnet (url)` — Start DDoS attack ⚡  
-- `!botnet_stop` — Stop DDoS attack ⚡  
+- `!botnet (ip) (time) (method)` — Start DDoS attack ⚡  
+- `hwid` — Get hardware ID 🍕🍕  
 
 ---
 
@@ -165,7 +165,13 @@ H-zz-H - https://discord.gg/29Ya4F3CgQ
 - `!tasks` — List running tasks 📝  
 - `!taskkill` — Kill task by name  
 - `!fakecmd (amount)` — Flash fake CMDs 💻  
-- `!cmdspam` — Spam CMDs until crash 💻  
+- `!cmdspam` — Spam CMDs until crash 💻
+- `!closeexplorer` - Kill Windows Explorer (hides desktop & taskbar) 🤯
+- `!minimize` - Simulate Win+D (show desktop) 👩‍💻
+- `!clipboard` - Show clipboard contents 📋 (Missing)
+- `!wallpaper (attachment.png)` -  Change wallpaper 🖼️ (Missing)
+- `!steam` - Gets Steam Username & ID + all games installed with ID 🍕
+- `!roblox` - Steal Roblox cookie 🎮🕹
 
 ---
 
@@ -174,7 +180,8 @@ H-zz-H - https://discord.gg/29Ya4F3CgQ
 - `!smartup` — Unknown startup path 🐀  
 - `!getadmin` — Request Admin via UAC spam  
 - `!admin` — Check admin status 🛠️  
-- `!closesession` — Close other user sessions 💻  
+- `!closesession` — Close other user sessions 💻
+- `!selfdestruct` - Remove RAT and traces 💣
 
 ---
 
@@ -202,6 +209,7 @@ H-zz-H - https://discord.gg/29Ya4F3CgQ
 - `!cpufuck` — Max CPU to 100% ⚡💻  
 - `!bluescreen` — Trigger BSOD 💥🖥️  
 - `!shaking` — Mouse shake effect 💥🖱️  
+- `playmp3` - Play attached MP3 file 🎵
 
 ---
 
