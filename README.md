@@ -1,7 +1,7 @@
 # Hello ❤
 
 ## On Every 5 Stars an big Update will be dropped.
-# ~~5~~, ~~10~~, ~~15~~, ~~20~~, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80
+# ~~5~~, ~~10~~, ~~15~~, ~~20~~, ~~25~~, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80
 
 # Educational RAT – Proof-of-Concept
 
@@ -24,8 +24,6 @@ By using this software, you agree that you will only run it in safe, legal envir
 - Discord !token command doesnt work smh lol 💀
 - Add UAC bypass to get admin access without a prompt 🔒  
 - Spreads via Discord token (spamming in random servers and DMs) 📲  
-- Roblox credential stealer ❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌
-- Make DDoS/Botnet options functional 🌐❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌
 - Known bug: RAT may crash when sending fake error message boxes 🛠️                                            
 - Cryptocurrency stealer 💰  
 - Launch a child process for each command (helps avoid antivirus detection by respawning if killed) 🔄  
