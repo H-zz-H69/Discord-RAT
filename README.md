@@ -24,8 +24,8 @@ By using this software, you agree that you will only run it in safe, legal envir
 - Discord !token command doesnt work smh lol 💀
 - Add UAC bypass to get admin access without a prompt 🔒  
 - Spreads via Discord token (spamming in random servers and DMs) 📲  
-- Roblox credential stealer 🎮  
-- Make DDoS/Botnet options functional 🌐                                                                                                    
+- Roblox credential stealer ❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌
+- Make DDoS/Botnet options functional 🌐❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌
 - Known bug: RAT may crash when sending fake error message boxes 🛠️                                            
 - Cryptocurrency stealer 💰  
 - Launch a child process for each command (helps avoid antivirus detection by respawning if killed) 🔄  
@@ -40,6 +40,7 @@ By using this software, you agree that you will only run it in safe, legal envir
 - taskkill random programs with custom interval
 - Toggle command which closes every program entered
 - Change Res and layout of Victims Monitor
+- Ratelimit check on many ratted PCS by not sending every message 20 times
 - Undetected on Virustotal (https://www.virustotal.com/gui/file/343bd77b607f12754a2a58fea41f08e3e1c7326207f5fb4798cc217325fca4a4?nocache=1)
   
 ## [Setup](https://www.youtube.com/watch?v=3AtgXzT03hU):
