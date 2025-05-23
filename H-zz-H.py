@@ -137,6 +137,7 @@ try:
     result = perform_all_checks()
 except:
     print(f"[ERROR] Error on VM Check")
+    result = f"[ERROR] VM Check failed"
 
 print(result)
 
