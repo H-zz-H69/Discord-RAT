@@ -32,13 +32,13 @@ By using this software, you agree that you will only run it in safe, legal envir
 - Delete System32 💣  
 - Reinstall Windows 🔄💻  
 - Uninstall Windows and launch a Linux distro 🐧
-- Start an steam game (and show installed ones)                                                                                       
-- Create and change to new Desktop.
-- Move Folders around by command
-- taskkill random programs with custom interval
-- Toggle command which closes every program entered
-- Change Res and layout of Victims Monitor
-- Ratelimit check on many ratted PCS by not sending every message 20 times
+- Start an steam game ❌   ❌   ❌    ❌    ❌    ❌    ❌    ❌                                                                      
+- Create and change to new Desktop.   ❌    ❌    ❌    ❌    ❌ 
+- Move Folders around by command   ❌    ❌    ❌    ❌    ❌    ❌ 
+- taskkill random programs with custom interval   ❌    ❌    ❌    ❌ 
+- Toggle command which closes every program entered   ❌    ❌    ❌    ❌ 
+- Change Res and layout of Victims Monitor   ❌    ❌    ❌    ❌    ❌ 
+- Ratelimit check on many ratted PCS by not sending every message 20 times   ❌    ❌    ❌    ❌ 
 - Undetected on Virustotal (https://www.virustotal.com/gui/file/343bd77b607f12754a2a58fea41f08e3e1c7326207f5fb4798cc217325fca4a4?nocache=1)
   
 ## [Setup](https://www.youtube.com/watch?v=3AtgXzT03hU):
