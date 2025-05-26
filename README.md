@@ -44,10 +44,7 @@ By using this software, you agree that you will only run it in safe, legal envir
 ## [Setup](https://www.youtube.com/watch?v=3AtgXzT03hU):
 Install [Python 3.9.11](https://www.python.org/downloads/release/python-3911/)
 
-
-Change the token on line 146, and you're good to go! ⚡
-
-If you want, feel free to read through the details below. 📖
+# [Setup Tutorial Site](https://h-zz-h69.github.io/index/index3.html)
 
 ---
 
