@@ -1,8 +1,7 @@
 # Hello ❤
 
 # Discontinued
-- please use RAT V2:
-- https://github.com/H-zz-H69/Discord-RAT-v2
+## please use RAT V2: https://github.com/H-zz-H69/Discord-RAT-v2
 
 # Educational RAT – Proof-of-Concept
 
